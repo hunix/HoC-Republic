@@ -1,0 +1,40 @@
+{
+  "id": "hoc-plugin-uiux-promax",
+  "name": "UI/UX Pro Max — Design Intelligence Engine",
+  "version": "2.0.0",
+  "description": "Integrates UI/UX Pro Max design intelligence into HoC. Provides 67 UI styles, 96 color palettes, 57 font pairings, 100 industry reasoning rules, and AI-powered design system generation. Auto-clones the skill repo and auto-detects Python — zero user configuration required.",
+  "sourceRepo": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+  "capabilities": {
+    "inference": false,
+    "tools": [
+      "uiux_design_system",
+      "uiux_search_styles",
+      "uiux_search_colors",
+      "uiux_search_fonts",
+      "uiux_search_charts",
+      "uiux_ux_guidelines",
+      "uiux_persist_system"
+    ],
+    "providers": [],
+    "hooks": ["citizen:task_assigned"],
+    "gateway": [
+      "uiux.designSystem",
+      "uiux.search",
+      "uiux.persist",
+      "uiux.stacks",
+      "uiux.status",
+      "uiux.config"
+    ],
+    "ui": ["uiux-design-panel"]
+  },
+  "lifecycle": {
+    "init": "index.ts#init",
+    "shutdown": "index.ts#shutdown",
+    "healthCheck": "index.ts#healthCheck"
+  },
+  "requirements": {
+    "autoBootstrap": true,
+    "notes": "Auto-clones skill repo and auto-detects Python 3 on first init. Git and Python 3.8+ must be available on PATH."
+  },
+  "bootPriority": 38
+}

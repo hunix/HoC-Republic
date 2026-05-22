@@ -1,0 +1,55 @@
+{
+  "id": "hoc-plugin-hunyuan-video",
+  "name": "HunyuanVideo 1.5 — 13B Cinematic Video Model",
+  "version": "1.0.0",
+  "displayName": "HunyuanVideo 1.5",
+  "description": "Integration with HunyuanVideo 1.5 (Tencent) — 13-billion-parameter cinematic video model. State-of-the-art visual quality with high dynamics, continuous actions, artistic shots, and physical compliance. 720p with 1080p super-resolution upscale.",
+  "sourceRepo": "https://github.com/Tencent/HunyuanVideo",
+  "author": "HoC Republic",
+  "backend": {
+    "type": "python-cli",
+    "repo": "https://github.com/Tencent/HunyuanVideo.git",
+    "deps": ["hunyuan-video"],
+    "verifyImport": "import hyvideo"
+  },
+  "toolDefinitions": [
+    {
+      "name": "hunyuan_generate_video",
+      "description": "Generate cinematic video using HunyuanVideo 1.5 (13B). State-of-the-art quality with physical realism, artistic shots, and dynamic action sequences.",
+      "params": {
+        "prompt": { "type": "string", "description": "Text prompt for cinematic video", "required": true },
+        "negative_prompt": { "type": "string", "description": "Negative prompt" },
+        "resolution": { "type": "string", "enum": ["540p", "720p", "1080p"], "description": "Resolution (720p default, 1080p via super-resolution)" },
+        "duration_sec": { "type": "number", "description": "Duration 1-15 seconds (default: 5)" },
+        "fps": { "type": "number", "description": "Frames per second (default: 24)" },
+        "precision": { "type": "string", "enum": ["fp16", "fp8", "bf16"], "description": "Model precision (fp8 for 24GB GPUs)" },
+        "seed": { "type": "number", "description": "Random seed" }
+      },
+      "command": "hunyuan_generate_video"
+    },
+    {
+      "name": "hunyuan_image_to_video",
+      "description": "Animate an image into cinematic video using HunyuanVideo 1.5 I2V mode.",
+      "params": {
+        "image_path": { "type": "string", "description": "Path to input image", "required": true },
+        "prompt": { "type": "string", "description": "Motion/action prompt" },
+        "duration_sec": { "type": "number", "description": "Duration in seconds" }
+      },
+      "command": "hunyuan_image_to_video"
+    }
+  ],
+  "gatewayDefinitions": [
+    { "method": "hunyuan.generate", "delegateTo": "hunyuan_generate_video" },
+    { "method": "hunyuan.image-to-video", "delegateTo": "hunyuan_image_to_video" },
+    { "method": "hunyuan.job-status", "delegateTo": "_job_status" },
+    { "method": "hunyuan.cancel", "delegateTo": "_cancel" },
+    { "method": "hunyuan.queue-status", "delegateTo": "_queue_status" }
+  ],
+  "jobQueue": { "maxConcurrent": 1, "timeoutMs": 1200000 },
+  "capabilities": {
+    "tools": ["hunyuan_generate_video", "hunyuan_image_to_video"],
+    "hooks": ["tick:before"]
+  },
+  "requirements": { "binaries": ["python3"], "gpu_vram_gb": 14 },
+  "bootPriority": 48
+}

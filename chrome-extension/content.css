@@ -1,0 +1,472 @@
+/* ═══════════════════════════════════════════════════
+   HoC Companion — Content Script Styles
+   ═══════════════════════════════════════════════════ */
+
+/* ─── Floating Action Button ──────────────────────── */
+#hoc-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 2147483646;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    user-select: none;
+}
+
+.hoc-fab__button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    box-shadow:
+        0 4px 16px rgba(99, 102, 241, 0.4),
+        0 2px 4px rgba(0, 0, 0, 0.2);
+    transition:
+        transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 200ms ease;
+    position: relative;
+}
+
+.hoc-fab__button:hover {
+    transform: scale(1.08);
+    box-shadow:
+        0 6px 24px rgba(99, 102, 241, 0.5),
+        0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.hoc-fab__button--active {
+    transform: scale(1.08) rotate(45deg);
+    background: linear-gradient(135deg, #ef4444, #f97316);
+}
+
+.hoc-fab__button svg {
+    width: 22px;
+    height: 22px;
+    transition: transform 200ms ease;
+}
+
+/* ─── FAB Menu ────────────────────────────────────── */
+.hoc-fab__menu {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    transition:
+        opacity 200ms ease,
+        transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hoc-fab__menu--open {
+    pointer-events: all;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.hoc-fab__action {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(15, 15, 25, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: #e2e8f0;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transition:
+        background 150ms ease,
+        transform 150ms ease,
+        box-shadow 150ms ease;
+    font-family: inherit;
+}
+
+.hoc-fab__action:hover {
+    background: rgba(99, 102, 241, 0.25);
+    transform: translateX(-4px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+}
+
+.hoc-fab__action svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* ─── Region Selection Overlay ────────────────────── */
+#hoc-region-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    background: rgba(0, 0, 0, 0.35);
+    cursor: crosshair;
+    backdrop-filter: blur(1px);
+}
+
+.hoc-region-instructions {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background: rgba(15, 15, 25, 0.9);
+    backdrop-filter: blur(12px);
+    border-radius: 10px;
+    color: #e2e8f0;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+.hoc-region-instructions kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    margin: 0 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: monospace;
+}
+
+#hoc-region-rect {
+    position: fixed;
+    display: none;
+    border: 2px solid #6366f1;
+    background: rgba(99, 102, 241, 0.08);
+    border-radius: 2px;
+    box-shadow:
+        0 0 0 9999px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+    z-index: 5;
+}
+
+#hoc-region-rect::after {
+    content: attr(data-size);
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px 8px;
+    background: rgba(15, 15, 25, 0.9);
+    color: #a5b4fc;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: monospace;
+    white-space: nowrap;
+}
+
+#hoc-region-coords {
+    position: fixed;
+    padding: 2px 6px;
+    background: rgba(15, 15, 25, 0.8);
+    color: #94a3b8;
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: monospace;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* ─── Flash Effect ────────────────────────────────── */
+#hoc-flash {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    background: rgba(255, 255, 255, 0.7);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 200ms ease;
+}
+
+#hoc-flash.hoc-flash--active {
+    opacity: 1;
+    animation: hoc-flash-anim 350ms ease-out forwards;
+}
+
+@keyframes hoc-flash-anim {
+    0% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* ─── Toast Notification ──────────────────────────── */
+.hoc-toast {
+    position: fixed;
+    bottom: 84px;
+    right: 24px;
+    z-index: 2147483647;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+        opacity 250ms ease,
+        transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+}
+
+.hoc-toast--visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hoc-toast--success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(6, 148, 100, 0.95));
+    color: #fff;
+}
+
+.hoc-toast--error {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(185, 28, 28, 0.95));
+    color: #fff;
+}
+
+/* ─── Prompt Dialog ───────────────────────────────── */
+#hoc-prompt-dialog {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.hoc-prompt__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+}
+
+.hoc-prompt__card {
+    position: relative;
+    width: 480px;
+    max-width: 90vw;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: rgba(20, 20, 35, 0.96);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow:
+        0 24px 64px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(99, 102, 241, 0.1);
+    color: #e2e8f0;
+    animation: hoc-dialog-in 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes hoc-dialog-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.hoc-prompt__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.hoc-prompt__header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #a5b4fc, #c4b5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hoc-prompt__close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #94a3b8;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 150ms ease, color 150ms ease;
+}
+
+.hoc-prompt__close:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.hoc-prompt__preview {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 12px;
+}
+
+.hoc-prompt__preview img {
+    width: 100%;
+    display: block;
+    max-height: 200px;
+    object-fit: contain;
+    background: #0a0a14;
+}
+
+.hoc-prompt__context {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.hoc-prompt__badge {
+    padding: 2px 8px;
+    border-radius: 5px;
+    background: rgba(99, 102, 241, 0.2);
+    color: #a5b4fc;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+}
+
+.hoc-prompt__url {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.hoc-prompt__suggestion {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px dashed rgba(99, 102, 241, 0.3);
+    border-radius: 8px;
+    background: rgba(99, 102, 241, 0.06);
+    color: #a5b4fc;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: left;
+    margin-bottom: 12px;
+    transition: background 150ms ease, border-color 150ms ease;
+    font-family: inherit;
+}
+
+.hoc-prompt__suggestion:hover {
+    background: rgba(99, 102, 241, 0.12);
+    border-color: rgba(99, 102, 241, 0.5);
+}
+
+.hoc-prompt__input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #e2e8f0;
+    font-size: 14px;
+    resize: vertical;
+    outline: none;
+    margin-bottom: 16px;
+    font-family: inherit;
+    transition: border-color 200ms ease;
+    box-sizing: border-box;
+}
+
+.hoc-prompt__input:focus {
+    border-color: rgba(99, 102, 241, 0.5);
+}
+
+.hoc-prompt__input::placeholder {
+    color: #64748b;
+}
+
+.hoc-prompt__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hoc-prompt__checkbox {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.hoc-prompt__checkbox input {
+    accent-color: #6366f1;
+}
+
+.hoc-prompt__actions {
+    display: flex;
+    gap: 8px;
+}
+
+.hoc-prompt__btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background 150ms ease,
+        transform 150ms ease,
+        box-shadow 150ms ease;
+    font-family: inherit;
+}
+
+.hoc-prompt__btn--secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e2e8f0;
+}
+
+.hoc-prompt__btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.hoc-prompt__btn--primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.hoc-prompt__btn--primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}

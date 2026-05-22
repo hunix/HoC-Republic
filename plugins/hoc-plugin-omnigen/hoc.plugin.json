@@ -1,0 +1,22 @@
+{
+  "name": "hoc-plugin-omnigen",
+  "version": "1.0.0",
+  "displayName": "OmniGen",
+  "description": "Unified image generation via OmniGen. Text-to-image, subject-driven, identity-preserving, multi-modal conditioned generation from a single model.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "text-to-image",
+    "subject-driven-generation",
+    "identity-preserving",
+    "image-conditioned-generation",
+    "multi-modal",
+    "image-editing"
+  ],
+  "requires": {
+    "python": ">=3.10",
+    "vram": "16GB+ (with offload_model) or 24GB+ (full)",
+    "diskSpace": "~15GB (model weights)"
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

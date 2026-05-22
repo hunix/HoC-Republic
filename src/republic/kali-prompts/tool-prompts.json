@@ -1,0 +1,440 @@
+{
+  "meta": {
+    "version": "2.0",
+    "format": "TOON",
+    "description": "Token-Optimized Object Notation prompts for Kali tool micro-orchestrators"
+  },
+  "categories": ["recon", "web", "exploit", "network", "compliance", "forensics", "scraping", "exploit-db"],
+  "tools": {
+    "nmap": {
+      "cat": "recon",
+      "cmd": "nmap",
+      "desc": "Network port scanner with service/OS detection and NSE scripts",
+      "prompt": "You are the Nmap specialist. Given a target and scope, build the optimal nmap command. Return TOON JSON only.\nRules:\n- Always use -sV for service detection\n- Use -sC for default scripts on detailed scans\n- Use --script vuln for vulnerability scans\n- Cap port range to scope (never scan beyond authorized range)\n- Output XML format for parsing: -oX\n- Rate-limit with --max-rate on external targets",
+      "input": {"t": "target", "p": "ports", "mode": "quick|detailed|vuln|stealth", "auth": "none"},
+      "output": {"ports": [{"p": 0, "proto": "tcp", "state": "open", "svc": "", "ver": ""}], "os": "", "scripts": []},
+      "flags": {
+        "quick": "-sS -sV --top-ports 100 --max-rate 1000",
+        "detailed": "-sS -sV -sC -O -p {ports} --max-rate 500",
+        "vuln": "-sV --script vuln -p {ports}",
+        "stealth": "-sS -T2 -f --data-length 24 -p {ports}"
+      },
+      "timeout": 300,
+      "parse": "xml"
+    },
+    "masscan": {
+      "cat": "recon",
+      "cmd": "masscan",
+      "desc": "High-speed TCP port scanner for large ranges",
+      "prompt": "You are the Masscan specialist. Use for broad port sweeps. Return TOON JSON.\nRules:\n- Rate limit to --rate=1000 for external targets\n- Use -oJ for JSON output\n- Never exceed authorized scope",
+      "input": {"t": "target", "p": "ports", "rate": 1000},
+      "output": {"ports": [{"p": 0, "proto": "tcp", "state": "open"}]},
+      "timeout": 120,
+      "parse": "json"
+    },
+    "dnsrecon": {
+      "cat": "recon",
+      "cmd": "dnsrecon",
+      "desc": "DNS enumeration — zone transfers, brute-force, SRV, reverse",
+      "prompt": "You are the DNS specialist. Enumerate DNS records for the target domain.\nRules:\n- Always try zone transfer first (-t axfr)\n- Use brute-force only with permission (-t brt)\n- Output JSON: -j",
+      "input": {"t": "domain"},
+      "output": {"records": [{"type": "A|AAAA|MX|NS|TXT|CNAME", "name": "", "val": ""}], "zone_transfer": false},
+      "timeout": 120,
+      "parse": "json"
+    },
+    "amass": {
+      "cat": "recon",
+      "cmd": "amass",
+      "desc": "Attack surface mapping and subdomain discovery via OSINT",
+      "prompt": "You are the OSINT specialist. Discover subdomains and map attack surface.\nRules:\n- Use passive mode (-passive) unless explicitly authorized for active\n- Output JSON: -json",
+      "input": {"t": "domain", "mode": "passive|active"},
+      "output": {"subdomains": [], "sources": []},
+      "timeout": 300,
+      "parse": "json"
+    },
+    "whois": {
+      "cat": "recon",
+      "cmd": "whois",
+      "desc": "Domain registration lookup",
+      "prompt": "Extract registrar, nameservers, creation/expiry dates from whois output.",
+      "input": {"t": "domain"},
+      "output": {"registrar": "", "created": "", "expires": "", "nameservers": [], "org": ""},
+      "timeout": 30,
+      "parse": "text"
+    },
+    "sslyze": {
+      "cat": "recon",
+      "cmd": "sslyze",
+      "desc": "TLS/SSL configuration analyzer",
+      "prompt": "You are the SSL/TLS specialist. Analyze certificate and cipher configuration.\nRules:\n- Check for weak ciphers, expired certs, protocol downgrade\n- Flag missing HSTS\n- Use --json_out for structured output",
+      "input": {"t": "host:port"},
+      "output": {"valid": true, "expires": "", "issuer": "", "weak_ciphers": [], "protocols": [], "vulns": []},
+      "timeout": 120,
+      "parse": "json"
+    },
+    "theharvester": {
+      "cat": "recon",
+      "cmd": "theHarvester",
+      "desc": "Gather emails, subdomains, hosts from public sources",
+      "prompt": "Collect OSINT data from public sources. Return structured results.",
+      "input": {"t": "domain", "sources": "all"},
+      "output": {"emails": [], "hosts": [], "ips": []},
+      "timeout": 180,
+      "parse": "text"
+    },
+    "nikto": {
+      "cat": "web",
+      "cmd": "nikto",
+      "desc": "Web server scanner — misconfigs, outdated software, dangerous files",
+      "prompt": "You are the web server security specialist. Scan for misconfigurations and known vulnerabilities.\nRules:\n- Use -Format json for structured output\n- If auth provided, use -id user:pass\n- Respect scope — only test authorized URLs\n- Flag outdated server versions, dangerous defaults",
+      "input": {"t": "url", "auth": "cookie|basic|bearer|none", "tuning": "x6"},
+      "output": {"findings": [{"id": "", "msg": "", "uri": "", "method": "GET|POST"}]},
+      "timeout": 300,
+      "parse": "json"
+    },
+    "gobuster": {
+      "cat": "web",
+      "cmd": "gobuster",
+      "desc": "Directory/file brute forcing for hidden paths",
+      "prompt": "You are the directory enumeration specialist. Discover hidden paths and files.\nRules:\n- Use common.txt wordlist by default\n- Try extensions: php,html,txt,js,json,xml,bak\n- Filter status codes: 200,301,302,403\n- Use -t 20 for reasonable thread count\n- If auth provided, pass cookies via -c",
+      "input": {"t": "url", "auth": "cookie|header|none", "wordlist": "/usr/share/wordlists/dirb/common.txt"},
+      "output": {"paths": [{"path": "", "status": 0, "size": 0}]},
+      "timeout": 300,
+      "parse": "text"
+    },
+    "sqlmap": {
+      "cat": "web",
+      "cmd": "sqlmap",
+      "desc": "Automatic SQL injection detection and exploitation",
+      "prompt": "You are the SQL injection specialist. Test injectable parameters.\nRules:\n- Always use --batch (non-interactive)\n- Start with --level=2 --risk=1\n- If auth provided, use --cookie or --headers\n- Never use --os-shell without explicit authorization\n- Output to --output-dir for evidence preservation",
+      "input": {"t": "url_with_params", "auth": "cookie|header|none", "level": 2, "risk": 1},
+      "output": {"injectable": false, "params": [], "dbms": "", "dbs": []},
+      "timeout": 300,
+      "parse": "text"
+    },
+    "wpscan": {
+      "cat": "web",
+      "cmd": "wpscan",
+      "desc": "WordPress vulnerability scanner",
+      "prompt": "You are the WordPress security specialist. Scan plugins, themes, users, core.\nRules:\n- Use --enumerate vp,vt,u for comprehensive scan\n- Use --format json for structured output\n- Flag outdated plugins as HIGH severity",
+      "input": {"t": "url"},
+      "output": {"version": "", "plugins": [], "themes": [], "users": [], "vulns": []},
+      "timeout": 300,
+      "parse": "json"
+    },
+    "wafw00f": {
+      "cat": "web",
+      "cmd": "wafw00f",
+      "desc": "Web Application Firewall detection",
+      "prompt": "Detect WAF vendor and type. Short execution, structured output.",
+      "input": {"t": "url"},
+      "output": {"detected": false, "waf": "", "confidence": ""},
+      "timeout": 30,
+      "parse": "text"
+    },
+    "ffuf": {
+      "cat": "web",
+      "cmd": "ffuf",
+      "desc": "Fast web fuzzer for directories, parameters, virtualhost",
+      "prompt": "You are the web fuzzing specialist. Fuzz directories, parameters, and vhosts.\nRules:\n- Use -mc 200,301,302,403 for useful matches\n- Rate limit with -rate 50 on external targets\n- Use -o for JSON output",
+      "input": {"t": "url/FUZZ", "wordlist": "common.txt", "auth": "header|none"},
+      "output": {"results": [{"input": "", "status": 0, "length": 0, "url": ""}]},
+      "timeout": 300,
+      "parse": "json"
+    },
+    "msfconsole": {
+      "cat": "exploit",
+      "cmd": "msfconsole",
+      "desc": "Metasploit Framework — exploit execution",
+      "prompt": "You are the Metasploit specialist. Search and configure exploits.\nRules:\n- NEVER auto-exploit without explicit authorization\n- Use -x for non-interactive command execution\n- Always verify target is in authorized scope\n- Prefer auxiliary/scanner modules over exploit modules for scanning\n- Document all modules used with options",
+      "input": {"t": "target", "svc": "service", "ver": "version"},
+      "output": {"modules": [{"name": "", "type": "auxiliary|exploit", "rank": "", "cve": ""}], "results": []},
+      "timeout": 300,
+      "parse": "text"
+    },
+    "searchsploit": {
+      "cat": "exploit",
+      "cmd": "searchsploit",
+      "desc": "Offline ExploitDB search",
+      "prompt": "Search local ExploitDB for known exploits. Return structured results.",
+      "input": {"q": "query"},
+      "output": {"exploits": [{"edb_id": "", "title": "", "path": "", "platform": ""}]},
+      "timeout": 30,
+      "parse": "json"
+    },
+    "hydra": {
+      "cat": "exploit",
+      "cmd": "hydra",
+      "desc": "Network brute-force — SSH, FTP, HTTP, RDP, SMB, 50+ protocols",
+      "prompt": "You are the credential testing specialist. Test for default/weak credentials.\nRules:\n- Use small, targeted wordlists (not rockyou) for initial checks\n- Limit threads: -t 4\n- Stop on first match: -f\n- NEVER brute-force without explicit authorization\n- Log all attempts for evidence",
+      "input": {"t": "target", "proto": "ssh|ftp|http-post-form|rdp|smb", "user": "", "wordlist": ""},
+      "output": {"cracked": false, "credentials": [{"user": "", "pass": "", "host": ""}]},
+      "timeout": 300,
+      "parse": "text"
+    },
+    "john": {
+      "cat": "exploit",
+      "cmd": "john",
+      "desc": "Password hash cracker — 200+ hash types",
+      "prompt": "Crack password hashes. Use targeted wordlists, not exhaustive brute-force.",
+      "input": {"hashfile": "", "format": "", "wordlist": "rockyou.txt"},
+      "output": {"cracked": 0, "total": 0, "results": [{"hash": "", "pass": ""}]},
+      "timeout": 600,
+      "parse": "text"
+    },
+    "tcpdump": {
+      "cat": "network",
+      "cmd": "tcpdump",
+      "desc": "Command-line packet capture and analysis",
+      "prompt": "Capture network traffic for analysis. Short captures only.\nRules:\n- Always limit with -c (packet count)\n- Use -nn for no name resolution\n- Save to pcap: -w",
+      "input": {"t": "target_host", "iface": "any", "count": 100},
+      "output": {"packets": 0, "protocols": {}, "file": ""},
+      "timeout": 60,
+      "parse": "text"
+    },
+    "tshark": {
+      "cat": "network",
+      "cmd": "tshark",
+      "desc": "Terminal Wireshark — deep packet inspection",
+      "prompt": "Deep packet analysis with display filters.",
+      "input": {"t": "target", "filter": "", "count": 100},
+      "output": {"packets": 0, "summary": ""},
+      "timeout": 60,
+      "parse": "text"
+    },
+    "traceroute": {
+      "cat": "network",
+      "cmd": "traceroute",
+      "desc": "Network path tracing",
+      "prompt": "Trace network path to target. Identify hops and latency.",
+      "input": {"t": "target"},
+      "output": {"hops": [{"n": 0, "ip": "", "rtt_ms": 0}]},
+      "timeout": 60,
+      "parse": "text"
+    },
+    "lynis": {
+      "cat": "compliance",
+      "cmd": "lynis",
+      "desc": "CIS benchmark compliance auditing",
+      "prompt": "You are the compliance specialist. Run CIS benchmark checks.\nRules:\n- Use --quick for fast audits\n- Parse hardening index score\n- Flag warnings as findings",
+      "input": {"mode": "quick|full"},
+      "output": {"hardening_index": 0, "warnings": [], "suggestions": []},
+      "timeout": 300,
+      "parse": "text"
+    },
+    "httrack": {
+      "cat": "scraping",
+      "cmd": "httrack",
+      "desc": "Website mirroring — full offline copies",
+      "prompt": "You are the website cloning specialist. Create forensic-quality offline mirrors.\nRules:\n- Always timestamp output directories\n- Rate limit: --max-rate=500000\n- Polite crawling: --connection-per-second=2\n- No robots.txt in pentest mode: -s0\n- Capture: HTML, CSS, JS, images, fonts, JSON, XML\n- Store in /evidence/web-clones/<target>_<timestamp>/",
+      "input": {"t": "url", "depth": 3, "auth": "cookie|none"},
+      "output": {"dir": "", "files": 0, "size": "", "duration_s": 0},
+      "timeout": 600,
+      "parse": "text"
+    },
+    "scrapy": {
+      "cat": "scraping",
+      "cmd": "scrapy",
+      "desc": "Structured web crawling — forms, scripts, meta tags, links",
+      "prompt": "You are the structured crawling specialist. Extract page structure and metadata.\nRules:\n- Depth limit 3\n- Polite delay 0.5s\n- Max 100 pages per crawl\n- Extract: URLs, forms, scripts, meta, h1, images w/o alt\n- Output JSON to /evidence/",
+      "input": {"t": "url", "depth": 3, "max_pages": 100},
+      "output": {"pages": 0, "forms": 0, "scripts": 0, "links": 0, "file": ""},
+      "timeout": 300,
+      "parse": "json"
+    },
+    "frontend-audit": {
+      "cat": "scraping",
+      "cmd": "frontend-audit",
+      "desc": "HTTP security headers, mixed content, exposed files, broken links",
+      "prompt": "You are the frontend security specialist. Check:\n1. HTTP security headers (CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy)\n2. Mixed content (HTTP resources on HTTPS pages)\n3. Exposed sensitive files (.env, .git/config, wp-config.php, package.json)\n4. Broken links via linkchecker\n5. Missing accessibility attributes",
+      "input": {"t": "url"},
+      "output": {"headers_missing": [], "mixed_content": false, "exposed_files": [], "broken_links": 0},
+      "timeout": 180,
+      "parse": "multi"
+    },
+    "js-analysis": {
+      "cat": "scraping",
+      "cmd": "js-analysis",
+      "desc": "JavaScript bundle scanning for secrets, eval(), unsafe storage",
+      "prompt": "You are the JavaScript security specialist. Scan all JS bundles for:\n1. Hardcoded API keys, tokens, passwords (CWE-798)\n2. eval() usage (CWE-95)\n3. Insecure localStorage/sessionStorage of sensitive data\n4. Exposed endpoints and internal API routes\n5. Source map files that leak source code",
+      "input": {"t": "url"},
+      "output": {"secrets_found": 0, "eval_calls": 0, "storage_keys": [], "source_maps": false},
+      "timeout": 120,
+      "parse": "text"
+    },
+    "linkchecker": {
+      "cat": "scraping",
+      "cmd": "linkchecker",
+      "desc": "Broken link detection across a website",
+      "prompt": "Check all links for 404s, redirects, timeouts. Report broken content.",
+      "input": {"t": "url", "depth": 2},
+      "output": {"total": 0, "broken": 0, "redirects": 0, "details": []},
+      "timeout": 120,
+      "parse": "text"
+    },
+    "exploitdb-sync": {
+      "cat": "exploit-db",
+      "cmd": "/opt/sync-exploitdb.sh",
+      "desc": "Sync ExploitDB + NVD CVE feeds",
+      "prompt": "Update local vulnerability databases. Run searchsploit -u and download NVD JSON feeds.",
+      "input": {},
+      "output": {"exploitdb_updated": false, "nvd_feeds": 0, "total_cves": 0},
+      "timeout": 600,
+      "parse": "text"
+    },
+    "exploitdb-search": {
+      "cat": "exploit-db",
+      "cmd": "searchsploit + nvd-grep",
+      "desc": "Search local ExploitDB + NVD for CVEs",
+      "prompt": "Search across ExploitDB and local NVD feeds. Return CVE IDs, CVSS scores, descriptions, exploit paths.",
+      "input": {"q": "query", "max": 20},
+      "output": {"results": [{"source": "exploitdb|nvd", "id": "", "title": "", "cvss": 0, "path": ""}]},
+      "timeout": 60,
+      "parse": "json"
+    },
+    "binwalk": {
+      "cat": "forensics",
+      "cmd": "binwalk",
+      "desc": "Firmware analysis and embedded file extraction",
+      "prompt": "Analyze binary files for embedded content, compressed archives, file systems.",
+      "input": {"file": ""},
+      "output": {"entries": [{"offset": 0, "type": "", "desc": ""}]},
+      "timeout": 120,
+      "parse": "text"
+    },
+    "enum4linux": {
+      "cat": "exploit",
+      "cmd": "enum4linux",
+      "desc": "Windows/Samba enumeration — users, shares, groups",
+      "prompt": "Enumerate SMB/CIFS targets for users, shares, groups, OS info.\nRules:\n- Use -a for all checks\n- Flag null session access as HIGH severity",
+      "input": {"t": "target"},
+      "output": {"users": [], "shares": [], "groups": [], "os": "", "null_session": false},
+      "timeout": 120,
+      "parse": "text"
+    },
+    "whatweb": {
+      "cat": "web",
+      "cmd": "whatweb",
+      "desc": "Web technology fingerprinting — CMS, frameworks, server headers, plugins",
+      "prompt": "You are the web fingerprinting specialist. Identify server technology stack.\nRules:\n- Use --log-json for structured output\n- Aggression level 1 (stealth) by default, 3 for detailed\n- Identify: CMS, framework, language, server, WAF, CDN, analytics",
+      "input": {"t": "url", "aggression": 1},
+      "output": {"plugins": [], "server": "", "cms": "", "framework": "", "headers": {}},
+      "timeout": 60,
+      "parse": "json"
+    },
+    "hashcat": {
+      "cat": "exploit",
+      "cmd": "hashcat",
+      "desc": "Advanced password recovery — GPU/CPU hash cracking with 350+ hash types",
+      "prompt": "You are the password cracking specialist. Crack hashes using hashcat.\nRules:\n- Always identify hash type first (-m flag)\n- Use targeted wordlists, not exhaustive brute-force\n- Common modes: -m 0 (MD5), -m 100 (SHA1), -m 1000 (NTLM), -m 1800 (sha512crypt)\n- Use --potfile-path for evidence tracking\n- Set --runtime limit for time-boxed cracking",
+      "input": {"hashfile": "", "mode": 0, "wordlist": "rockyou.txt", "runtime": 600},
+      "output": {"cracked": 0, "total": 0, "results": [{"hash": "", "pass": ""}], "speed": ""},
+      "timeout": 600,
+      "parse": "text"
+    },
+    "hping3": {
+      "cat": "network",
+      "cmd": "hping3",
+      "desc": "TCP/IP packet crafter — firewall testing, traceroute, OS fingerprinting",
+      "prompt": "You are the packet crafting specialist. Test firewall rules and network behavior.\nRules:\n- Use -S for SYN, -F for FIN, -A for ACK flood test\n- Always limit with -c (count)\n- Use --traceroute for ICMP-free path tracing\n- Flag open ports behind firewalls",
+      "input": {"t": "target", "port": 80, "flags": "S", "count": 10},
+      "output": {"responses": 0, "ttl": 0, "rtt_ms": 0, "flags": ""},
+      "timeout": 60,
+      "parse": "text"
+    },
+    "arp-scan": {
+      "cat": "network",
+      "cmd": "arp-scan",
+      "desc": "LAN host discovery via ARP — fast Layer 2 scan",
+      "prompt": "You are the LAN discovery specialist. Find hosts on the local network.\nRules:\n- Use --localnet for full subnet scan\n- Use -I to specify interface\n- Identifies MAC vendor for device fingerprinting\n- Only works on local LAN (Layer 2)",
+      "input": {"iface": "eth0", "subnet": "--localnet"},
+      "output": {"hosts": [{"ip": "", "mac": "", "vendor": ""}], "total": 0},
+      "timeout": 30,
+      "parse": "text"
+    },
+    "foremost": {
+      "cat": "forensics",
+      "cmd": "foremost",
+      "desc": "File carving — recover files from disk images and raw data",
+      "prompt": "Recover files from disk images or data streams by carving file headers.\nRules:\n- Supports: jpg, gif, png, pdf, doc, zip, exe, and more\n- Use -t to specify file types\n- Output to -o directory for evidence",
+      "input": {"file": "", "types": "all"},
+      "output": {"files_recovered": 0, "by_type": {}, "output_dir": ""},
+      "timeout": 300,
+      "parse": "text"
+    },
+    "exiftool": {
+      "cat": "forensics",
+      "cmd": "exiftool",
+      "desc": "Metadata extraction from images, PDFs, documents, videos",
+      "prompt": "Extract metadata from files for OSINT and forensic analysis.\nRules:\n- Check GPS coordinates in images\n- Check author/creator in documents\n- Check software versions and timestamps\n- Use -json for structured output",
+      "input": {"file": ""},
+      "output": {"metadata": {}, "gps": null, "author": "", "software": "", "created": ""},
+      "timeout": 30,
+      "parse": "json"
+    },
+    "steghide": {
+      "cat": "forensics",
+      "cmd": "steghide",
+      "desc": "Steganography — detect and extract hidden data in images/audio",
+      "prompt": "Detect and extract hidden data embedded in JPEG/BMP/WAV/AU files.\nRules:\n- Use 'info' to check for embedded data\n- Use 'extract' with passphrase to recover\n- Try common/empty passphrases first",
+      "input": {"file": "", "passphrase": ""},
+      "output": {"embedded": false, "format": "", "capacity": "", "extracted_file": ""},
+      "timeout": 30,
+      "parse": "text"
+    },
+    "nc": {
+      "cat": "network",
+      "cmd": "nc",
+      "desc": "Netcat — TCP/UDP connections, port scanning, banner grabbing",
+      "prompt": "You are the network utility specialist. Use netcat for connectivity tests and banner grabbing.\nRules:\n- Use -z for port scanning (zero I/O)\n- Use -v for verbose output\n- Use -w for timeout\n- Banner grab with echo '' | nc -w 3 host port",
+      "input": {"t": "target", "port": 0, "mode": "connect|scan|listen"},
+      "output": {"connected": false, "banner": "", "ports_open": []},
+      "timeout": 30,
+      "parse": "text"
+    }
+  },
+  "scan_patterns": {
+    "spa_react_vue": {
+      "desc": "Single Page Application (React, Vue, Angular)",
+      "tools": ["nmap:quick", "sslyze", "whatweb", "wafw00f", "httrack", "scrapy", "js-analysis", "frontend-audit", "nikto", "gobuster", "ffuf"],
+      "skip": ["wpscan", "enum4linux", "lynis"],
+      "priority": "web-first",
+      "notes": "Heavy JS scanning, check source maps, API endpoint discovery"
+    },
+    "wordpress": {
+      "desc": "WordPress CMS",
+      "tools": ["nmap:quick", "sslyze", "whatweb", "wpscan", "nikto", "gobuster", "sqlmap", "httrack", "frontend-audit"],
+      "skip": ["amass"],
+      "priority": "cms-first",
+      "notes": "WPScan is primary. Check xmlrpc.php, wp-login brute-force"
+    },
+    "api_rest": {
+      "desc": "REST API backend",
+      "tools": ["nmap:detailed", "sslyze", "ffuf", "sqlmap", "nikto"],
+      "skip": ["wpscan", "httrack", "scrapy", "linkchecker"],
+      "priority": "api-first",
+      "notes": "Parameter fuzzing, auth bypass, rate limiting checks"
+    },
+    "network_infra": {
+      "desc": "Network infrastructure (routers, servers, IoT)",
+      "tools": ["nmap:detailed", "masscan", "traceroute", "hping3", "arp-scan", "enum4linux", "hydra", "tcpdump"],
+      "skip": ["wpscan", "nikto", "httrack", "scrapy"],
+      "priority": "recon-first",
+      "notes": "Focus on open ports, default credentials, SNMP"
+    },
+    "ecommerce": {
+      "desc": "E-commerce platform",
+      "tools": ["nmap:quick", "sslyze", "whatweb", "nikto", "sqlmap", "httrack", "scrapy", "frontend-audit", "js-analysis", "gobuster"],
+      "skip": [],
+      "priority": "payment-security-first",
+      "notes": "Check PCI DSS compliance, payment form security, session management"
+    },
+    "full_pentest": {
+      "desc": "Comprehensive penetration test — all tools",
+      "tools": ["nmap:detailed", "dnsrecon", "amass", "whois", "sslyze", "whatweb", "theharvester", "wafw00f", "nikto", "gobuster", "sqlmap", "wpscan", "ffuf", "httrack", "scrapy", "frontend-audit", "js-analysis", "msfconsole", "searchsploit", "hydra", "hashcat", "hping3", "traceroute", "lynis"],
+      "skip": [],
+      "priority": "recon-first",
+      "notes": "Run all phases sequentially with mid-scan re-planning"
+    }
+  }
+}

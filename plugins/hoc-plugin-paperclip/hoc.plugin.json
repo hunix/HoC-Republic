@@ -1,0 +1,22 @@
+{
+  "name": "hoc-plugin-paperclip",
+  "version": "1.0.0",
+  "displayName": "Paperclip Company OS",
+  "description": "Integrates Paperclip AI Company OS (paperclipai/paperclip) — gives citizens org charts, ticket assignments, heartbeat scheduling, token budgets, and multi-company governance. Citizens become employees of AI-run companies.",
+  "author": "HoC Republic",
+  "bootPriority": 5,
+  "capabilities": [
+    "company-management",
+    "org-chart",
+    "ticket-system",
+    "agent-heartbeat",
+    "cost-governance",
+    "multi-company"
+  ],
+  "requires": {
+    "node": ">=20",
+    "pnpm": ">=8"
+  },
+  "autoBootstrap": false,
+  "entry": "./index.js"
+}

@@ -1,0 +1,2831 @@
+/* ==========================================================================
+   Republic Dashboard Styles — Premium Glassmorphic Edition
+   ========================================================================== */
+
+/* ─── Republic Custom Properties ───────────────────────────── */
+
+.republic-view {
+    --republic-glass: rgba(24, 27, 34, 0.65);
+    --republic-glass-border: rgba(255, 255, 255, 0.06);
+    --republic-glass-hover: rgba(255, 255, 255, 0.08);
+    --republic-glow-accent: rgba(139, 92, 246, 0.18);
+    --republic-glow-indigo: rgba(139, 92, 246, 0.20);
+    --republic-glow-emerald: rgba(16, 185, 129, 0.2);
+    --republic-glow-amber: rgba(245, 158, 11, 0.2);
+    --republic-shimmer: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.04) 50%, transparent 100%);
+}
+
+:root[data-theme="light"] .republic-view {
+    --republic-glass: rgba(255, 255, 255, 0.72);
+    --republic-glass-border: rgba(0, 0, 0, 0.06);
+    --republic-glass-hover: rgba(0, 0, 0, 0.03);
+    --republic-glow-accent: rgba(124, 58, 237, 0.12);
+    --republic-glow-indigo: rgba(124, 58, 237, 0.14);
+    --republic-glow-emerald: rgba(16, 185, 129, 0.12);
+    --republic-glow-amber: rgba(245, 158, 11, 0.12);
+    --republic-shimmer: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.02) 50%, transparent 100%);
+}
+
+/* ─── Loading ────────────────────────────────────────────────── */
+
+.republic-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 4rem 2rem;
+    color: var(--muted);
+}
+
+.republic-loading__spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid transparent;
+    border-top-color: var(--accent);
+    border-right-color: var(--accent);
+    border-radius: 50%;
+    animation: republic-spin 0.8s linear infinite;
+    position: relative;
+    filter: drop-shadow(0 0 8px var(--republic-glow-accent));
+}
+
+.republic-loading__spinner::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 2px solid transparent;
+    border-bottom-color: var(--accent-subtle, rgba(139, 92, 246, 0.6));
+    border-left-color: var(--accent-subtle, rgba(139, 92, 246, 0.6));
+    border-radius: 50%;
+    animation: republic-spin 1.2s linear infinite reverse;
+}
+
+@keyframes republic-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ─── Empty State ────────────────────────────────────────────── */
+
+.republic-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 5rem 2rem;
+    text-align: center;
+    animation: republic-fadeInUp 0.5s var(--ease-out) both;
+}
+
+.republic-empty__icon {
+    font-size: 3.5rem;
+    opacity: 0.6;
+    animation: republic-float 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 12px var(--republic-glow-indigo));
+}
+
+.republic-empty__icon svg {
+    width: 56px;
+    height: 56px;
+    color: var(--accent);
+}
+
+.republic-empty h3 {
+    margin: 0;
+    color: var(--text-strong);
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+}
+
+.republic-empty p {
+    color: var(--muted);
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+@keyframes republic-float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* ─── View Container ─────────────────────────────────────────── */
+
+.republic-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: republic-fadeInUp 0.3s var(--ease-out) both;
+}
+
+/* ─── Hero Section ───────────────────────────────────────────── */
+
+.republic-hero {
+    background: linear-gradient(135deg, var(--republic-glass) 0%, rgba(139, 92, 246, 0.06) 50%, var(--republic-glass) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-xl);
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md), 0 0 40px var(--republic-glow-indigo);
+}
+
+.republic-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--republic-shimmer);
+    background-size: 200% 100%;
+    animation: republic-shimmer 4s linear infinite;
+    pointer-events: none;
+}
+
+.republic-hero__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.republic-hero__title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--text-strong);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.republic-hero__title svg {
+    width: 24px;
+    height: 24px;
+    color: var(--accent);
+    filter: drop-shadow(0 0 6px var(--republic-glow-accent));
+}
+
+.republic-hero__badge {
+    background: linear-gradient(135deg, var(--accent), #a78bfa);
+    color: #fff;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 2px 12px var(--republic-glow-accent);
+    letter-spacing: 0.01em;
+}
+
+.republic-hero__badge--lg {
+    font-size: 0.95rem;
+    padding: 0.4rem 1.1rem;
+}
+
+.republic-hero__badge--live {
+    background: linear-gradient(135deg, #10b981, #34d399);
+    animation: republic-pulse-glow 2s infinite;
+    box-shadow: 0 2px 16px var(--republic-glow-emerald);
+}
+
+@keyframes republic-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes republic-pulse-glow {
+
+    0%,
+    100% {
+        opacity: 1;
+        box-shadow: 0 2px 16px var(--republic-glow-emerald);
+    }
+
+    50% {
+        opacity: 0.85;
+        box-shadow: 0 2px 24px rgba(16, 185, 129, 0.4);
+    }
+}
+
+/* ─── Metrics ────────────────────────────────────────────────── */
+
+.republic-metrics {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+
+.republic-metrics--compact {
+    gap: 0.75rem;
+}
+
+.republic-metrics--grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+}
+
+.republic-metric {
+    text-align: center;
+    min-width: 80px;
+}
+
+.republic-metric--card {
+    background: var(--republic-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-lg);
+    padding: 1.1rem;
+    transition: transform 0.25s var(--ease-spring), box-shadow 0.25s var(--ease-out);
+}
+
+.republic-metric--card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.republic-metric--lg {
+    padding: 1rem 0;
+}
+
+.republic-metric__value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-strong);
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(135deg, var(--text-strong) 40%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.republic-metric__value--green {
+    background: linear-gradient(135deg, #10b981 40%, #34d399 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.republic-metric__value--red {
+    background: linear-gradient(135deg, #ef4444 40%, #f87171 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.republic-metric__label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.3rem;
+    font-weight: 500;
+}
+
+/* ─── Cards ──────────────────────────────────────────────────── */
+
+.republic-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+}
+
+.republic-cards--three {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.republic-card {
+    background: var(--republic-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-out), border-color 0.2s;
+    box-shadow: var(--shadow-sm);
+    contain: layout style;
+}
+
+.republic-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-subtle);
+}
+
+.republic-card--featured {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md), 0 0 20px var(--republic-glow-accent);
+}
+
+.republic-card--wide {
+    grid-column: 1 / -1;
+}
+
+.republic-card--compact {
+    padding: 1rem;
+}
+
+.republic-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+}
+
+.republic-card__header h3,
+.republic-card__header h4 {
+    margin: 0;
+    color: var(--text-strong);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.republic-card__empty {
+    color: var(--muted);
+    text-align: center;
+    padding: 2rem 0;
+    font-style: italic;
+}
+
+.republic-card__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--republic-glass-border);
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+/* ─── Buttons ────────────────────────────────────────────────── */
+
+.republic-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s var(--ease-out);
+    background: linear-gradient(135deg, var(--accent), #a78bfa);
+    color: #fff;
+    box-shadow: 0 2px 8px var(--republic-glow-accent);
+    position: relative;
+    overflow: hidden;
+}
+
+.republic-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.1) 100%);
+    pointer-events: none;
+}
+
+.republic-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px var(--republic-glow-accent);
+}
+
+.republic-btn:active {
+    transform: scale(0.97);
+}
+
+.republic-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.republic-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.republic-btn--secondary {
+    background: var(--republic-glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-color: var(--republic-glass-border);
+    color: var(--text-strong);
+    box-shadow: var(--shadow-sm);
+}
+
+.republic-btn--secondary:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px var(--republic-glow-accent);
+}
+
+.republic-btn--success {
+    background: linear-gradient(135deg, #10b981, #34d399);
+    box-shadow: 0 2px 8px var(--republic-glow-emerald);
+}
+
+.republic-btn--warning {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    color: #000;
+    box-shadow: 0 2px 8px var(--republic-glow-amber);
+}
+
+.republic-btn--danger {
+    background: linear-gradient(135deg, #ef4444, #f87171);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+}
+
+.republic-btn--sm {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+/* ─── Toolbar ────────────────────────────────────────────────── */
+
+.republic-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.republic-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--republic-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.9rem;
+    flex: 1;
+    min-width: 200px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.republic-search:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 16px var(--republic-glow-accent);
+}
+
+.republic-search__icon svg {
+    width: 16px;
+    height: 16px;
+    color: var(--muted);
+}
+
+.republic-search__input {
+    border: none;
+    background: transparent;
+    color: var(--text-strong);
+    outline: none;
+    width: 100%;
+    font-size: 0.85rem;
+}
+
+.republic-select {
+    background: var(--card);
+    color: var(--text-strong);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+}
+
+.republic-select--sm {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* ─── Tags & Badges ──────────────────────────────────────────── */
+
+.republic-tag {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: rgba(139, 92, 246, 0.15);
+    color: var(--info);
+}
+
+.republic-tag--gold {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--warn);
+}
+
+.republic-tag--sm {
+    padding: 0.1rem 0.35rem;
+    font-size: 0.7rem;
+}
+
+.republic-tag--green {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--ok);
+}
+
+.republic-tag--yellow {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--warn);
+}
+
+.republic-tag--red {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--danger);
+}
+
+.republic-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--border);
+    color: var(--muted);
+}
+
+.republic-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* ─── Progress Bars ──────────────────────────────────────────── */
+
+.republic-bar {
+    display: inline-block;
+    width: 80px;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.republic-bar__fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s var(--ease-out);
+    position: relative;
+}
+
+.republic-bar__fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    background-size: 200% 100%;
+    animation: republic-shimmer 2s linear infinite;
+}
+
+.republic-tax-bar {
+    width: 100%;
+    height: 10px;
+    background: var(--border);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.republic-tax-bar__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #a78bfa);
+    border-radius: 5px;
+    transition: width 0.4s var(--ease-out);
+    position: relative;
+    box-shadow: 2px 0 8px var(--republic-glow-accent);
+}
+
+.republic-tax-bar__fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background-size: 200% 100%;
+    animation: republic-shimmer 2s linear infinite;
+}
+
+/* ─── Table ──────────────────────────────────────────────────── */
+
+.republic-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    contain: layout style;
+}
+
+.republic-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.republic-table th {
+    text-align: left;
+    padding: 0.85rem 1rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--republic-glass-border);
+    white-space: nowrap;
+    background: var(--republic-glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    font-weight: 600;
+}
+
+.republic-table td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-strong);
+    transition: background 0.15s;
+}
+
+.republic-table__row {
+    transition: all 0.15s;
+}
+
+.republic-table__row:hover {
+    background: var(--accent-subtle);
+}
+
+.republic-table__row:hover td:first-child {
+    box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.republic-table__more {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    padding: 0.5rem;
+}
+
+/* ─── Lists ──────────────────────────────────────────────────── */
+
+.republic-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.republic-list__item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: var(--radius-md);
+    transition: all 0.2s var(--ease-out);
+}
+
+.republic-list__item:hover {
+    background: var(--republic-glass-hover);
+    transform: translateX(2px);
+}
+
+.republic-list__item--case,
+.republic-list__item--objective {
+    flex-wrap: wrap;
+}
+
+.republic-list__left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+.republic-list__right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.republic-list__title {
+    font-weight: 500;
+    color: var(--text-strong);
+}
+
+.republic-list__meta {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+/* ─── Tabs ───────────────────────────────────────────────────── */
+
+.republic-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--republic-glass-border);
+    overflow-x: auto;
+    background: var(--republic-glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 0 0.25rem;
+}
+
+.republic-tabs__tab {
+    padding: 0.75rem 1.25rem;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s var(--ease-out);
+    white-space: nowrap;
+    position: relative;
+}
+
+.republic-tabs__tab:hover {
+    color: var(--text-strong);
+    background: var(--republic-glass-hover);
+}
+
+.republic-tabs__tab--active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+    text-shadow: 0 0 12px var(--republic-glow-accent);
+}
+
+/* ─── Charts ─────────────────────────────────────────────────── */
+
+.republic-chart__title {
+    margin: 1rem 0 0.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.republic-chart__bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.republic-chart__row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.republic-chart__label {
+    width: 100px;
+    font-size: 0.8rem;
+    color: var(--text-strong);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.republic-chart__bar {
+    flex: 1;
+    height: 14px;
+    background: var(--border);
+    border-radius: 7px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.republic-chart__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #a78bfa);
+    border-radius: 7px;
+    transition: width 0.5s var(--ease-out);
+    position: relative;
+    box-shadow: 2px 0 8px var(--republic-glow-accent);
+}
+
+.republic-chart__fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    background-size: 200% 100%;
+    animation: republic-shimmer 2.5s linear infinite;
+}
+
+.republic-chart__count {
+    width: 40px;
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+}
+
+/* ─── Event Feed ─────────────────────────────────────────────── */
+
+.republic-feed {
+    background: var(--republic-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.republic-feed__title {
+    margin: 0 0 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text-strong);
+    font-weight: 600;
+}
+
+.republic-feed__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.republic-feed__list::before {
+    content: "";
+    position: absolute;
+    left: 0.35rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), rgba(139, 92, 246, 0.1));
+    border-radius: 1px;
+}
+
+.republic-feed__item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    position: relative;
+    animation: republic-fadeInUp 0.3s var(--ease-out) both;
+}
+
+.republic-feed__item::before {
+    content: "";
+    position: absolute;
+    left: -0.75rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--republic-glow-accent);
+}
+
+.republic-feed__emoji {
+    font-size: 1.2rem;
+}
+
+.republic-feed__body {
+    flex: 1;
+    font-size: 0.85rem;
+    color: var(--text-strong);
+}
+
+.republic-feed__body strong {
+    margin-right: 0.5rem;
+}
+
+.republic-feed__time {
+    font-size: 0.72rem;
+    color: var(--muted);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ─── Constitution ───────────────────────────────────────────── */
+
+.republic-constitution {
+    display: flex;
+    gap: 1.25rem;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.06) 0%, rgba(139, 92, 246, 0.04) 50%, transparent 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-radius: var(--radius-xl);
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md), 0 0 30px var(--republic-glow-amber);
+}
+
+.republic-constitution::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top right, rgba(245, 158, 11, 0.05), transparent 60%);
+    pointer-events: none;
+}
+
+.republic-constitution__icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    animation: republic-float 4s ease-in-out infinite;
+}
+
+.republic-constitution__icon svg {
+    width: 44px;
+    height: 44px;
+    color: #f59e0b;
+    filter: drop-shadow(0 0 10px var(--republic-glow-amber));
+}
+
+.republic-constitution h2 {
+    margin: 0 0 0.5rem;
+    color: var(--text-strong);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.republic-constitution__preamble {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.republic-constitution__amendments {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #f59e0b;
+    font-weight: 500;
+}
+
+/* ─── Officials ──────────────────────────────────────────────── */
+
+.republic-official {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+}
+
+.republic-official__avatar {
+    font-size: 2rem;
+}
+
+.republic-official__info strong {
+    display: block;
+    color: var(--text-strong);
+}
+
+.republic-official__info span {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+/* ─── Pipeline (Bills) ───────────────────────────────────────── */
+
+.republic-pipeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.republic-pipeline__item {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.republic-pipeline__status {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 100px;
+}
+
+.republic-pipeline__body {
+    flex: 1;
+}
+
+.republic-pipeline__body strong {
+    color: var(--text-strong);
+    display: block;
+}
+
+.republic-pipeline__body p {
+    margin: 0.25rem 0 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.republic-pipeline__votes {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.35rem;
+}
+
+.republic-vote {
+    font-size: 0.8rem;
+}
+
+.republic-vote--for {
+    color: #10b981;
+}
+
+.republic-vote--against {
+    color: #ef4444;
+}
+
+/* ─── Departments ────────────────────────────────────────────── */
+
+.republic-dept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.republic-dept {
+    background: var(--republic-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    transition: transform 0.25s var(--ease-spring), box-shadow 0.25s;
+}
+
+.republic-dept:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.republic-dept__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.republic-dept__header h4 {
+    margin: 0;
+    color: var(--text-strong);
+}
+
+.republic-dept__stats {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+}
+
+.republic-dept__duties {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.republic-dept__duties li {
+    margin-bottom: 0.2rem;
+}
+
+/* ─── Elections ──────────────────────────────────────────────── */
+
+.republic-election-controls {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* ─── Economy: Balances ──────────────────────────────────────── */
+
+.republic-balances {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+}
+
+.republic-balance {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--republic-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+    transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
+}
+
+.republic-balance:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.republic-balance__icon {
+    font-size: 1.5rem;
+}
+
+.republic-balance__info {
+    flex: 1;
+}
+
+.republic-balance__amount {
+    font-weight: 600;
+    color: var(--text-strong);
+    font-variant-numeric: tabular-nums;
+}
+
+.republic-balance__label {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.republic-change {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.republic-change--up {
+    color: #10b981;
+}
+
+.republic-change--down {
+    color: #ef4444;
+}
+
+.republic-change--flat {
+    color: var(--muted);
+}
+
+/* ─── Economy: Harvesters ────────────────────────────────────── */
+
+.republic-harvesters {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.republic-harvester {
+    background: var(--republic-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    transition: all 0.25s var(--ease-out);
+}
+
+.republic-harvester--active {
+    border-color: rgba(16, 185, 129, 0.3);
+    box-shadow: 0 0 20px var(--republic-glow-emerald);
+}
+
+.republic-harvester--disabled {
+    opacity: 0.5;
+    filter: grayscale(0.3);
+}
+
+.republic-harvester__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.republic-harvester__header h4 {
+    margin: 0;
+    color: var(--text-strong);
+}
+
+.republic-harvester__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.republic-harvester__stat {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+.republic-harvester__label {
+    color: var(--muted);
+}
+
+.republic-harvester__value {
+    color: var(--text-strong);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ─── Toggle Switch ──────────────────────────────────────────── */
+
+.republic-toggle {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+}
+
+.republic-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.republic-toggle__slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: var(--border);
+    border-radius: 22px;
+    transition: 0.2s;
+}
+
+.republic-toggle__slider::before {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background: var(--text);
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.republic-toggle input:checked+.republic-toggle__slider {
+    background: #10b981;
+}
+
+.republic-toggle input:checked+.republic-toggle__slider::before {
+    transform: translateX(18px);
+}
+
+/* ─── Economy: Resources ─────────────────────────────────────── */
+
+.republic-resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.75rem;
+}
+
+.republic-resource {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.republic-resource__name {
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--text-strong);
+}
+
+.republic-resource__bar {
+    width: 100%;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.republic-resource__fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    border-radius: 4px;
+    position: relative;
+    box-shadow: 2px 0 6px var(--republic-glow-indigo);
+}
+
+.republic-resource__fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    background-size: 200% 100%;
+    animation: republic-shimmer 2.5s linear infinite;
+}
+
+.republic-resource__info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+/* ─── Economy: Transactions ──────────────────────────────────── */
+
+.republic-tx-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.republic-tx {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0;
+}
+
+.republic-tx__icon {
+    font-size: 1.2rem;
+}
+
+.republic-tx__body {
+    flex: 1;
+    font-size: 0.85rem;
+}
+
+.republic-tx__body strong {
+    margin-right: 0.5rem;
+    color: var(--text-strong);
+}
+
+.republic-tx__body span {
+    color: var(--muted);
+}
+
+.republic-tx__amount {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.republic-tx__amount--in {
+    color: #10b981;
+}
+
+.republic-tx__amount--out {
+    color: #ef4444;
+}
+
+.republic-tx__time {
+    font-size: 0.75rem;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+/* ─── Simulation: Controls ───────────────────────────────────── */
+
+.republic-sim-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.republic-sim-speed {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+/* ─── Technology: Crystals ───────────────────────────────────── */
+
+.republic-crystal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.75rem;
+}
+
+.republic-crystal {
+    background: var(--republic-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-lg);
+    padding: 0.85rem;
+    text-align: center;
+    transition: all 0.3s var(--ease-spring);
+}
+
+.republic-crystal:hover {
+    transform: translateY(-4px);
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow: 0 8px 24px var(--republic-glow-indigo), 0 0 16px var(--republic-glow-indigo);
+}
+
+.republic-crystal__icon {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+
+.republic-crystal__type {
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-bottom: 0.35rem;
+}
+
+.republic-crystal__stats {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+}
+
+/* ─── Technology: Universes ──────────────────────────────────── */
+
+.republic-universe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+}
+
+.republic-universe {
+    background: var(--republic-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-lg);
+    padding: 0.85rem;
+    transition: all 0.25s var(--ease-spring);
+}
+
+.republic-universe:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.republic-universe__state {
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+.republic-universe__id {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: monospace;
+    margin-bottom: 0.35rem;
+}
+
+.republic-universe__stats {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+}
+
+/* ─── Grid: Nodes ────────────────────────────────────────────── */
+
+.republic-node-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.75rem;
+}
+
+.republic-node {
+    background: var(--republic-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-lg);
+    padding: 0.85rem;
+    transition: all 0.25s var(--ease-spring);
+}
+
+.republic-node:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.republic-node--leader {
+    border-color: rgba(245, 158, 11, 0.3);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), var(--republic-glass));
+    box-shadow: 0 0 20px var(--republic-glow-amber);
+}
+
+.republic-node__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+}
+
+.republic-node__id {
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: var(--text-strong);
+}
+
+.republic-node__endpoint {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+}
+
+.republic-node__bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 0.35rem;
+}
+
+.republic-node__bar-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.republic-node__bar-group .republic-bar {
+    flex: 1;
+}
+
+.republic-node__meta {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+/* ─── Grid: Objectives ───────────────────────────────────────── */
+
+.republic-objective__progress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.republic-objective__meta {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.republic-verdict {
+    font-size: 0.8rem;
+    color: var(--accent);
+}
+
+/* ─── Section Header ─────────────────────────────────────────── */
+
+.republic-section-header {
+    margin-top: 0.5rem;
+}
+
+.republic-section-header h3 {
+    margin: 0;
+    color: var(--text-strong);
+    font-size: 1rem;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .republic-view {
+        padding: 1rem;
+    }
+
+    .republic-hero {
+        padding: 1rem;
+    }
+
+    .republic-balances {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .republic-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .republic-dept-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .republic-node-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .republic-harvesters {
+        grid-template-columns: 1fr;
+    }
+
+    .republic-metrics--grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==========================================================================
+   R3: Animations, Transitions & Polish
+   ========================================================================== */
+
+/* ─── Entry Animations ──────────────────────────────────────── */
+
+@keyframes republic-fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes republic-scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes republic-shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes republic-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px var(--republic-glow-indigo);
+    }
+
+    50% {
+        box-shadow: 0 0 24px rgba(139, 92, 246, 0.5), 0 0 48px var(--republic-glow-indigo);
+    }
+}
+
+@keyframes republic-pulse-ring {
+    0% {
+        box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(139, 92, 246, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+    }
+}
+
+.republic-card--animated {
+    animation: republic-fadeInUp 0.3s ease-out both;
+}
+
+.republic-card--animated:nth-child(2) {
+    animation-delay: 0.05s;
+}
+
+.republic-card--animated:nth-child(3) {
+    animation-delay: 0.1s;
+}
+
+.republic-card--animated:nth-child(4) {
+    animation-delay: 0.15s;
+}
+
+.republic-card--pulse {
+    animation: republic-glow 2s infinite;
+}
+
+.republic-hero--animated {
+    animation: republic-scaleIn 0.25s ease-out both;
+}
+
+.republic-empty--animated {
+    animation: republic-fadeInUp 0.4s ease-out both;
+}
+
+.republic-empty--animated .republic-empty__icon {
+    animation: republic-pulse-ring 2s infinite;
+    border-radius: 50%;
+}
+
+/* ─── Tab Transitions ───────────────────────────────────────── */
+
+.republic-tabs--animated {
+    position: relative;
+}
+
+.republic-tabs--animated .republic-tabs__tab {
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.republic-tabs--animated .republic-tabs__tab--active::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    animation: republic-fadeInUp 0.15s ease-out;
+}
+
+.republic-section--fade {
+    animation: republic-fadeInUp 0.2s ease-out both;
+}
+
+/* ─── Bar Animations ────────────────────────────────────────── */
+
+.republic-bar__fill--animated {
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Crystal Hover ─────────────────────────────────────────── */
+
+.republic-crystal--animated {
+    transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-out);
+}
+
+.republic-crystal--animated:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 24px var(--republic-glow-indigo);
+}
+
+/* ─── Node Animations ───────────────────────────────────────── */
+
+.republic-node--animated {
+    transition: transform 0.25s var(--ease-spring), box-shadow 0.25s var(--ease-out);
+}
+
+.republic-node--animated:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ─── Universe Cards (R3) ───────────────────────────────────── */
+
+.republic-universe--animated {
+    transition: transform 0.25s var(--ease-spring), box-shadow 0.25s var(--ease-out);
+}
+
+.republic-universe--animated:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg), 0 0 16px var(--republic-glow-indigo);
+}
+
+.republic-universe__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.republic-universe__state-icon {
+    font-size: 1.3rem;
+}
+
+.republic-universe__actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.republic-universe__created {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+}
+
+/* ─── Extra-small Button ────────────────────────────────────── */
+
+.republic-btn--xs {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+    border-radius: 4px;
+}
+
+/* ─── Accent & Glow Buttons ─────────────────────────────────── */
+
+.republic-btn--accent {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    box-shadow: 0 2px 12px var(--republic-glow-indigo);
+}
+
+.republic-btn--accent:hover {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    box-shadow: 0 4px 24px var(--republic-glow-indigo);
+}
+
+.republic-btn--glow {
+    animation: republic-glow 2s infinite;
+}
+
+/* ─── Pulse Tag ─────────────────────────────────────────────── */
+
+.republic-tag--pulse {
+    animation: republic-pulse 1.5s infinite;
+}
+
+/* ─── Quantum Actions Panel ─────────────────────────────────── */
+
+.republic-quantum-actions {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+}
+
+/* ─── Inline Form ───────────────────────────────────────────── */
+
+.republic-inline-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.republic-input {
+    background: var(--republic-glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--republic-glass-border);
+    border-radius: var(--radius-md);
+    color: var(--text-strong);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.republic-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--republic-glow-accent);
+}
+
+.republic-input--sm {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8rem;
+    flex: 1;
+    min-width: 160px;
+}
+
+/* ─── Select ────────────────────────────────────────────────── */
+
+.republic-select {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-strong);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.6rem center;
+    padding-right: 2rem;
+}
+
+.republic-select:focus {
+    border-color: var(--accent);
+}
+
+.republic-select--sm {
+    padding: 0.35rem 0.6rem;
+    padding-right: 1.8rem;
+    font-size: 0.8rem;
+}
+
+/* ─── Grid Controls Panel ───────────────────────────────────── */
+
+.republic-card--controls {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+}
+
+.republic-grid-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* ─── Swarm Objective Form ──────────────────────────────────── */
+
+.republic-swarm-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.republic-swarm-form .republic-select--sm {
+    min-width: 180px;
+}
+
+.republic-swarm-form .republic-input--sm {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* ─── Gossip Item ───────────────────────────────────────────── */
+
+.republic-list__item--gossip {
+    gap: 0.5rem;
+}
+
+/* ─── Auto-Save Indicator ───────────────────────────────────── */
+
+.config-autosave-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.config-autosave-indicator--pending {
+    color: var(--muted);
+}
+
+.config-autosave-indicator--saving {
+    color: #f59e0b;
+    animation: republic-pulse 1s infinite;
+}
+
+.config-autosave-indicator--saved {
+    color: #10b981;
+}
+
+.config-autosave-indicator--error {
+    color: #ef4444;
+}
+
+/* ─── Card header actions ───────────────────────────────────── */
+
+.republic-card__header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ─── Section container ─────────────────────────────────────── */
+
+.republic-section {
+    margin-top: 1rem;
+}
+
+/* ─── Loading Spinner Enhancement ───────────────────────────── */
+
+.republic-loading__spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: republic-spin 0.8s linear infinite;
+    margin-bottom: 0.5rem;
+}
+
+@keyframes republic-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ─── R3 Responsive ─────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .republic-inline-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .republic-swarm-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .republic-grid-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .republic-universe__actions {
+        flex-direction: column;
+    }
+
+    .republic-quantum-actions .republic-inline-form {
+        flex-direction: column;
+    }
+
+    .republic-universe-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   Avatar Dashboard
+   ========================================================================== */
+
+/* ─── Section Nav ───────────────────────────────────────────── */
+
+.avatar-section-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+
+.avatar-section-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.85rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary, var(--muted));
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.avatar-section-btn:hover {
+    background: var(--card);
+    border-color: var(--accent);
+    color: var(--text-strong);
+}
+
+.avatar-section-btn--active {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(139, 92, 246, 0.08));
+    border-color: var(--accent);
+    color: var(--text-strong);
+    font-weight: 600;
+}
+
+.avatar-section-btn__icon {
+    font-size: 1rem;
+}
+
+.avatar-section-btn__label {
+    white-space: nowrap;
+}
+
+/* ─── Conversation Layout ───────────────────────────────────── */
+
+.avatar-conversation-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    height: calc(100vh - 220px);
+    min-height: 400px;
+}
+
+/* ─── Session Bar ───────────────────────────────────────────── */
+
+.avatar-session-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.avatar-session-bar__left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.avatar-session-bar__right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* ─── Emotion Badge ─────────────────────────────────────────── */
+
+.avatar-emotion-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.65rem;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(139, 92, 246, 0.08));
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--text-strong);
+    animation: republic-glow 3s infinite;
+}
+
+.avatar-emotion-badge__emoji {
+    font-size: 1.1rem;
+}
+
+.avatar-emotion-badge__label {
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+/* ─── Viseme Indicator ──────────────────────────────────────── */
+
+.avatar-viseme {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.55rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 16px;
+    font-size: 0.8rem;
+    color: #10b981;
+    font-weight: 500;
+}
+
+/* ─── Transcript ────────────────────────────────────────────── */
+
+.avatar-transcript {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background: var(--surface, var(--bg));
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.avatar-transcript__empty {
+    margin: auto;
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+}
+
+.avatar-transcript__empty-icon {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.6;
+}
+
+/* ─── Message ───────────────────────────────────────────────── */
+
+.avatar-message {
+    display: flex;
+    flex-direction: column;
+    max-width: 75%;
+    animation: republic-fadeInUp 0.2s ease-out;
+}
+
+.avatar-message--user {
+    align-self: flex-end;
+    align-items: flex-end;
+}
+
+.avatar-message--avatar {
+    align-self: flex-start;
+    align-items: flex-start;
+}
+
+.avatar-message__bubble {
+    padding: 0.6rem 0.9rem;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.avatar-message--user .avatar-message__bubble {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+
+.avatar-message--avatar .avatar-message__bubble {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text-strong);
+    border-bottom-left-radius: 4px;
+}
+
+.avatar-message__emotion {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.avatar-message__text {
+    flex: 1;
+    min-width: 0;
+}
+
+.avatar-message__time {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+    padding: 0 0.3rem;
+}
+
+/* ─── Intent Chip ───────────────────────────────────────────── */
+
+.avatar-intent-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.1rem 0.45rem;
+    background: color-mix(in srgb, var(--intent-color, #6b7280) 15%, transparent);
+    border: 1px solid color-mix(in srgb, var(--intent-color, #6b7280) 30%, transparent);
+    border-radius: 10px;
+    font-size: 0.7rem;
+    color: var(--intent-color, #6b7280);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* ─── Typing Animation ──────────────────────────────────────── */
+
+.avatar-message--typing .avatar-message__bubble {
+    padding: 0.7rem 1.1rem;
+}
+
+.avatar-typing-dots {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+}
+
+.avatar-typing-dots span {
+    width: 7px;
+    height: 7px;
+    background: var(--muted);
+    border-radius: 50%;
+    animation: avatar-typing-bounce 1.4s ease-in-out infinite;
+}
+
+.avatar-typing-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.avatar-typing-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes avatar-typing-bounce {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+    }
+
+    30% {
+        transform: translateY(-6px);
+    }
+}
+
+/* ─── Input Bar ─────────────────────────────────────────────── */
+
+.avatar-input-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 0.85rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-top: 0.75rem;
+}
+
+.avatar-input-bar__input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-strong);
+    font-size: 0.9rem;
+    outline: none;
+    padding: 0.35rem 0;
+}
+
+.avatar-input-bar__input::placeholder {
+    color: var(--muted);
+}
+
+.avatar-input-bar__input:disabled {
+    opacity: 0.5;
+}
+
+/* ─── Face Mesh ─────────────────────────────────────────────── */
+
+.avatar-facemesh {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.avatar-blendshape-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+}
+
+.avatar-blendshape-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+}
+
+.avatar-blendshape-item__name {
+    width: 120px;
+    flex-shrink: 0;
+    color: var(--muted);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0.72rem;
+}
+
+.avatar-blendshape-item__bar {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.avatar-blendshape-item__fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.avatar-blendshape-item__val {
+    width: 35px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-strong);
+    font-size: 0.72rem;
+    font-weight: 500;
+}
+
+/* ─── Personality ───────────────────────────────────────────── */
+
+.avatar-personality {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.avatar-trait-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.75rem;
+}
+
+.avatar-trait-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem;
+    transition: border-color 0.15s;
+}
+
+.avatar-trait-card:hover {
+    border-color: var(--accent);
+}
+
+.avatar-trait-card__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.avatar-trait-card__emoji {
+    font-size: 1.2rem;
+}
+
+.avatar-trait-card__label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-strong);
+    flex: 1;
+}
+
+.avatar-trait-card__value {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+}
+
+.avatar-trait-slider {
+    width: 100%;
+    appearance: none;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+
+.avatar-trait-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+
+.avatar-trait-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.avatar-trait-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--accent);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.avatar-trait-card__desc {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+    text-align: center;
+}
+
+/* ─── Trait Summary (Bar Chart) ─────────────────────────────── */
+
+.avatar-trait-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+}
+
+.avatar-trait-summary__row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.avatar-trait-summary__label {
+    width: 130px;
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    color: var(--text-strong);
+}
+
+.avatar-trait-summary__bar {
+    flex: 1;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.avatar-trait-summary__fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+.avatar-trait-summary__pct {
+    width: 40px;
+    text-align: right;
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    color: var(--text-strong);
+}
+
+/* ─── Diagnostics ───────────────────────────────────────────── */
+
+.avatar-diagnostics {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.avatar-emotion-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+}
+
+.avatar-emotion-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.65rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--text-strong);
+    text-transform: capitalize;
+    transition: border-color 0.15s;
+}
+
+.avatar-emotion-tag:hover {
+    border-color: var(--accent);
+}
+
+/* ─── Avatar Responsive ─────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .avatar-section-nav {
+        gap: 0.35rem;
+    }
+
+    .avatar-section-btn__label {
+        display: none;
+    }
+
+    .avatar-session-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .avatar-message {
+        max-width: 90%;
+    }
+
+    .avatar-blendshape-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .avatar-trait-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .avatar-conversation-layout {
+        height: calc(100vh - 260px);
+    }
+}
+
+/* ─── Dev File Viewer ───────────────────────────────────────── */
+
+.dev-file-viewer {
+    overflow: hidden;
+}
+
+.dev-file-viewer__code {
+    max-height: 600px;
+    overflow: auto;
+    background: #0d1117;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dev-file-viewer__pre {
+    margin: 0;
+    padding: 1rem 0;
+    font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    tab-size: 4;
+    color: #c9d1d9;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+.dev-file-viewer__line {
+    display: block;
+    padding: 0 1rem 0 0;
+    transition: background 0.1s;
+}
+
+.dev-file-viewer__line:hover {
+    background: rgba(139, 92, 246, 0.08);
+}
+
+.dev-file-viewer__line-num {
+    display: inline-block;
+    width: 4ch;
+    margin-right: 1.5ch;
+    padding-left: 1rem;
+    color: #484f58;
+    text-align: right;
+    user-select: none;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Make file rows show clickable via pointer */
+.republic-table__row[style*="cursor"] td code {
+    transition: color 0.15s;
+}
+
+.republic-table__row[style*="cursor"]:hover td code {
+    color: #93c5fd;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+/* Scrollbar styling for code viewer */
+.dev-file-viewer__code::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.dev-file-viewer__code::-webkit-scrollbar-track {
+    background: #0d1117;
+}
+
+.dev-file-viewer__code::-webkit-scrollbar-thumb {
+    background: #30363d;
+    border-radius: 4px;
+}
+
+.dev-file-viewer__code::-webkit-scrollbar-thumb:hover {
+    background: #484f58;
+}
+
+/* ─── Neural Network View ────────────────────────────────────── */
+
+.republic-neural__panels {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+    .republic-neural__panels {
+        grid-template-columns: 1fr;
+    }
+}
+
+.republic-neural-canvas {
+    width: 100%;
+    min-height: 480px;
+    background: rgba(15, 23, 42, 0.4);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.republic-neural-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.republic-neural-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--republic-glass-border);
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.republic-neural-legend span {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.republic-dna-distribution {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--republic-glass-border);
+}
+
+.republic-dna-distribution h4 {
+    margin: 0 0 1rem 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.republic-dna-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 120px;
+    background: rgba(15, 23, 42, 0.2);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem;
+    border: 1px solid var(--republic-glass-border);
+}
+
+.republic-dna-bar {
+    flex: 1;
+    min-width: 4px;
+    border-radius: 2px 2px 0 0;
+    transition: height 0.3s var(--ease-out), filter 0.2s;
+}
+
+.republic-dna-bar:hover {
+    filter: brightness(1.3);
+}
+
+.republic-neural__bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+@media (max-width: 768px) {
+    .republic-neural__bottom {
+        grid-template-columns: 1fr;
+    }
+}
+
+.republic-fitness-svg {
+    width: 100%;
+    height: 250px;
+    display: block;
+    margin-top: 1rem;
+}
+
+.republic-genome-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    background: var(--republic-glass);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--republic-glass-border);
+}
+
+.republic-genome-selector label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 500;
+}

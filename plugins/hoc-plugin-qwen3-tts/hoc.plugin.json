@@ -1,0 +1,80 @@
+{
+  "id": "hoc-plugin-qwen3-tts",
+  "name": "Qwen3-TTS — AI Voice Synthesis & Cloning",
+  "version": "1.0.0",
+  "displayName": "Qwen3-TTS",
+  "description": "Integrates Qwen3-TTS from Alibaba/Qwen into HoC. Citizens can synthesize speech using preset voices, design new voice personas from text descriptions, or clone any voice from a reference audio clip.",
+  "sourceRepo": "https://github.com/QwenLM/Qwen3-TTS",
+  "author": "HoC Republic",
+
+  "backend": {
+    "type": "python-cli",
+    "repo": "https://github.com/QwenLM/Qwen3-TTS.git",
+    "deps": ["qwen-tts"],
+    "verifyImport": "import qwen_tts"
+  },
+
+  "toolDefinitions": [
+    {
+      "name": "tts_speak",
+      "description": "Synthesize speech from text using Qwen3-TTS preset voices.",
+      "params": {
+        "text": { "type": "string", "description": "Text to speak", "required": true },
+        "voice": { "type": "string", "description": "Voice preset name" },
+        "language": { "type": "string", "description": "Language code" }
+      },
+      "command": "tts_speak"
+    },
+    {
+      "name": "tts_design_voice",
+      "description": "Design a new voice persona from a text description of the desired voice characteristics.",
+      "params": {
+        "description": {
+          "type": "string",
+          "description": "Text description of the desired voice",
+          "required": true
+        }
+      },
+      "command": "tts_design_voice"
+    },
+    {
+      "name": "tts_clone_voice",
+      "description": "Clone a voice from a reference audio clip.",
+      "params": {
+        "audio_path": {
+          "type": "string",
+          "description": "Path to reference audio file",
+          "required": true
+        },
+        "name": { "type": "string", "description": "Name for the cloned voice", "required": true }
+      },
+      "command": "tts_clone_voice"
+    }
+  ],
+
+  "gatewayDefinitions": [
+    { "method": "qwen3tts.speak", "delegateTo": "tts_speak" },
+    { "method": "qwen3tts.design", "delegateTo": "tts_design_voice" },
+    { "method": "qwen3tts.clone", "delegateTo": "tts_clone_voice" },
+    { "method": "qwen3tts.job-status", "delegateTo": "_job_status" },
+    { "method": "qwen3tts.cancel", "delegateTo": "_cancel" },
+    { "method": "qwen3tts.queue-status", "delegateTo": "_queue_status" }
+  ],
+
+  "jobQueue": {
+    "maxConcurrent": 1,
+    "timeoutMs": 180000
+  },
+
+  "capabilities": {
+    "inference": true,
+    "tools": ["tts_speak", "tts_design_voice", "tts_clone_voice"],
+    "hooks": ["tick:before"]
+  },
+
+  "requirements": {
+    "binaries": ["python3"]
+  },
+
+  "bootPriority": 32
+}

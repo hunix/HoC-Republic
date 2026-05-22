@@ -1,0 +1,21 @@
+{
+  "name": "hoc-plugin-magentic-one",
+  "version": "1.0.0",
+  "displayName": "Magentic-One",
+  "description": "Integration with Magentic-One (Microsoft AutoGen) — generalist multi-agent system for solving open-ended web and file-based tasks. Uses MagenticOneGroupChat orchestrator with WebSurfer, FileSurfer, and Coder agents.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "multi-agent-orchestration",
+    "web-browsing",
+    "file-manipulation",
+    "code-execution",
+    "task-solving",
+    "agentic-benchmarking"
+  ],
+  "requires": {
+    "python": ">=3.10",
+    "pip": ["autogen-agentchat", "autogen-ext"]
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

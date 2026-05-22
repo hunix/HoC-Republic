@@ -1,0 +1,44 @@
+{
+  "id": "hoc-plugin-luxtts",
+  "name": "LuxTTS — Voice Cloning",
+  "version": "1.0.0",
+  "displayName": "LuxTTS (Voice Cloning)",
+  "description": "High-quality, hyper-fast voice cloning and TTS generation using LuxTTS.",
+  "author": "HoC Republic",
+
+  "toolDefinitions": [
+    {
+      "name": "luxtts_generate",
+      "description": "Generate speech with voice cloning.",
+      "params": {
+        "text": { "type": "string", "description": "Text to synthesize", "required": true },
+        "reference_audio": { "type": "string", "description": "Absolute path to reference audio file" },
+        "rms": { "type": "number", "description": "RMS volume" },
+        "num_steps": { "type": "number", "description": "Sampling steps" }
+      },
+      "command": "luxtts_generate"
+    }
+  ],
+
+  "gatewayDefinitions": [
+    { "method": "luxtts.generate", "delegateTo": "luxtts_generate" },
+    { "method": "luxtts.job-status", "delegateTo": "_job_status" },
+    { "method": "luxtts.cancel", "delegateTo": "_cancel" }
+  ],
+
+  "jobQueue": {
+    "maxConcurrent": 1,
+    "timeoutMs": 60000
+  },
+
+  "capabilities": {
+    "tools": ["luxtts_generate", "luxtts_job_status", "luxtts_cancel"],
+    "hooks": []
+  },
+
+  "requirements": {
+    "binaries": ["python3"]
+  },
+
+  "bootPriority": 55
+}

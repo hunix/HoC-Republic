@@ -1,0 +1,7 @@
+{
+  "title": "ZenithR Security Analysis",
+  "out_path": "/workspace/ZenithR_Security_Research.pptx",
+  "template": "",
+  "branding": "{}",
+  "slide_data": "[{\"title\":\"Overview\",\"content\":\"Security reconnaissance was performed on zenithr.com. WhatWeb and Nikto were executed against the target URL.\"},{\"title\":\"Infrastructure & WAF\",\"content\":\"The target zenithr.com resolves to www.zenithr.com and is operating behind a **Cloudflare** Web Application Firewall (WAF).\\n\\nTechnology Stack:\\n- jQuery\\n- OpenResty\"},{\"title\":\"Security Headers Detected\",\"content\":\"- **Strict-Transport-Security (HSTS):** Enabled, ensuring connections are forced over HTTPS.\\n- **X-Frame-Options:** Set to SAMEORIGIN, protecting against clickjacking attacks.\"},{\"title\":\"Nikto Scan Results\",\"content\":\"The Nikto vulnerability scanner did not detect immediately exploitable local paths. The Cloudflare perimeter is actively routing and filtering malicious payloads, making direct enumeration difficult from an untrusted source.\"}]"
+}

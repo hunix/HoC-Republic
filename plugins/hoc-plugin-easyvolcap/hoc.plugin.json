@@ -1,0 +1,21 @@
+{
+  "name": "hoc-plugin-easyvolcap",
+  "version": "1.0.0",
+  "displayName": "EasyVolcap",
+  "description": "Integration with EasyVolcap (SIGGRAPH Asia 2023) — neural volumetric video research framework. Supports ENeRFi, Instant-NGP+T, and 3DGS+T for multi-view video reconstruction, free-view rendering, and 4D volumetric capture.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "volumetric-video",
+    "neural-rendering",
+    "3d-reconstruction",
+    "free-view-synthesis",
+    "gaussian-splatting"
+  ],
+  "requires": {
+    "python": ">=3.10",
+    "pytorch": ">=2.0.0",
+    "gpu_vram_gb": 12
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

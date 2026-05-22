@@ -1,0 +1,21 @@
+{
+  "name": "hoc-plugin-glm-image",
+  "version": "1.0.0",
+  "displayName": "GLM-Image",
+  "description": "AI image generation via GLM-Image (9B AR + 7B DiT). Text-to-image and image-to-image with text rendering, style transfer, and identity-preserving generation.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "text-to-image",
+    "image-to-image",
+    "image-editing",
+    "style-transfer",
+    "identity-preserving"
+  ],
+  "requires": {
+    "python": ">=3.10",
+    "vram": "80GB+ (single GPU) or multi-GPU",
+    "diskSpace": "~50GB (model weights)"
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

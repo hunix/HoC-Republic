@@ -1,0 +1,19 @@
+{
+  "name": "hoc-plugin-blackeye",
+  "displayName": "BlackEye — Phishing Awareness Simulator",
+  "version": "1.0.0",
+  "description": "Security awareness training platform that simulates phishing campaigns (localhost-only, no real credential capture). Citizens run social engineering defence drills using 38 realistic site templates.",
+  "author": "HoC Security / inspired by BlackEye",
+  "capabilities": [
+    "phishing-simulation",
+    "security-awareness-training",
+    "social-engineering-defence",
+    "campaign-analytics"
+  ],
+  "requirements": {
+    "node": ">=20.0.0"
+  },
+  "bootPriority": 7,
+  "autoBootstrap": false,
+  "entryPoint": "./index.js"
+}

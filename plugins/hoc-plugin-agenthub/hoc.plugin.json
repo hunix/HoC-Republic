@@ -1,0 +1,21 @@
+{
+  "name": "hoc-plugin-agenthub",
+  "displayName": "AgentHub",
+  "version": "1.0.0",
+  "description": "GitHub for AI agents — multi-agent code collaboration via bare-git DAG commits and a message board. Citizens submit experiments, coordinate through threaded discussion, and run autonomous research loops.",
+  "author": "HoC / inspired by Karpathy AgentHub",
+  "capabilities": [
+    "multi-agent-collaboration",
+    "bare-git-dag",
+    "experiment-runner",
+    "message-board",
+    "autoresearch"
+  ],
+  "requirements": {
+    "node": ">=20.0.0",
+    "git": ">=2.30.0"
+  },
+  "bootPriority": 5,
+  "autoBootstrap": false,
+  "entryPoint": "./index.js"
+}

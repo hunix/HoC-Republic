@@ -1,0 +1,21 @@
+{
+  "name": "hoc-plugin-stable-avatar",
+  "version": "1.0.0",
+  "displayName": "StableAvatar",
+  "description": "Integration with StableAvatar — end-to-end video diffusion transformer for infinite-length audio-driven avatar video synthesis. Uses Time-step-aware Audio Adapter and Audio Native Guidance for perfect lip sync from a reference image and audio.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "avatar-video-generation",
+    "audio-driven-animation",
+    "lip-sync",
+    "talking-head",
+    "infinite-length-video"
+  ],
+  "requires": {
+    "python": ">=3.10",
+    "pytorch": ">=2.0.0",
+    "gpu_vram_gb": 16
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

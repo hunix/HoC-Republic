@@ -1,0 +1,28 @@
+{
+  "id": "hoc-plugin-awesome-claude-code",
+  "name": "Awesome Claude Code — Agentic Resource Catalog",
+  "version": "1.0.0",
+  "description": "Integrates hesreallyhim/awesome-claude-code curated catalog of 100+ agentic resources (skills, workflows, tooling, hooks, slash-commands, CLAUDE.md files, status lines, and alternative clients) into HoC citizen intelligence. Citizens discover and leverage the best community-built tools for their specialization.",
+  "sourceRepo": "https://github.com/hesreallyhim/awesome-claude-code",
+  "capabilities": {
+    "inference": false,
+    "tools": [
+      "acc_list_resources",
+      "acc_search",
+      "acc_get_resource",
+      "acc_match_resources",
+      "acc_refresh"
+    ],
+    "providers": [],
+    "hooks": ["tick:before", "citizen:task_assigned"],
+    "gateway": ["acc.listResources", "acc.search", "acc.byCategory", "acc.status", "acc.refresh"],
+    "ui": ["acc-resources-panel"]
+  },
+  "lifecycle": {
+    "init": "index.ts#init",
+    "shutdown": "index.ts#shutdown",
+    "healthCheck": "index.ts#healthCheck"
+  },
+  "requirements": {},
+  "bootPriority": 30
+}

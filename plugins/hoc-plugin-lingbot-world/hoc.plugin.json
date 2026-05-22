@@ -1,0 +1,40 @@
+{
+  "id": "hoc-plugin-lingbot-world",
+  "name": "LingBot-World — AI World Simulation & Video Generation",
+  "version": "1.0.0",
+  "description": "Integrates LingBot-World from Robbyant into HoC. Citizens can generate interactive world simulation videos from an image + prompt, with optional camera path control. Auto-clones the repo and auto-installs dependencies — zero user configuration required.",
+  "sourceRepo": "https://github.com/Robbyant/lingbot-world",
+  "capabilities": {
+    "inference": true,
+    "tools": [
+      "world_generate",
+      "world_generate_camera",
+      "world_list_resolutions",
+      "world_job_status",
+      "world_queue_status",
+      "world_cancel_job"
+    ],
+    "providers": [],
+    "hooks": ["tick:before", "citizen:task_assigned"],
+    "gateway": [
+      "lingbot.generate",
+      "lingbot.status",
+      "lingbot.queue",
+      "lingbot.cancel",
+      "lingbot.config"
+    ],
+    "ui": ["world-sim-panel"]
+  },
+  "lifecycle": {
+    "init": "index.ts#init",
+    "shutdown": "index.ts#shutdown",
+    "healthCheck": "index.ts#healthCheck"
+  },
+  "requirements": {
+    "autoBootstrap": true,
+    "notes": "Auto-clones repo, auto-installs requirements.txt via pip, auto-downloads model from HuggingFace. Requires CUDA GPU (8GB+ for NF4 quantized, 80GB+ for full precision multi-GPU).",
+    "gpu": true,
+    "vram": "8GB+ (NF4 quantized) or 80GB+ (full precision, multi-GPU)"
+  },
+  "bootPriority": 35
+}

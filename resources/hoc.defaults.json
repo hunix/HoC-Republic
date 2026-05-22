@@ -1,0 +1,39 @@
+{
+  "gateway": {
+    "port": 18789,
+    "host": "0.0.0.0"
+  },
+  "companion": {
+    "pipeName": "OpenClawCompanion",
+    "healthCheckIntervalMs": 30000,
+    "clusterHeartbeatIntervalMs": 30000,
+    "requestTimeoutMs": 30000,
+    "maxConcurrentClients": 10
+  },
+  "vision": {
+    "enabled": false,
+    "ollamaEndpoint": "http://localhost:11434",
+    "model": "qwen3-vl:4b",
+    "temperature": 0.1,
+    "requestTimeoutSeconds": 120,
+    "captureFormat": "png"
+  },
+  "logging": {
+    "level": "info",
+    "maxFileSizeMB": 50,
+    "retentionDays": 30
+  },
+  "republic": {
+    "tickIntervalMs": 5000,
+    "maxCitizens": 200,
+    "defaultPopulation": 50,
+    "innovationCooldownMs": 60000
+  },
+  "security": {
+    "allowRemotePowerShell": false,
+    "allowRegistryWrite": true,
+    "allowFileWrite": true,
+    "firewallCommandsRequireAdmin": true,
+    "clipboardAccessEnabled": true
+  }
+}

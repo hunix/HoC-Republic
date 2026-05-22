@@ -1,0 +1,17 @@
+# External plugin data (downloaded / generated, not maintained here)
+plugins/.data/**
+
+# Browser extension (third-party code bundled for distribution)
+chrome-extension/**
+
+# Legacy Node UI (separate codebase)
+node-ui/**
+
+# Old Lit/TypeScript UI (replaced by hoc-ui React UI)
+ui/**
+
+# Build outputs
+dist/**
+
+# Scratch / generated fix scripts (not production code)
+.scratch/**

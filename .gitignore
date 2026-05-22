@@ -1,0 +1,245 @@
+node_modules
+**/node_modules/
+.env
+docker-compose.extra.yml
+dist
+*.bun-build
+pnpm-lock.yaml
+bun.lock
+bun.lockb
+coverage
+.pnpm-store
+.worktrees/
+.DS_Store
+**/.DS_Store
+ui/src/ui/__screenshots__/
+ui/playwright-report/
+ui/test-results/
+
+# Bun build artifacts
+*.bun-build
+apps/macos/.build/
+apps/shared/MoltbotKit/.build/
+**/ModuleCache/
+bin/
+bin/clawdbot-mac
+bin/docs-list
+apps/macos/.build-local/
+apps/macos/.swiftpm/
+apps/shared/MoltbotKit/.swiftpm/
+Core/
+apps/ios/*.xcodeproj/
+apps/ios/*.xcworkspace/
+apps/ios/.swiftpm/
+vendor/
+apps/ios/Clawdbot.xcodeproj/
+apps/ios/Clawdbot.xcodeproj/**
+apps/macos/.build/**
+**/*.bun-build
+apps/ios/*.xcfilelist
+
+# Vendor build artifacts
+vendor/a2ui/renderers/lit/dist/
+src/canvas-host/a2ui/*.bundle.js
+src/canvas-host/a2ui/*.map
+.bundle.hash
+
+# fastlane (iOS)
+apps/ios/fastlane/README.md
+apps/ios/fastlane/report.xml
+apps/ios/fastlane/Preview.html
+apps/ios/fastlane/screenshots/
+apps/ios/fastlane/test_output/
+apps/ios/fastlane/logs/
+apps/ios/fastlane/.env
+apps/ios/fastlane/report.xml
+
+# fastlane build artifacts (local)
+apps/ios/*.ipa
+apps/ios/*.dSYM.zip
+
+# provisioning profiles (local)
+apps/ios/*.mobileprovision
+.env
+
+# Local untracked files
+.local/
+IDENTITY.md
+USER.md
+.tgz
+
+# local tooling
+.serena/
+
+# Agent credentials and memory (NEVER COMMIT)
+memory/
+.agent/*.json
+!.agent/workflows/
+
+# External projects (local tool dependencies, not tracked)
+bitnet/
+
+# Large runtime data (not tracked)
+data/republic/
+data/*.db
+data/*.db-shm
+data/*.db-wal
+data/*.sqlite
+republic-output/
+republic-research-*.md
+
+# Embedded Python runtime + model weights (NOT tracked — multi-GB binaries)
+runtime/
+models/bitnet/
+models/gguf/
+models/ollama/
+models/lmstudio/
+*.gguf
+*.safetensors
+*.bin.model
+plugins/.data/hoc-plugin-autogpt/AutoGPT
+plugins/.data/hoc-plugin-autogpt/AutoGPT
+plugins/.data/hoc-plugin-autogpt/AutoGPT
+
+# ─── Generated debug / audit artifacts ───────────────────────────
+button_audit.txt
+compile-errors.txt
+compile_errors.txt
+compile.log
+dev-output.txt
+floating.log
+floating_matches.txt
+gateway_output.txt
+lint-by-file.txt
+lint-detail.txt
+lint-education-sample.txt
+lint-files.txt
+lint-misc.txt
+lint-non-unused.txt
+lint-report.txt
+lint-summary.txt
+lint-summary2.txt
+lint.json
+lint.log
+lint2.log
+lint_default.txt
+lint_default_utf8.txt
+lint_results.txt
+mem-leaks-utf8.txt
+mem-leaks.txt
+oxlint.json
+oxlint.log
+parse-lint.mjs
+split.cjs
+split.js
+summarize-lint.mjs
+tsc-output.txt
+tsc.log
+tsc_output.txt
+tsc_output2.txt
+tsc_results.txt
+ts-errors.txt
+test-output.txt
+test-regression.txt
+sc_info.txt
+
+# External tool repos (cloned, not tracked)
+tools/
+plugins/.data/hoc-plugin-superpowers/superpowers-repo
+plugins/.data/hoc-plugin-open-lovable/open-lovable
+plugins/.data/hoc-plugin-autogpt/AutoGPT
+
+# Plugin runtime data (cloned 3rd-party repos - never track these)
+plugins/.data/
+nemoclaw/
+bitnet/
+
+# ─── Windows Companion build artifacts (NEVER track) ─────────────
+windows-companion/obj/
+windows-companion/bin/
+
+# ─── Large binary / media files (NEVER track in git) ─────────────
+*.wav
+*.mp3
+*.mp4
+*.avi
+*.mkv
+*.mov
+*.flac
+*.ogg
+*.onnx
+*.pt
+*.pth
+*.h5
+*.pkl
+*.model
+*.whl
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+
+# ─── Swift / Xcode build caches (NEVER track) ───────────────────
+apps/shared/ClawdisKit/.build/
+apps/shared/OpenClawKit/.build/
+*.pcm
+*.dSYM/
+*.xctest/
+
+# ─── Serena cache (NEVER track) ─────────────────────────────────
+.serena/cache/
+
+# ─── Runtime data files (NEVER track) ───────────────────────────
+data/threat-intel.sqlite
+replay_pid*.log
+wan2gp_api_info.json
+test_results.json
+test-results.json
+test_output.txt
+test-output.txt
+test-regression.txt
+
+# ─── Temp analysis files ─────────────────────────────────────────
+__blob_sizes.txt
+__size_report.txt
+
+# ─── Public-release hygiene: local diagnostics and scratch outputs ───────────
+.scratch/
+tmp/
+*.log
+*.log.*
+hs_err_pid*.log
+lint-results*.json
+oxlint_out.txt
+diff.txt
+
+# Local environment overrides must stay private. Public examples are explicitly allowed.
+.env.*
+!.env.example
+!.env.full
+!.env.cluster
+!.env.lmlink.example
+!apps/ios/fastlane/.env.example
+
+# Local secret-scan and audit output generated outside committed baselines.
+hoc_*_secret*.txt
+hoc_*_audit*.txt
+
+# Public-release cleanup: generated diagnostics and local runtime state
+config/.hoc-redis-state.json
+models/.downloads/state.json
+errors.txt
+true-errors.txt
+ts_errors.txt
+tmp_defs.txt
+hoc-ui/build-errors*.txt
+hoc-ui/tsc-errors.txt
+wan2gp_*.txt
+wan2gp_*.json
+windows-companion/build_attempt_*.txt
+windows-companion/build_error.txt
+windows-companion/build_log.txt
+windows-companion/build_manual_ref.txt
+windows-companion/build_enhanced_try*.txt
+windows-companion/nuget_error.txt

@@ -1,0 +1,64 @@
+{
+  "manifest_version": 3,
+  "name": "HoC Companion",
+  "version": "1.0.0",
+  "description": "House of Claw AI Companion — Screenshot capture, annotation, AI prompting, PWA relay bridge, and mini-chat via the HoC gateway.",
+  "icons": {
+    "16": "icons/icon16.svg",
+    "48": "icons/icon48.svg",
+    "128": "icons/icon128.svg"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.svg",
+      "48": "icons/icon48.svg",
+      "128": "icons/icon128.svg"
+    },
+    "default_title": "HoC Companion"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "clipboardWrite",
+    "storage",
+    "notifications"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "commands": {
+    "capture-full": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Alt+Shift+S"
+      },
+      "description": "Capture full tab screenshot"
+    },
+    "capture-region": {
+      "suggested_key": {
+        "default": "Alt+Shift+R",
+        "mac": "Alt+Shift+R"
+      },
+      "description": "Start region selection capture"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*", "annotator.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

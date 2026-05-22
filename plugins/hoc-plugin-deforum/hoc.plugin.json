@@ -1,0 +1,64 @@
+{
+  "id": "hoc-plugin-deforum",
+  "name": "Deforum Stable Diffusion",
+  "version": "1.0.0",
+  "displayName": "Deforum Stable Diffusion",
+  "description": "Integration with Deforum Stable Diffusion — animated image synthesis with 2D/3D/RANSAC animation modes, interpolation, CLIP conditioning, and color palette support. Generate stunning AI animations from text prompts.",
+  "sourceRepo": "https://github.com/deforum-art/deforum-stable-diffusion",
+  "author": "HoC Republic",
+
+  "backend": {
+    "type": "python-cli",
+    "repo": "https://github.com/deforum-art/deforum-stable-diffusion.git",
+    "deps": ["deforum-stable-diffusion"],
+    "verifyImport": "import deforum"
+  },
+
+  "toolDefinitions": [
+    {
+      "name": "deforum_generate",
+      "description": "Generate AI animation from text prompts with 2D/3D/RANSAC modes, interpolation, and CLIP conditioning.",
+      "params": {
+        "prompt": {
+          "type": "string",
+          "description": "Text prompt for the animation",
+          "required": true
+        },
+        "animation_mode": {
+          "type": "string",
+          "enum": ["2D", "3D", "RANSAC"],
+          "description": "Animation mode (default: 2D)"
+        },
+        "max_frames": {
+          "type": "number",
+          "description": "Maximum number of frames (default: 120)"
+        },
+        "fps": { "type": "number", "description": "Frames per second (default: 15)" }
+      },
+      "command": "deforum_generate"
+    }
+  ],
+
+  "gatewayDefinitions": [
+    { "method": "deforum.generate", "delegateTo": "deforum_generate" },
+    { "method": "deforum.job-status", "delegateTo": "_job_status" },
+    { "method": "deforum.cancel", "delegateTo": "_cancel" },
+    { "method": "deforum.queue-status", "delegateTo": "_queue_status" }
+  ],
+
+  "jobQueue": {
+    "maxConcurrent": 1,
+    "timeoutMs": 600000
+  },
+
+  "capabilities": {
+    "tools": ["deforum_generate"],
+    "hooks": ["tick:before"]
+  },
+
+  "requirements": {
+    "binaries": ["python3"]
+  },
+
+  "bootPriority": 50
+}

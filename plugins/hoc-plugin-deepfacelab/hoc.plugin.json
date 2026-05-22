@@ -1,0 +1,47 @@
+{
+  "id": "hoc-plugin-deepfacelab",
+  "name": "DeepFaceLab — Multi-Stage Deepfake Pipeline",
+  "version": "1.0.0",
+  "description": "Integrates iperov/DeepFaceLab deepfake pipeline into HoC. Citizens can run full face-swap pipelines (extract, sort, train, merge, compose) using local GPU hardware with multi-stage orchestration.",
+  "sourceRepo": "https://github.com/iperov/DeepFaceLab",
+  "capabilities": {
+    "inference": false,
+    "tools": [
+      "dfl_create_pipeline",
+      "dfl_start_pipeline",
+      "dfl_pipeline_status",
+      "dfl_cancel_pipeline",
+      "dfl_list_pipelines",
+      "dfl_extract_faces",
+      "dfl_train_model",
+      "dfl_merge_faces",
+      "dfl_list_models",
+      "dfl_gpu_status"
+    ],
+    "providers": [],
+    "hooks": ["tick:before", "citizen:task_assigned"],
+    "gateway": [
+      "deepfacelab.createPipeline",
+      "deepfacelab.status",
+      "deepfacelab.pipelines",
+      "deepfacelab.cancel",
+      "deepfacelab.models",
+      "deepfacelab.gpuStatus",
+      "deepfacelab.config",
+      "deepfacelab.stages"
+    ],
+    "ui": ["deepfacelab-pipeline-panel"]
+  },
+  "lifecycle": {
+    "init": "index.ts#init",
+    "shutdown": "index.ts#shutdown",
+    "healthCheck": "index.ts#healthCheck"
+  },
+  "requirements": {
+    "python": ">=3.6",
+    "tensorflow": true,
+    "cuda": "recommended",
+    "ffmpeg": true
+  },
+  "bootPriority": 36
+}

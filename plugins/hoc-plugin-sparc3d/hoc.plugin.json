@@ -1,0 +1,21 @@
+{
+  "name": "hoc-plugin-sparc3d",
+  "version": "1.0.0",
+  "displayName": "Sparc3D",
+  "description": "Integration with Sparc3D — sparse representation and construction for high-resolution 3D shape modeling. Uses Sparcubes + Sparconv-VAE for near-lossless 3D reconstruction at 1024³ resolution, supporting image-to-3D generation via latent diffusion.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "3d-generation",
+    "image-to-3d",
+    "mesh-reconstruction",
+    "sparse-voxel-modeling",
+    "latent-diffusion-3d"
+  ],
+  "requires": {
+    "python": ">=3.8",
+    "pytorch": ">=2.0.0",
+    "gpu_vram_gb": 12
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

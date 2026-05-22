@@ -1,0 +1,14 @@
+{
+  "name": "hoc-plugin-marketplace-bridge",
+  "version": "1.0.0",
+  "description": "Autonomous Content Production & Marketplace Bridge — Stream 3 Revenue",
+  "main": "index.ts",
+  "hoc": {
+    "bootPriority": 5,
+    "capabilities": {
+      "tools": true,
+      "httpRoutes": false,
+      "scheduledJobs": true
+    }
+  }
+}

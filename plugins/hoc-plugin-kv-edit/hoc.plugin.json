@@ -1,0 +1,22 @@
+{
+  "name": "hoc-plugin-kv-edit",
+  "version": "1.0.0",
+  "displayName": "KV-Edit",
+  "description": "Integration with KV-Edit (ICCV 2025) — training-free image editing for precise background preservation. Uses KV Cache in FLUX DiT model for object addition, removal, and replacement while strictly maintaining background consistency.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "image-editing",
+    "background-preservation",
+    "object-addition",
+    "object-removal",
+    "object-replacement",
+    "training-free-editing"
+  ],
+  "requires": {
+    "python": ">=3.10",
+    "pytorch": ">=2.0.0",
+    "gpu_vram_gb": 24
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "hoc-plugin-superpowers",
+  "name": "Superpowers — Agentic Skills Framework",
+  "version": "1.0.0",
+  "description": "Integrates obra/superpowers (60k+ ★) agentic skills framework into HoC citizen intelligence. Gives citizens structured cognitive methodologies for brainstorming, TDD, systematic debugging, plan writing/execution, subagent-driven development, code review, and git worktrees.",
+  "sourceRepo": "https://github.com/obra/superpowers",
+  "capabilities": {
+    "inference": false,
+    "tools": [
+      "superpowers_list_skills",
+      "superpowers_get_skill",
+      "superpowers_match_skills",
+      "superpowers_install",
+      "superpowers_update"
+    ],
+    "providers": [],
+    "hooks": ["tick:before", "citizen:task_assigned", "citizen:project_started"],
+    "gateway": [
+      "superpowers.listSkills",
+      "superpowers.getSkill",
+      "superpowers.matchSkills",
+      "superpowers.status",
+      "superpowers.install",
+      "superpowers.update"
+    ],
+    "ui": ["superpowers-skills-panel"]
+  },
+  "lifecycle": {
+    "init": "index.ts#init",
+    "shutdown": "index.ts#shutdown",
+    "healthCheck": "index.ts#healthCheck"
+  },
+  "requirements": {},
+  "bootPriority": 25
+}

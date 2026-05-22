@@ -1,0 +1,20 @@
+{
+  "id": "hoc-plugin-echo",
+  "name": "Echo Plugin",
+  "version": "1.0.0",
+  "description": "Example HoC plugin that demonstrates the plugin architecture. Echoes back any prompts it receives as an inference provider.",
+  "capabilities": {
+    "inference": true,
+    "providers": ["echo"],
+    "hooks": ["tick:after"],
+    "gateway": ["echo.ping", "echo.status"],
+    "tools": ["echo_message"]
+  },
+  "lifecycle": {
+    "init": "index.ts#init",
+    "shutdown": "index.ts#shutdown",
+    "healthCheck": "index.ts#healthCheck"
+  },
+  "requirements": {},
+  "bootPriority": 90
+}

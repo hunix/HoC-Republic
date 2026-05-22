@@ -1,0 +1,22 @@
+{
+  "name": "hoc-plugin-pentagi",
+  "version": "1.0.0",
+  "displayName": "PentAGI Red Team",
+  "description": "Integrates PentAGI (vxcontrol/pentagi) — autonomous AI red team with 20+ professional pentesting tools (nmap, metasploit, sqlmap, etc.) running in Docker sandbox. Citizens can dispatch scans, recon operations, and receive vulnerability reports.",
+  "author": "HoC Republic",
+  "bootPriority": 7,
+  "capabilities": [
+    "penetration-testing",
+    "red-team",
+    "network-scanning",
+    "vulnerability-assessment",
+    "exploit-research",
+    "security-reporting"
+  ],
+  "requires": {
+    "docker": ">=20",
+    "docker-compose": ">=2"
+  },
+  "autoBootstrap": false,
+  "entry": "./index.js"
+}

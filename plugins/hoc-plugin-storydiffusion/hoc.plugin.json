@@ -1,0 +1,22 @@
+{
+  "name": "hoc-plugin-storydiffusion",
+  "version": "1.0.0",
+  "displayName": "StoryDiffusion",
+  "description": "Integration with StoryDiffusion (NeurIPS 2024) — consistent self-attention for long-range image and video generation. Creates character-consistent story sequences and animated videos from text prompts.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "story-generation",
+    "character-consistency",
+    "comic-generation",
+    "image-sequence",
+    "image-to-video",
+    "long-range-generation"
+  ],
+  "requires": {
+    "python": ">=3.8",
+    "pytorch": ">=2.0.0",
+    "gpu_vram_gb": 10
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

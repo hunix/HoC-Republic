@@ -1,0 +1,23 @@
+{
+  "name": "hoc-plugin-autogpt",
+  "version": "1.0.0",
+  "displayName": "AutoGPT Platform",
+  "description": "Integration with Auto-GPT — the platform for building, deploying, and running autonomous AI agents. Supports agent creation, workflow building, marketplace agents, continuous execution, and monitoring via the AutoGPT Server API.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "agent-creation",
+    "workflow-building",
+    "agent-deployment",
+    "agent-execution",
+    "agent-monitoring",
+    "marketplace-agents",
+    "autonomous-tasks"
+  ],
+  "requires": {
+    "docker": ">=20.10.0 (recommended for self-hosting)",
+    "git": ">=2.30",
+    "network": "HTTPS access to AutoGPT server API"
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

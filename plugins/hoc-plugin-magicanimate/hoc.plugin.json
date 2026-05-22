@@ -1,0 +1,22 @@
+{
+  "name": "hoc-plugin-magicanimate",
+  "version": "1.0.0",
+  "displayName": "MagicAnimate",
+  "description": "Integration with MagicAnimate (CVPR 2024) — temporally consistent human image animation using diffusion models. Takes a reference image and motion sequence to produce animated video with identity preservation.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "human-animation",
+    "image-to-video",
+    "motion-transfer",
+    "densepose-control",
+    "identity-preservation"
+  ],
+  "requires": {
+    "python": ">=3.8",
+    "cuda": ">=11.3",
+    "ffmpeg": true,
+    "gpu_vram_gb": 12
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

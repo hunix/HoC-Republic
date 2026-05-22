@@ -1,0 +1,21 @@
+{
+  "name": "hoc-plugin-switti",
+  "version": "1.0.0",
+  "displayName": "Switti",
+  "description": "Integration with Switti (CVPR 2025) — scale-wise transformer for fast text-to-image synthesis. Outperforms existing T2I AR models, competes with diffusion models while being faster.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "text-to-image",
+    "fast-generation",
+    "scale-wise-transformer",
+    "ar-generation",
+    "high-resolution"
+  ],
+  "requires": {
+    "python": ">=3.8",
+    "pytorch": ">=2.0.0",
+    "gpu_vram_gb": 8
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HoC Node — Control Panel</title>
+    <meta
+      name="description"
+      content="HoC Compute Node management interface — hardware, plugins, LLM runtimes, gateway pairing, and distributed workload monitoring."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside id="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <span class="logo-icon">⬡</span>
+            <span class="logo-text">HoC Node</span>
+          </div>
+          <div id="node-name" class="node-name">Loading...</div>
+        </div>
+        <nav id="nav">
+          <a href="#/" class="nav-item active" data-page="dashboard">
+            <span class="nav-icon">📊</span>
+            <span>Dashboard</span>
+          </a>
+          <a href="#/pairing" class="nav-item" data-page="pairing">
+            <span class="nav-icon">🔗</span>
+            <span>Gateway Pairing</span>
+          </a>
+          <a href="#/hardware" class="nav-item" data-page="hardware">
+            <span class="nav-icon">🖥️</span>
+            <span>Hardware</span>
+          </a>
+          <a href="#/plugins" class="nav-item" data-page="plugins">
+            <span class="nav-icon">🧩</span>
+            <span>Plugins</span>
+          </a>
+          <a href="#/llm" class="nav-item" data-page="llm">
+            <span class="nav-icon">🤖</span>
+            <span>LLM Status</span>
+          </a>
+          <a href="#/workloads" class="nav-item" data-page="workloads">
+            <span class="nav-icon">⚡</span>
+            <span>Workloads</span>
+          </a>
+          <a href="#/citizens" class="nav-item" data-page="citizens">
+            <span class="nav-icon">👥</span>
+            <span>Citizens</span>
+          </a>
+          <a href="#/config" class="nav-item" data-page="config">
+            <span class="nav-icon">⚙️</span>
+            <span>Configuration</span>
+          </a>
+          <a href="#/logs" class="nav-item" data-page="logs">
+            <span class="nav-icon">📝</span>
+            <span>Logs</span>
+          </a>
+          <a href="#/windows" class="nav-item" data-page="windows">
+            <span class="nav-icon">🪟</span>
+            <span>Windows Service</span>
+          </a>
+        </nav>
+        <div class="sidebar-footer">
+          <div id="connection-status" class="conn-status disconnected">
+            <span class="conn-dot"></span>
+            <span class="conn-text">Disconnected</span>
+          </div>
+        </div>
+      </aside>
+      <main id="content">
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Loading...</p>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

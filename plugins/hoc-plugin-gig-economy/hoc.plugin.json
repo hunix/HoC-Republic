@@ -1,0 +1,14 @@
+{
+  "name": "hoc-plugin-gig-economy",
+  "version": "1.0.0",
+  "description": "Autonomous Gig Economy — Stream 4: Citizens compete for and complete freelance gigs on Upwork-compatible platforms",
+  "main": "index.ts",
+  "hoc": {
+    "bootPriority": 5,
+    "capabilities": {
+      "tools": true,
+      "httpRoutes": false,
+      "scheduledJobs": true
+    }
+  }
+}

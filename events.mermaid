@@ -1,0 +1,724 @@
+graph TD
+classDef event fill:#f9f,stroke:#333,stroke-width:2px;
+classDef emitter fill:#bbf,stroke:#333,stroke-width:1px;
+classDef listener fill:#bfb,stroke:#333,stroke-width:1px;
+E_exit(["exit"])
+class E_exit event
+F_agents_session_write_lock_test_ts["agents/session-write-lock.test.ts"] --> |emit| E_exit
+class F_agents_session_write_lock_test_ts emitter
+F_infra_ssh_config_test_ts["infra/ssh-config.test.ts"] --> |emit| E_exit
+class F_infra_ssh_config_test_ts emitter
+F_infra_ssh_config_test_ts["infra/ssh-config.test.ts"] --> |emit| E_exit
+class F_infra_ssh_config_test_ts emitter
+E_exit -.-> |listen| F_acp_client_ts["acp/client.ts"]
+class F_acp_client_ts listener
+E_exit -.-> |listen| F_agents_session_write_lock_ts["agents/session-write-lock.ts"]
+class F_agents_session_write_lock_ts listener
+E_exit -.-> |listen| F_browser_server_context_ts["browser/server-context.ts"]
+class F_browser_server_context_ts listener
+E_exit -.-> |listen| F_hooks_gmail_ops_ts["hooks/gmail-ops.ts"]
+class F_hooks_gmail_ops_ts listener
+E_exit -.-> |listen| F_hooks_gmail_watcher_ts["hooks/gmail-watcher.ts"]
+class F_hooks_gmail_watcher_ts listener
+E_exit -.-> |listen| F_hooks_gmail_watcher_ts["hooks/gmail-watcher.ts"]
+class F_hooks_gmail_watcher_ts listener
+E_exit -.-> |listen| F_node_host_runner_ts["node-host/runner.ts"]
+class F_node_host_runner_ts listener
+E_beforeExit(["beforeExit"])
+class E_beforeExit event
+E_beforeExit -.-> |listen| F_agents_bash_process_registry_ts["agents/bash-process-registry.ts"]
+class F_agents_bash_process_registry_ts listener
+E_SIGINT(["SIGINT"])
+class E_SIGINT event
+F_agents_session_write_lock_test_ts["agents/session-write-lock.test.ts"] --> |emit| E_SIGINT
+class F_agents_session_write_lock_test_ts emitter
+E_SIGINT -.-> |listen| F_agents_bash_process_registry_ts["agents/bash-process-registry.ts"]
+class F_agents_bash_process_registry_ts listener
+E_SIGINT -.-> |listen| F_agents_session_write_lock_test_ts["agents/session-write-lock.test.ts"]
+class F_agents_session_write_lock_test_ts listener
+E_SIGINT -.-> |listen| F_agents_session_write_lock_test_ts["agents/session-write-lock.test.ts"]
+class F_agents_session_write_lock_test_ts listener
+E_SIGINT -.-> |listen| F_cli_gateway_cli_run_loop_ts["cli/gateway-cli/run-loop.ts"]
+class F_cli_gateway_cli_run_loop_ts listener
+E_SIGINT -.-> |listen| F_hooks_gmail_ops_ts["hooks/gmail-ops.ts"]
+class F_hooks_gmail_ops_ts listener
+E_SIGINT -.-> |listen| F_intelligence_cli_ts["intelligence/cli.ts"]
+class F_intelligence_cli_ts listener
+E_SIGINT -.-> |listen| F_macos_gateway_daemon_ts["macos/gateway-daemon.ts"]
+class F_macos_gateway_daemon_ts listener
+E_SIGTERM(["SIGTERM"])
+class E_SIGTERM event
+E_SIGTERM -.-> |listen| F_agents_bash_process_registry_ts["agents/bash-process-registry.ts"]
+class F_agents_bash_process_registry_ts listener
+E_SIGTERM -.-> |listen| F_cli_gateway_cli_run_loop_ts["cli/gateway-cli/run-loop.ts"]
+class F_cli_gateway_cli_run_loop_ts listener
+E_SIGTERM -.-> |listen| F_hooks_gmail_ops_ts["hooks/gmail-ops.ts"]
+class F_hooks_gmail_ops_ts listener
+E_SIGTERM -.-> |listen| F_macos_gateway_daemon_ts["macos/gateway-daemon.ts"]
+class F_macos_gateway_daemon_ts listener
+E_data(["data"])
+class E_data event
+F_infra_ssh_config_test_ts["infra/ssh-config.test.ts"] --> |emit| E_data
+class F_infra_ssh_config_test_ts emitter
+F_memory_qmd_manager_test_ts["memory/qmd-manager.test.ts"] --> |emit| E_data
+class F_memory_qmd_manager_test_ts emitter
+F_memory_qmd_manager_test_ts["memory/qmd-manager.test.ts"] --> |emit| E_data
+class F_memory_qmd_manager_test_ts emitter
+E_data -.-> |listen| F_agents_bash_tools_exec_ts["agents/bash-tools.exec.ts"]
+class F_agents_bash_tools_exec_ts listener
+E_data -.-> |listen| F_agents_bash_tools_exec_ts["agents/bash-tools.exec.ts"]
+class F_agents_bash_tools_exec_ts listener
+E_data -.-> |listen| F_agents_sandbox_docker_ts["agents/sandbox/docker.ts"]
+class F_agents_sandbox_docker_ts listener
+E_data -.-> |listen| F_agents_sandbox_docker_ts["agents/sandbox/docker.ts"]
+class F_agents_sandbox_docker_ts listener
+E_data -.-> |listen| F_auto_reply_reply_stage_sandbox_media_ts["auto-reply/reply/stage-sandbox-media.ts"]
+class F_auto_reply_reply_stage_sandbox_media_ts listener
+E_data -.-> |listen| F_cli_gateway_sigterm_test_ts["cli/gateway.sigterm.test.ts"]
+class F_cli_gateway_sigterm_test_ts listener
+E_data -.-> |listen| F_cli_gateway_sigterm_test_ts["cli/gateway.sigterm.test.ts"]
+class F_cli_gateway_sigterm_test_ts listener
+E_data -.-> |listen| F_cli_gateway_sigterm_test_ts["cli/gateway.sigterm.test.ts"]
+class F_cli_gateway_sigterm_test_ts listener
+E_data -.-> |listen| F_gateway_hooks_ts["gateway/hooks.ts"]
+class F_gateway_hooks_ts listener
+E_data -.-> |listen| F_hooks_gmail_watcher_ts["hooks/gmail-watcher.ts"]
+class F_hooks_gmail_watcher_ts listener
+E_data -.-> |listen| F_hooks_gmail_watcher_ts["hooks/gmail-watcher.ts"]
+class F_hooks_gmail_watcher_ts listener
+E_data -.-> |listen| F_imessage_client_ts["imessage/client.ts"]
+class F_imessage_client_ts listener
+E_data -.-> |listen| F_infra_companion_bridge_ts["infra/companion-bridge.ts"]
+class F_infra_companion_bridge_ts listener
+E_data -.-> |listen| F_infra_exec_approvals_ts["infra/exec-approvals.ts"]
+class F_infra_exec_approvals_ts listener
+E_data -.-> |listen| F_infra_exec_host_ts["infra/exec-host.ts"]
+class F_infra_exec_host_ts listener
+E_data -.-> |listen| F_infra_shell_compat_ts["infra/shell-compat.ts"]
+class F_infra_shell_compat_ts listener
+E_data -.-> |listen| F_infra_shell_compat_ts["infra/shell-compat.ts"]
+class F_infra_shell_compat_ts listener
+E_data -.-> |listen| F_infra_ssh_config_ts["infra/ssh-config.ts"]
+class F_infra_ssh_config_ts listener
+E_data -.-> |listen| F_infra_ssh_tunnel_ts["infra/ssh-tunnel.ts"]
+class F_infra_ssh_tunnel_ts listener
+E_data -.-> |listen| F_intelligence_bitnet_engine_ts["intelligence/bitnet-engine.ts"]
+class F_intelligence_bitnet_engine_ts listener
+E_data -.-> |listen| F_intelligence_bitnet_engine_ts["intelligence/bitnet-engine.ts"]
+class F_intelligence_bitnet_engine_ts listener
+E_data -.-> |listen| F_intelligence_bitnet_engine_ts["intelligence/bitnet-engine.ts"]
+class F_intelligence_bitnet_engine_ts listener
+E_data -.-> |listen| F_intelligence_bitnet_engine_ts["intelligence/bitnet-engine.ts"]
+class F_intelligence_bitnet_engine_ts listener
+E_data -.-> |listen| F_intelligence_bitnet_engine_ts["intelligence/bitnet-engine.ts"]
+class F_intelligence_bitnet_engine_ts listener
+E_data -.-> |listen| F_intelligence_bitnet_engine_ts["intelligence/bitnet-engine.ts"]
+class F_intelligence_bitnet_engine_ts listener
+E_data -.-> |listen| F_intelligence_install_ts["intelligence/install.ts"]
+class F_intelligence_install_ts listener
+E_data -.-> |listen| F_intelligence_install_ts["intelligence/install.ts"]
+class F_intelligence_install_ts listener
+E_data -.-> |listen| F_line_monitor_ts["line/monitor.ts"]
+class F_line_monitor_ts listener
+E_data -.-> |listen| F_media_store_ts["media/store.ts"]
+class F_media_store_ts listener
+E_data -.-> |listen| F_memory_qmd_manager_ts["memory/qmd-manager.ts"]
+class F_memory_qmd_manager_ts listener
+E_data -.-> |listen| F_memory_qmd_manager_ts["memory/qmd-manager.ts"]
+class F_memory_qmd_manager_ts listener
+E_data -.-> |listen| F_node_host_runner_ts["node-host/runner.ts"]
+class F_node_host_runner_ts listener
+E_data -.-> |listen| F_node_host_runner_ts["node-host/runner.ts"]
+class F_node_host_runner_ts listener
+E_data -.-> |listen| F_process_child_process_bridge_test_ts["process/child-process-bridge.test.ts"]
+class F_process_child_process_bridge_test_ts listener
+E_data -.-> |listen| F_process_exec_ts["process/exec.ts"]
+class F_process_exec_ts listener
+E_data -.-> |listen| F_process_exec_ts["process/exec.ts"]
+class F_process_exec_ts listener
+E_data -.-> |listen| F_republic_document_generator_ts["republic/document-generator.ts"]
+class F_republic_document_generator_ts listener
+E_data -.-> |listen| F_republic_persistence_layer_ts["republic/persistence-layer.ts"]
+class F_republic_persistence_layer_ts listener
+E_data -.-> |listen| F_signal_daemon_ts["signal/daemon.ts"]
+class F_signal_daemon_ts listener
+E_data -.-> |listen| F_signal_daemon_ts["signal/daemon.ts"]
+class F_signal_daemon_ts listener
+E_data -.-> |listen| F_tui_tui_local_shell_ts["tui/tui-local-shell.ts"]
+class F_tui_tui_local_shell_ts listener
+E_data -.-> |listen| F_tui_tui_local_shell_ts["tui/tui-local-shell.ts"]
+class F_tui_tui_local_shell_ts listener
+E_failure(["failure"])
+class E_failure event
+F_agents_pi_embedded_runner_google_ts["agents/pi-embedded-runner/google.ts"] --> |emit| E_failure
+class F_agents_pi_embedded_runner_google_ts emitter
+E_failure -.-> |listen| F_agents_pi_embedded_runner_google_ts["agents/pi-embedded-runner/google.ts"]
+class F_agents_pi_embedded_runner_google_ts listener
+E_session_before_compact(["session_before_compact"])
+class E_session_before_compact event
+E_session_before_compact -.-> |listen| F_agents_pi_extensions_compaction_safeguard_ts["agents/pi-extensions/compaction-safeguard.ts"]
+class F_agents_pi_extensions_compaction_safeguard_ts listener
+E_context(["context"])
+class E_context event
+E_context -.-> |listen| F_agents_pi_extensions_context_pruning_extension_ts["agents/pi-extensions/context-pruning/extension.ts"]
+class F_agents_pi_extensions_context_pruning_extension_ts listener
+E_close(["close"])
+class E_close event
+F_agents_sandbox_agent_config_agent_specific_sandbox_config_includes_session_status_default_sandbox_allowlist_test_ts["agents/sandbox-agent-config.agent-specific-sandbox-config.includes-session-status-default-sandbox-allowlist.test.ts"] --> |emit| E_close
+class F_agents_sandbox_agent_config_agent_specific_sandbox_config_includes_session_status_default_sandbox_allowlist_test_ts emitter
+F_agents_sandbox_agent_config_agent_specific_sandbox_config_includes_session_status_default_sandbox_allowlist_test_ts["agents/sandbox-agent-config.agent-specific-sandbox-config.includes-session-status-default-sandbox-allowlist.test.ts"] --> |emit| E_close
+class F_agents_sandbox_agent_config_agent_specific_sandbox_config_includes_session_status_default_sandbox_allowlist_test_ts emitter
+F_agents_sandbox_agent_config_agent_specific_sandbox_config_should_allow_agent_specific_docker_settings_beyond_test_ts["agents/sandbox-agent-config.agent-specific-sandbox-config.should-allow-agent-specific-docker-settings-beyond.test.ts"] --> |emit| E_close
+class F_agents_sandbox_agent_config_agent_specific_sandbox_config_should_allow_agent_specific_docker_settings_beyond_test_ts emitter
+F_agents_sandbox_agent_config_agent_specific_sandbox_config_should_allow_agent_specific_docker_settings_beyond_test_ts["agents/sandbox-agent-config.agent-specific-sandbox-config.should-allow-agent-specific-docker-settings-beyond.test.ts"] --> |emit| E_close
+class F_agents_sandbox_agent_config_agent_specific_sandbox_config_should_allow_agent_specific_docker_settings_beyond_test_ts emitter
+F_agents_sandbox_agent_config_agent_specific_sandbox_config_should_use_agent_specific_workspaceroot_test_ts["agents/sandbox-agent-config.agent-specific-sandbox-config.should-use-agent-specific-workspaceroot.test.ts"] --> |emit| E_close
+class F_agents_sandbox_agent_config_agent_specific_sandbox_config_should_use_agent_specific_workspaceroot_test_ts emitter
+F_agents_sandbox_agent_config_agent_specific_sandbox_config_should_use_agent_specific_workspaceroot_test_ts["agents/sandbox-agent-config.agent-specific-sandbox-config.should-use-agent-specific-workspaceroot.test.ts"] --> |emit| E_close
+class F_agents_sandbox_agent_config_agent_specific_sandbox_config_should_use_agent_specific_workspaceroot_test_ts emitter
+F_agents_sandbox_agent_config_agent_specific_sandbox_config_should_use_global_sandbox_config_no_agent_test_ts["agents/sandbox-agent-config.agent-specific-sandbox-config.should-use-global-sandbox-config-no-agent.test.ts"] --> |emit| E_close
+class F_agents_sandbox_agent_config_agent_specific_sandbox_config_should_use_global_sandbox_config_no_agent_test_ts emitter
+F_agents_sandbox_agent_config_agent_specific_sandbox_config_should_use_global_sandbox_config_no_agent_test_ts["agents/sandbox-agent-config.agent-specific-sandbox-config.should-use-global-sandbox-config-no-agent.test.ts"] --> |emit| E_close
+class F_agents_sandbox_agent_config_agent_specific_sandbox_config_should_use_global_sandbox_config_no_agent_test_ts emitter
+F_agents_sandbox_skills_test_ts["agents/sandbox-skills.test.ts"] --> |emit| E_close
+class F_agents_sandbox_skills_test_ts emitter
+F_agents_sandbox_skills_test_ts["agents/sandbox-skills.test.ts"] --> |emit| E_close
+class F_agents_sandbox_skills_test_ts emitter
+F_memory_qmd_manager_test_ts["memory/qmd-manager.test.ts"] --> |emit| E_close
+class F_memory_qmd_manager_test_ts emitter
+F_memory_qmd_manager_test_ts["memory/qmd-manager.test.ts"] --> |emit| E_close
+class F_memory_qmd_manager_test_ts emitter
+E_close -.-> |listen| F_agents_sandbox_docker_ts["agents/sandbox/docker.ts"]
+class F_agents_sandbox_docker_ts listener
+E_close -.-> |listen| F_browser_cdp_helpers_ts["browser/cdp.helpers.ts"]
+class F_browser_cdp_helpers_ts listener
+E_close -.-> |listen| F_browser_extension_relay_ts["browser/extension-relay.ts"]
+class F_browser_extension_relay_ts listener
+E_close -.-> |listen| F_browser_extension_relay_ts["browser/extension-relay.ts"]
+class F_browser_extension_relay_ts listener
+E_close -.-> |listen| F_browser_pw_session_ts["browser/pw-session.ts"]
+class F_browser_pw_session_ts listener
+E_close -.-> |listen| F_canvas_host_server_ts["canvas-host/server.ts"]
+class F_canvas_host_server_ts listener
+E_close -.-> |listen| F_gateway_client_ts["gateway/client.ts"]
+class F_gateway_client_ts listener
+E_close -.-> |listen| F_gateway_openai_http_ts["gateway/openai-http.ts"]
+class F_gateway_openai_http_ts listener
+E_close -.-> |listen| F_gateway_openresponses_http_ts["gateway/openresponses-http.ts"]
+class F_gateway_openresponses_http_ts listener
+E_close -.-> |listen| F_imessage_client_ts["imessage/client.ts"]
+class F_imessage_client_ts listener
+E_close -.-> |listen| F_infra_companion_bridge_ts["infra/companion-bridge.ts"]
+class F_infra_companion_bridge_ts listener
+E_close -.-> |listen| F_infra_shell_compat_ts["infra/shell-compat.ts"]
+class F_infra_shell_compat_ts listener
+E_close -.-> |listen| F_intelligence_bitnet_engine_ts["intelligence/bitnet-engine.ts"]
+class F_intelligence_bitnet_engine_ts listener
+E_close -.-> |listen| F_intelligence_bitnet_engine_ts["intelligence/bitnet-engine.ts"]
+class F_intelligence_bitnet_engine_ts listener
+E_close -.-> |listen| F_intelligence_bitnet_engine_ts["intelligence/bitnet-engine.ts"]
+class F_intelligence_bitnet_engine_ts listener
+E_close -.-> |listen| F_intelligence_install_ts["intelligence/install.ts"]
+class F_intelligence_install_ts listener
+E_close -.-> |listen| F_memory_qmd_manager_ts["memory/qmd-manager.ts"]
+class F_memory_qmd_manager_ts listener
+E_close -.-> |listen| F_process_exec_ts["process/exec.ts"]
+class F_process_exec_ts listener
+E_close -.-> |listen| F_tui_tui_local_shell_ts["tui/tui-local-shell.ts"]
+class F_tui_tui_local_shell_ts listener
+E_tool_result_persist(["tool_result_persist"])
+class E_tool_result_persist event
+E_tool_result_persist -.-> |listen| F_agents_session_tool_result_guard_tool_result_persist_hook_test_ts["agents/session-tool-result-guard.tool-result-persist-hook.test.ts"]
+class F_agents_session_tool_result_guard_tool_result_persist_hook_test_ts listener
+E_tool_result_persist -.-> |listen| F_agents_session_tool_result_guard_tool_result_persist_hook_test_ts["agents/session-tool-result-guard.tool-result-persist-hook.test.ts"]
+class F_agents_session_tool_result_guard_tool_result_persist_hook_test_ts listener
+E_add(["add"])
+class E_add event
+E_add -.-> |listen| F_agents_skills_refresh_ts["agents/skills/refresh.ts"]
+class F_agents_skills_refresh_ts listener
+E_add -.-> |listen| F_gateway_config_reload_ts["gateway/config-reload.ts"]
+class F_gateway_config_reload_ts listener
+E_add -.-> |listen| F_memory_manager_ts["memory/manager.ts"]
+class F_memory_manager_ts listener
+E_change(["change"])
+class E_change event
+E_change -.-> |listen| F_agents_skills_refresh_ts["agents/skills/refresh.ts"]
+class F_agents_skills_refresh_ts listener
+E_change -.-> |listen| F_gateway_config_reload_ts["gateway/config-reload.ts"]
+class F_gateway_config_reload_ts listener
+E_change -.-> |listen| F_memory_manager_ts["memory/manager.ts"]
+class F_memory_manager_ts listener
+E_unlink(["unlink"])
+class E_unlink event
+E_unlink -.-> |listen| F_agents_skills_refresh_ts["agents/skills/refresh.ts"]
+class F_agents_skills_refresh_ts listener
+E_unlink -.-> |listen| F_gateway_config_reload_ts["gateway/config-reload.ts"]
+class F_gateway_config_reload_ts listener
+E_unlink -.-> |listen| F_memory_manager_ts["memory/manager.ts"]
+class F_memory_manager_ts listener
+E_error(["error"])
+class E_error event
+F_discord_monitor_gateway_test_ts["discord/monitor.gateway.test.ts"] --> |emit| E_error
+class F_discord_monitor_gateway_test_ts emitter
+F_discord_monitor_gateway_test_ts["discord/monitor.gateway.test.ts"] --> |emit| E_error
+class F_discord_monitor_gateway_test_ts emitter
+E_error -.-> |listen| F_agents_skills_refresh_ts["agents/skills/refresh.ts"]
+class F_agents_skills_refresh_ts listener
+E_error -.-> |listen| F_browser_extension_relay_test_ts["browser/extension-relay.test.ts"]
+class F_browser_extension_relay_test_ts listener
+E_error -.-> |listen| F_canvas_host_server_test_ts["canvas-host/server.test.ts"]
+class F_canvas_host_server_test_ts listener
+E_error -.-> |listen| F_canvas_host_server_ts["canvas-host/server.ts"]
+class F_canvas_host_server_ts listener
+E_error -.-> |listen| F_cluster_cluster_config_ts["cluster/cluster-config.ts"]
+class F_cluster_cluster_config_ts listener
+E_error -.-> |listen| F_cluster_node_discovery_ts["cluster/node-discovery.ts"]
+class F_cluster_node_discovery_ts listener
+E_error -.-> |listen| F_cluster_redis_state_store_ts["cluster/redis-state-store.ts"]
+class F_cluster_redis_state_store_ts listener
+E_error -.-> |listen| F_cluster_redis_state_store_ts["cluster/redis-state-store.ts"]
+class F_cluster_redis_state_store_ts listener
+E_error -.-> |listen| F_commands_onboard_non_interactive_gateway_test_ts["commands/onboard-non-interactive.gateway.test.ts"]
+class F_commands_onboard_non_interactive_gateway_test_ts listener
+E_error -.-> |listen| F_commands_signal_install_ts["commands/signal-install.ts"]
+class F_commands_signal_install_ts listener
+E_error -.-> |listen| F_discord_monitor_gateway_ts["discord/monitor.gateway.ts"]
+class F_discord_monitor_gateway_ts listener
+E_error -.-> |listen| F_gateway_client_ts["gateway/client.ts"]
+class F_gateway_client_ts listener
+E_error -.-> |listen| F_gateway_config_reload_ts["gateway/config-reload.ts"]
+class F_gateway_config_reload_ts listener
+E_error -.-> |listen| F_gateway_gateway_cli_backend_live_test_ts["gateway/gateway-cli-backend.live.test.ts"]
+class F_gateway_gateway_cli_backend_live_test_ts listener
+E_error -.-> |listen| F_gateway_gateway_models_profiles_live_test_ts["gateway/gateway-models.profiles.live.test.ts"]
+class F_gateway_gateway_models_profiles_live_test_ts listener
+E_error -.-> |listen| F_gateway_hooks_ts["gateway/hooks.ts"]
+class F_gateway_hooks_ts listener
+E_error -.-> |listen| F_hooks_gmail_watcher_ts["hooks/gmail-watcher.ts"]
+class F_hooks_gmail_watcher_ts listener
+E_error -.-> |listen| F_imessage_client_ts["imessage/client.ts"]
+class F_imessage_client_ts listener
+E_error -.-> |listen| F_infra_companion_bridge_ts["infra/companion-bridge.ts"]
+class F_infra_companion_bridge_ts listener
+E_error -.-> |listen| F_infra_exec_approvals_ts["infra/exec-approvals.ts"]
+class F_infra_exec_approvals_ts listener
+E_error -.-> |listen| F_infra_exec_host_ts["infra/exec-host.ts"]
+class F_infra_exec_host_ts listener
+E_error -.-> |listen| F_infra_shell_compat_ts["infra/shell-compat.ts"]
+class F_infra_shell_compat_ts listener
+E_error -.-> |listen| F_intelligence_bitnet_engine_ts["intelligence/bitnet-engine.ts"]
+class F_intelligence_bitnet_engine_ts listener
+E_error -.-> |listen| F_intelligence_bitnet_engine_ts["intelligence/bitnet-engine.ts"]
+class F_intelligence_bitnet_engine_ts listener
+E_error -.-> |listen| F_intelligence_bitnet_engine_ts["intelligence/bitnet-engine.ts"]
+class F_intelligence_bitnet_engine_ts listener
+E_error -.-> |listen| F_intelligence_install_ts["intelligence/install.ts"]
+class F_intelligence_install_ts listener
+E_error -.-> |listen| F_intelligence_memory_system_ts["intelligence/memory-system.ts"]
+class F_intelligence_memory_system_ts listener
+E_error -.-> |listen| F_line_monitor_ts["line/monitor.ts"]
+class F_line_monitor_ts listener
+E_error -.-> |listen| F_media_store_redirect_test_ts["media/store.redirect.test.ts"]
+class F_media_store_redirect_test_ts listener
+E_error -.-> |listen| F_media_store_redirect_test_ts["media/store.redirect.test.ts"]
+class F_media_store_redirect_test_ts listener
+E_error -.-> |listen| F_media_store_ts["media/store.ts"]
+class F_media_store_ts listener
+E_error -.-> |listen| F_memory_qmd_manager_ts["memory/qmd-manager.ts"]
+class F_memory_qmd_manager_ts listener
+E_error -.-> |listen| F_node_host_runner_ts["node-host/runner.ts"]
+class F_node_host_runner_ts listener
+E_error -.-> |listen| F_process_child_process_bridge_test_ts["process/child-process-bridge.test.ts"]
+class F_process_child_process_bridge_test_ts listener
+E_error -.-> |listen| F_process_exec_ts["process/exec.ts"]
+class F_process_exec_ts listener
+E_error -.-> |listen| F_republic_document_generator_ts["republic/document-generator.ts"]
+class F_republic_document_generator_ts listener
+E_error -.-> |listen| F_republic_perf_utils_ts["republic/perf-utils.ts"]
+class F_republic_perf_utils_ts listener
+E_error -.-> |listen| F_republic_perf_utils_ts["republic/perf-utils.ts"]
+class F_republic_perf_utils_ts listener
+E_error -.-> |listen| F_signal_daemon_ts["signal/daemon.ts"]
+class F_signal_daemon_ts listener
+E_error -.-> |listen| F_tui_tui_local_shell_ts["tui/tui-local-shell.ts"]
+class F_tui_tui_local_shell_ts listener
+E_error -.-> |listen| F_web_session_ts["web/session.ts"]
+class F_web_session_ts listener
+E_message(["message"])
+class E_message event
+E_message -.-> |listen| F_browser_cdp_helpers_ts["browser/cdp.helpers.ts"]
+class F_browser_cdp_helpers_ts listener
+E_message -.-> |listen| F_browser_cdp_test_ts["browser/cdp.test.ts"]
+class F_browser_cdp_test_ts listener
+E_message -.-> |listen| F_browser_cdp_test_ts["browser/cdp.test.ts"]
+class F_browser_cdp_test_ts listener
+E_message -.-> |listen| F_browser_cdp_test_ts["browser/cdp.test.ts"]
+class F_browser_cdp_test_ts listener
+E_message -.-> |listen| F_browser_extension_relay_test_ts["browser/extension-relay.test.ts"]
+class F_browser_extension_relay_test_ts listener
+E_message -.-> |listen| F_browser_extension_relay_ts["browser/extension-relay.ts"]
+class F_browser_extension_relay_ts listener
+E_message -.-> |listen| F_browser_extension_relay_ts["browser/extension-relay.ts"]
+class F_browser_extension_relay_ts listener
+E_message -.-> |listen| F_canvas_host_server_test_ts["canvas-host/server.test.ts"]
+class F_canvas_host_server_test_ts listener
+E_message -.-> |listen| F_cli_gateway_sigterm_test_ts["cli/gateway.sigterm.test.ts"]
+class F_cli_gateway_sigterm_test_ts listener
+E_message -.-> |listen| F_cluster_node_discovery_ts["cluster/node-discovery.ts"]
+class F_cluster_node_discovery_ts listener
+E_message -.-> |listen| F_gateway_client_ts["gateway/client.ts"]
+class F_gateway_client_ts listener
+E_message -.-> |listen| F_gateway_server_ws_connection_message_handler_ts["gateway/server/ws-connection/message-handler.ts"]
+class F_gateway_server_ws_connection_message_handler_ts listener
+E_message -.-> |listen| F_gateway_test_helpers_e2e_ts["gateway/test-helpers.e2e.ts"]
+class F_gateway_test_helpers_e2e_ts listener
+E_message -.-> |listen| F_gateway_test_helpers_server_ts["gateway/test-helpers.server.ts"]
+class F_gateway_test_helpers_server_ts listener
+E_message -.-> |listen| F_republic_perf_utils_ts["republic/perf-utils.ts"]
+class F_republic_perf_utils_ts listener
+E_message -.-> |listen| F_republic_perf_utils_ts["republic/perf-utils.ts"]
+class F_republic_perf_utils_ts listener
+E_message -.-> |listen| F_telegram_bot_handlers_ts["telegram/bot-handlers.ts"]
+class F_telegram_bot_handlers_ts listener
+E_connection(["connection"])
+class E_connection event
+F_browser_extension_relay_ts["browser/extension-relay.ts"] --> |emit| E_connection
+class F_browser_extension_relay_ts emitter
+F_browser_extension_relay_ts["browser/extension-relay.ts"] --> |emit| E_connection
+class F_browser_extension_relay_ts emitter
+F_canvas_host_server_ts["canvas-host/server.ts"] --> |emit| E_connection
+class F_canvas_host_server_ts emitter
+F_gateway_server_http_ts["gateway/server-http.ts"] --> |emit| E_connection
+class F_gateway_server_http_ts emitter
+E_connection -.-> |listen| F_browser_cdp_test_ts["browser/cdp.test.ts"]
+class F_browser_cdp_test_ts listener
+E_connection -.-> |listen| F_browser_cdp_test_ts["browser/cdp.test.ts"]
+class F_browser_cdp_test_ts listener
+E_connection -.-> |listen| F_browser_cdp_test_ts["browser/cdp.test.ts"]
+class F_browser_cdp_test_ts listener
+E_connection -.-> |listen| F_browser_extension_relay_ts["browser/extension-relay.ts"]
+class F_browser_extension_relay_ts listener
+E_connection -.-> |listen| F_browser_extension_relay_ts["browser/extension-relay.ts"]
+class F_browser_extension_relay_ts listener
+E_connection -.-> |listen| F_canvas_host_server_ts["canvas-host/server.ts"]
+class F_canvas_host_server_ts listener
+E_connection -.-> |listen| F_gateway_client_test_ts["gateway/client.test.ts"]
+class F_gateway_client_test_ts listener
+E_connection -.-> |listen| F_gateway_server_ws_connection_ts["gateway/server/ws-connection.ts"]
+class F_gateway_server_ws_connection_ts listener
+E_upgrade(["upgrade"])
+class E_upgrade event
+E_upgrade -.-> |listen| F_browser_extension_relay_ts["browser/extension-relay.ts"]
+class F_browser_extension_relay_ts listener
+E_upgrade -.-> |listen| F_canvas_host_server_test_ts["canvas-host/server.test.ts"]
+class F_canvas_host_server_test_ts listener
+E_upgrade -.-> |listen| F_canvas_host_server_ts["canvas-host/server.ts"]
+class F_canvas_host_server_ts listener
+E_upgrade -.-> |listen| F_gateway_server_http_ts["gateway/server-http.ts"]
+class F_gateway_server_http_ts listener
+E_console(["console"])
+class E_console event
+E_console -.-> |listen| F_browser_pw_session_ts["browser/pw-session.ts"]
+class F_browser_pw_session_ts listener
+E_pageerror(["pageerror"])
+class E_pageerror event
+E_pageerror -.-> |listen| F_browser_pw_session_ts["browser/pw-session.ts"]
+class F_browser_pw_session_ts listener
+E_request(["request"])
+class E_request event
+E_request -.-> |listen| F_browser_pw_session_ts["browser/pw-session.ts"]
+class F_browser_pw_session_ts listener
+E_response(["response"])
+class E_response event
+E_response -.-> |listen| F_browser_pw_session_ts["browser/pw-session.ts"]
+class F_browser_pw_session_ts listener
+E_response -.-> |listen| F_browser_pw_tools_core_responses_ts["browser/pw-tools-core.responses.ts"]
+class F_browser_pw_tools_core_responses_ts listener
+E_requestfailed(["requestfailed"])
+class E_requestfailed event
+E_requestfailed -.-> |listen| F_browser_pw_session_ts["browser/pw-session.ts"]
+class F_browser_pw_session_ts listener
+E_page(["page"])
+class E_page event
+E_page -.-> |listen| F_browser_pw_session_ts["browser/pw-session.ts"]
+class F_browser_pw_session_ts listener
+E_disconnected(["disconnected"])
+class E_disconnected event
+E_disconnected -.-> |listen| F_browser_pw_session_ts["browser/pw-session.ts"]
+class F_browser_pw_session_ts listener
+E_download(["download"])
+class E_download event
+E_download -.-> |listen| F_browser_pw_tools_core_downloads_ts["browser/pw-tools-core.downloads.ts"]
+class F_browser_pw_tools_core_downloads_ts listener
+E_open(["open"])
+class E_open event
+E_open -.-> |listen| F_canvas_host_server_test_ts["canvas-host/server.test.ts"]
+class F_canvas_host_server_test_ts listener
+E_open -.-> |listen| F_gateway_client_ts["gateway/client.ts"]
+class F_gateway_client_ts listener
+E_all(["all"])
+class E_all event
+E_all -.-> |listen| F_canvas_host_server_ts["canvas-host/server.ts"]
+class F_canvas_host_server_ts listener
+E_SIGUSR1(["SIGUSR1"])
+class E_SIGUSR1 event
+F_gateway_server_reload_handlers_ts["gateway/server-reload-handlers.ts"] --> |emit| E_SIGUSR1
+class F_gateway_server_reload_handlers_ts emitter
+F_infra_restart_ts["infra/restart.ts"] --> |emit| E_SIGUSR1
+class F_infra_restart_ts emitter
+E_SIGUSR1 -.-> |listen| F_cli_gateway_cli_run_loop_ts["cli/gateway-cli/run-loop.ts"]
+class F_cli_gateway_cli_run_loop_ts listener
+E_SIGUSR1 -.-> |listen| F_gateway_server_roles_allowlist_update_e2e_test_ts["gateway/server.roles-allowlist-update.e2e.test.ts"]
+class F_gateway_server_roles_allowlist_update_e2e_test_ts listener
+E_SIGUSR1 -.-> |listen| F_gateway_server_roles_allowlist_update_e2e_test_ts["gateway/server.roles-allowlist-update.e2e.test.ts"]
+class F_gateway_server_roles_allowlist_update_e2e_test_ts listener
+E_SIGUSR1 -.-> |listen| F_macos_gateway_daemon_ts["macos/gateway-daemon.ts"]
+class F_macos_gateway_daemon_ts listener
+E_uncaughtException(["uncaughtException"])
+class E_uncaughtException event
+E_uncaughtException -.-> |listen| F_cli_run_main_ts["cli/run-main.ts"]
+class F_cli_run_main_ts listener
+E_uncaughtException -.-> |listen| F_index_ts["index.ts"]
+class F_index_ts listener
+E_uncaughtException -.-> |listen| F_macos_relay_ts["macos/relay.ts"]
+class F_macos_relay_ts listener
+E_connect(["connect"])
+class E_connect event
+E_connect -.-> |listen| F_cluster_cluster_config_ts["cluster/cluster-config.ts"]
+class F_cluster_cluster_config_ts listener
+E_connect -.-> |listen| F_infra_companion_bridge_ts["infra/companion-bridge.ts"]
+class F_infra_companion_bridge_ts listener
+E_timeout(["timeout"])
+class E_timeout event
+E_timeout -.-> |listen| F_cluster_cluster_config_ts["cluster/cluster-config.ts"]
+class F_cluster_cluster_config_ts listener
+E_gateway_joined(["gateway-joined"])
+class E_gateway_joined event
+F_cluster_gateway_cluster_manager_ts["cluster/gateway-cluster-manager.ts"] --> |emit| E_gateway_joined
+class F_cluster_gateway_cluster_manager_ts emitter
+E_primary_lost(["primary-lost"])
+class E_primary_lost event
+F_cluster_gateway_cluster_manager_ts["cluster/gateway-cluster-manager.ts"] --> |emit| E_primary_lost
+class F_cluster_gateway_cluster_manager_ts emitter
+F_cluster_gateway_cluster_manager_ts["cluster/gateway-cluster-manager.ts"] --> |emit| E_primary_lost
+class F_cluster_gateway_cluster_manager_ts emitter
+E_gateway_left(["gateway-left"])
+class E_gateway_left event
+F_cluster_gateway_cluster_manager_ts["cluster/gateway-cluster-manager.ts"] --> |emit| E_gateway_left
+class F_cluster_gateway_cluster_manager_ts emitter
+E_primary_elected(["primary-elected"])
+class E_primary_elected event
+F_cluster_gateway_cluster_manager_ts["cluster/gateway-cluster-manager.ts"] --> |emit| E_primary_elected
+class F_cluster_gateway_cluster_manager_ts emitter
+E_failover(["failover"])
+class E_failover event
+F_cluster_gateway_cluster_manager_ts["cluster/gateway-cluster-manager.ts"] --> |emit| E_failover
+class F_cluster_gateway_cluster_manager_ts emitter
+E_ready(["ready"])
+class E_ready event
+E_ready -.-> |listen| F_cluster_redis_state_store_ts["cluster/redis-state-store.ts"]
+class F_cluster_redis_state_store_ts listener
+E_end(["end"])
+class E_end event
+E_end -.-> |listen| F_cluster_redis_state_store_ts["cluster/redis-state-store.ts"]
+class F_cluster_redis_state_store_ts listener
+E_end -.-> |listen| F_gateway_hooks_ts["gateway/hooks.ts"]
+class F_gateway_hooks_ts listener
+E_end -.-> |listen| F_line_monitor_ts["line/monitor.ts"]
+class F_line_monitor_ts listener
+E_end -.-> |listen| F_republic_document_generator_ts["republic/document-generator.ts"]
+class F_republic_document_generator_ts listener
+E_debug(["debug"])
+class E_debug event
+F_discord_gateway_logging_test_ts["discord/gateway-logging.test.ts"] --> |emit| E_debug
+class F_discord_gateway_logging_test_ts emitter
+F_discord_gateway_logging_test_ts["discord/gateway-logging.test.ts"] --> |emit| E_debug
+class F_discord_gateway_logging_test_ts emitter
+F_discord_gateway_logging_test_ts["discord/gateway-logging.test.ts"] --> |emit| E_debug
+class F_discord_gateway_logging_test_ts emitter
+F_discord_gateway_logging_test_ts["discord/gateway-logging.test.ts"] --> |emit| E_debug
+class F_discord_gateway_logging_test_ts emitter
+E_debug -.-> |listen| F_discord_gateway_logging_ts["discord/gateway-logging.ts"]
+class F_discord_gateway_logging_ts listener
+E_debug -.-> |listen| F_discord_monitor_provider_ts["discord/monitor/provider.ts"]
+class F_discord_monitor_provider_ts listener
+E_warning(["warning"])
+class E_warning event
+F_discord_gateway_logging_test_ts["discord/gateway-logging.test.ts"] --> |emit| E_warning
+class F_discord_gateway_logging_test_ts emitter
+F_discord_gateway_logging_test_ts["discord/gateway-logging.test.ts"] --> |emit| E_warning
+class F_discord_gateway_logging_test_ts emitter
+E_warning -.-> |listen| F_discord_gateway_logging_ts["discord/gateway-logging.ts"]
+class F_discord_gateway_logging_ts listener
+E_warning -.-> |listen| F_infra_warnings_ts["infra/warnings.ts"]
+class F_infra_warnings_ts listener
+E_metrics(["metrics"])
+class E_metrics event
+F_discord_gateway_logging_test_ts["discord/gateway-logging.test.ts"] --> |emit| E_metrics
+class F_discord_gateway_logging_test_ts emitter
+F_discord_gateway_logging_test_ts["discord/gateway-logging.test.ts"] --> |emit| E_metrics
+class F_discord_gateway_logging_test_ts emitter
+E_metrics -.-> |listen| F_discord_gateway_logging_ts["discord/gateway-logging.ts"]
+class F_discord_gateway_logging_ts listener
+E_line(["line"])
+class E_line event
+E_line -.-> |listen| F_imessage_client_ts["imessage/client.ts"]
+class F_imessage_client_ts listener
+E_unhandledRejection(["unhandledRejection"])
+class E_unhandledRejection event
+F_infra_unhandled_rejections_fatal_detection_test_ts["infra/unhandled-rejections.fatal-detection.test.ts"] --> |emit| E_unhandledRejection
+class F_infra_unhandled_rejections_fatal_detection_test_ts emitter
+F_infra_unhandled_rejections_fatal_detection_test_ts["infra/unhandled-rejections.fatal-detection.test.ts"] --> |emit| E_unhandledRejection
+class F_infra_unhandled_rejections_fatal_detection_test_ts emitter
+F_infra_unhandled_rejections_fatal_detection_test_ts["infra/unhandled-rejections.fatal-detection.test.ts"] --> |emit| E_unhandledRejection
+class F_infra_unhandled_rejections_fatal_detection_test_ts emitter
+F_infra_unhandled_rejections_fatal_detection_test_ts["infra/unhandled-rejections.fatal-detection.test.ts"] --> |emit| E_unhandledRejection
+class F_infra_unhandled_rejections_fatal_detection_test_ts emitter
+F_infra_unhandled_rejections_fatal_detection_test_ts["infra/unhandled-rejections.fatal-detection.test.ts"] --> |emit| E_unhandledRejection
+class F_infra_unhandled_rejections_fatal_detection_test_ts emitter
+F_infra_unhandled_rejections_fatal_detection_test_ts["infra/unhandled-rejections.fatal-detection.test.ts"] --> |emit| E_unhandledRejection
+class F_infra_unhandled_rejections_fatal_detection_test_ts emitter
+F_infra_unhandled_rejections_fatal_detection_test_ts["infra/unhandled-rejections.fatal-detection.test.ts"] --> |emit| E_unhandledRejection
+class F_infra_unhandled_rejections_fatal_detection_test_ts emitter
+F_infra_unhandled_rejections_fatal_detection_test_ts["infra/unhandled-rejections.fatal-detection.test.ts"] --> |emit| E_unhandledRejection
+class F_infra_unhandled_rejections_fatal_detection_test_ts emitter
+F_infra_unhandled_rejections_fatal_detection_test_ts["infra/unhandled-rejections.fatal-detection.test.ts"] --> |emit| E_unhandledRejection
+class F_infra_unhandled_rejections_fatal_detection_test_ts emitter
+F_infra_unhandled_rejections_fatal_detection_test_ts["infra/unhandled-rejections.fatal-detection.test.ts"] --> |emit| E_unhandledRejection
+class F_infra_unhandled_rejections_fatal_detection_test_ts emitter
+E_unhandledRejection -.-> |listen| F_imessage_monitor_updates_last_route_chat_id_direct_messages_test_ts["imessage/monitor.updates-last-route-chat-id-direct-messages.test.ts"]
+class F_imessage_monitor_updates_last_route_chat_id_direct_messages_test_ts listener
+E_unhandledRejection -.-> |listen| F_infra_unhandled_rejections_ts["infra/unhandled-rejections.ts"]
+class F_infra_unhandled_rejections_ts listener
+E_unhandledRejection -.-> |listen| F_memory_manager_sync_errors_do_not_crash_test_ts["memory/manager.sync-errors-do-not-crash.test.ts"]
+class F_memory_manager_sync_errors_do_not_crash_test_ts listener
+E_name_change(["name-change"])
+class E_name_change event
+E_name_change -.-> |listen| F_infra_bonjour_ts["infra/bonjour.ts"]
+class F_infra_bonjour_ts listener
+E_hostname_change(["hostname-change"])
+class E_hostname_change event
+E_hostname_change -.-> |listen| F_infra_bonjour_ts["infra/bonjour.ts"]
+class F_infra_bonjour_ts listener
+E_finish(["finish"])
+class E_finish event
+E_finish -.-> |listen| F_media_server_ts["media/server.ts"]
+class F_media_server_ts listener
+E_spawn(["spawn"])
+class E_spawn event
+F_process_spawn_utils_test_ts["process/spawn-utils.test.ts"] --> |emit| E_spawn
+class F_process_spawn_utils_test_ts emitter
+E_callback_query(["callback_query"])
+class E_callback_query event
+E_callback_query -.-> |listen| F_telegram_bot_handlers_ts["telegram/bot-handlers.ts"]
+class F_telegram_bot_handlers_ts listener
+E_message_migrate_to_chat_id(["message:migrate_to_chat_id"])
+class E_message_migrate_to_chat_id event
+E_message_migrate_to_chat_id -.-> |listen| F_telegram_bot_handlers_ts["telegram/bot-handlers.ts"]
+class F_telegram_bot_handlers_ts listener
+E_message_reaction(["message_reaction"])
+class E_message_reaction event
+E_message_reaction -.-> |listen| F_telegram_bot_ts["telegram/bot.ts"]
+class F_telegram_bot_ts listener
+E_messages_upsert(["messages.upsert"])
+class E_messages_upsert event
+F_web_inbound_media_test_ts["web/inbound.media.test.ts"] --> |emit| E_messages_upsert
+class F_web_inbound_media_test_ts emitter
+F_web_inbound_media_test_ts["web/inbound.media.test.ts"] --> |emit| E_messages_upsert
+class F_web_inbound_media_test_ts emitter
+F_web_inbound_media_test_ts["web/inbound.media.test.ts"] --> |emit| E_messages_upsert
+class F_web_inbound_media_test_ts emitter
+F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts["web/monitor-inbox.allows-messages-from-senders-allowfrom-list.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts emitter
+F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts["web/monitor-inbox.allows-messages-from-senders-allowfrom-list.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts emitter
+F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts["web/monitor-inbox.allows-messages-from-senders-allowfrom-list.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts emitter
+F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts["web/monitor-inbox.allows-messages-from-senders-allowfrom-list.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts emitter
+F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts["web/monitor-inbox.allows-messages-from-senders-allowfrom-list.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts emitter
+F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts["web/monitor-inbox.allows-messages-from-senders-allowfrom-list.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts emitter
+F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts["web/monitor-inbox.allows-messages-from-senders-allowfrom-list.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts emitter
+F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts["web/monitor-inbox.allows-messages-from-senders-allowfrom-list.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_allows_messages_from_senders_allowfrom_list_test_ts emitter
+F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts["web/monitor-inbox.blocks-messages-from-unauthorized-senders-not-allowfrom.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts emitter
+F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts["web/monitor-inbox.blocks-messages-from-unauthorized-senders-not-allowfrom.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts emitter
+F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts["web/monitor-inbox.blocks-messages-from-unauthorized-senders-not-allowfrom.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts emitter
+F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts["web/monitor-inbox.blocks-messages-from-unauthorized-senders-not-allowfrom.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts emitter
+F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts["web/monitor-inbox.blocks-messages-from-unauthorized-senders-not-allowfrom.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts emitter
+F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts["web/monitor-inbox.blocks-messages-from-unauthorized-senders-not-allowfrom.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts emitter
+F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts["web/monitor-inbox.blocks-messages-from-unauthorized-senders-not-allowfrom.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts emitter
+F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts["web/monitor-inbox.blocks-messages-from-unauthorized-senders-not-allowfrom.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts emitter
+F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts["web/monitor-inbox.blocks-messages-from-unauthorized-senders-not-allowfrom.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_blocks_messages_from_unauthorized_senders_not_allowfrom_test_ts emitter
+F_web_monitor_inbox_captures_media_path_image_messages_test_ts["web/monitor-inbox.captures-media-path-image-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_captures_media_path_image_messages_test_ts emitter
+F_web_monitor_inbox_captures_media_path_image_messages_test_ts["web/monitor-inbox.captures-media-path-image-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_captures_media_path_image_messages_test_ts emitter
+F_web_monitor_inbox_captures_media_path_image_messages_test_ts["web/monitor-inbox.captures-media-path-image-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_captures_media_path_image_messages_test_ts emitter
+F_web_monitor_inbox_captures_media_path_image_messages_test_ts["web/monitor-inbox.captures-media-path-image-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_captures_media_path_image_messages_test_ts emitter
+F_web_monitor_inbox_captures_media_path_image_messages_test_ts["web/monitor-inbox.captures-media-path-image-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_captures_media_path_image_messages_test_ts emitter
+F_web_monitor_inbox_captures_media_path_image_messages_test_ts["web/monitor-inbox.captures-media-path-image-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_captures_media_path_image_messages_test_ts emitter
+F_web_monitor_inbox_streams_inbound_messages_test_ts["web/monitor-inbox.streams-inbound-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_streams_inbound_messages_test_ts emitter
+F_web_monitor_inbox_streams_inbound_messages_test_ts["web/monitor-inbox.streams-inbound-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_streams_inbound_messages_test_ts emitter
+F_web_monitor_inbox_streams_inbound_messages_test_ts["web/monitor-inbox.streams-inbound-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_streams_inbound_messages_test_ts emitter
+F_web_monitor_inbox_streams_inbound_messages_test_ts["web/monitor-inbox.streams-inbound-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_streams_inbound_messages_test_ts emitter
+F_web_monitor_inbox_streams_inbound_messages_test_ts["web/monitor-inbox.streams-inbound-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_streams_inbound_messages_test_ts emitter
+F_web_monitor_inbox_streams_inbound_messages_test_ts["web/monitor-inbox.streams-inbound-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_streams_inbound_messages_test_ts emitter
+F_web_monitor_inbox_streams_inbound_messages_test_ts["web/monitor-inbox.streams-inbound-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_streams_inbound_messages_test_ts emitter
+F_web_monitor_inbox_streams_inbound_messages_test_ts["web/monitor-inbox.streams-inbound-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_streams_inbound_messages_test_ts emitter
+F_web_monitor_inbox_streams_inbound_messages_test_ts["web/monitor-inbox.streams-inbound-messages.test.ts"] --> |emit| E_messages_upsert
+class F_web_monitor_inbox_streams_inbound_messages_test_ts emitter
+E_messages_upsert -.-> |listen| F_web_inbound_monitor_ts["web/inbound/monitor.ts"]
+class F_web_inbound_monitor_ts listener
+E_connection_update(["connection.update"])
+class E_connection_update event
+F_web_monitor_inbox_captures_media_path_image_messages_test_ts["web/monitor-inbox.captures-media-path-image-messages.test.ts"] --> |emit| E_connection_update
+class F_web_monitor_inbox_captures_media_path_image_messages_test_ts emitter
+F_web_session_test_ts["web/session.test.ts"] --> |emit| E_connection_update
+class F_web_session_test_ts emitter
+F_web_session_test_ts["web/session.test.ts"] --> |emit| E_connection_update
+class F_web_session_test_ts emitter
+E_connection_update -.-> |listen| F_web_inbound_monitor_ts["web/inbound/monitor.ts"]
+class F_web_inbound_monitor_ts listener
+E_connection_update -.-> |listen| F_web_session_ts["web/session.ts"]
+class F_web_session_ts listener
+E_connection_update -.-> |listen| F_web_session_ts["web/session.ts"]
+class F_web_session_ts listener
+E_creds_update(["creds.update"])
+class E_creds_update event
+F_web_session_test_ts["web/session.test.ts"] --> |emit| E_creds_update
+class F_web_session_test_ts emitter
+F_web_session_test_ts["web/session.test.ts"] --> |emit| E_creds_update
+class F_web_session_test_ts emitter
+F_web_session_test_ts["web/session.test.ts"] --> |emit| E_creds_update
+class F_web_session_test_ts emitter
+F_web_session_test_ts["web/session.test.ts"] --> |emit| E_creds_update
+class F_web_session_test_ts emitter
+F_web_session_test_ts["web/session.test.ts"] --> |emit| E_creds_update
+class F_web_session_test_ts emitter
+E_creds_update -.-> |listen| F_web_session_ts["web/session.ts"]
+class F_web_session_ts listener

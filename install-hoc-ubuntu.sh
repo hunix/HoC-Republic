@@ -1,0 +1,332 @@
+#!/bin/bash
+#
+# OpenClaw (HoC) Enhanced Edition - Ubuntu Installation Script
+# For Ubuntu 24.04.3 LTS
+# 
+# This script automates the complete installation of OpenClaw with all enhancements
+#
+
+set -e  # Exit on error
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Functions
+print_header() {
+    echo -e "${BLUE}╔══════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${BLUE}║     OpenClaw (HoC) Enhanced Edition - Ubuntu Installer          ║${NC}"
+    echo -e "${BLUE}╚══════════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+}
+
+print_step() {
+    echo -e "${GREEN}▶ $1${NC}"
+}
+
+print_info() {
+    echo -e "${BLUE}ℹ $1${NC}"
+}
+
+print_warning() {
+    echo -e "${YELLOW}⚠ $1${NC}"
+}
+
+print_error() {
+    echo -e "${RED}✗ $1${NC}"
+}
+
+print_success() {
+    echo -e "${GREEN}✓ $1${NC}"
+}
+
+check_ubuntu_version() {
+    print_step "Checking Ubuntu version..."
+    
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        echo "  OS: $NAME"
+        echo "  Version: $VERSION"
+        
+        if [[ "$VERSION_ID" != "24.04" ]] && [[ "$VERSION_ID" != "22.04" ]] && [[ "$VERSION_ID" != "20.04" ]]; then
+            print_warning "This script is optimized for Ubuntu 24.04, but will attempt to continue..."
+        fi
+    else
+        print_warning "Could not detect Ubuntu version, continuing anyway..."
+    fi
+    echo ""
+}
+
+install_system_dependencies() {
+    print_step "Installing system dependencies..."
+    
+    sudo apt-get update
+    sudo apt-get install -y \
+        curl \
+        wget \
+        git \
+        build-essential \
+        ca-certificates \
+        gnupg \
+        lsb-release \
+        software-properties-common
+    
+    print_success "System dependencies installed"
+    echo ""
+}
+
+install_nodejs() {
+    print_step "Installing Node.js 20.x..."
+    
+    # Check if Node.js is already installed
+    if command -v node &> /dev/null; then
+        NODE_VERSION=$(node --version)
+        print_info "Node.js is already installed: $NODE_VERSION"
+        
+        # Check if version is 18 or higher
+        MAJOR_VERSION=$(echo $NODE_VERSION | cut -d'.' -f1 | sed 's/v//')
+        if [ "$MAJOR_VERSION" -ge 18 ]; then
+            print_success "Node.js version is sufficient"
+            echo ""
+            return
+        else
+            print_warning "Node.js version is too old, upgrading..."
+        fi
+    fi
+    
+    # Install Node.js 20.x from NodeSource
+    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+    
+    # Verify installation
+    NODE_VERSION=$(node --version)
+    NPM_VERSION=$(npm --version)
+    
+    print_success "Node.js installed: $NODE_VERSION"
+    print_success "npm installed: $NPM_VERSION"
+    echo ""
+}
+
+install_pnpm() {
+    print_step "Installing pnpm..."
+    
+    # Check if pnpm is already installed
+    if command -v pnpm &> /dev/null; then
+        PNPM_VERSION=$(pnpm --version)
+        print_info "pnpm is already installed: $PNPM_VERSION"
+        echo ""
+        return
+    fi
+    
+    # Install pnpm globally
+    sudo npm install -g pnpm
+    
+    # Verify installation
+    PNPM_VERSION=$(pnpm --version)
+    print_success "pnpm installed: $PNPM_VERSION"
+    echo ""
+}
+
+clone_repository() {
+    print_step "Cloning HoC repository..."
+    
+    # Ask for installation directory
+    read -p "Enter installation directory [default: $HOME/HoC]: " INSTALL_DIR
+    INSTALL_DIR=${INSTALL_DIR:-$HOME/HoC}
+    
+    # Check if directory already exists
+    if [ -d "$INSTALL_DIR" ]; then
+        print_warning "Directory $INSTALL_DIR already exists"
+        read -p "Remove and re-clone? (y/N): " REMOVE_EXISTING
+        if [[ "$REMOVE_EXISTING" =~ ^[Yy]$ ]]; then
+            rm -rf "$INSTALL_DIR"
+        else
+            print_info "Using existing directory"
+            cd "$INSTALL_DIR"
+            echo ""
+            return
+        fi
+    fi
+    
+    # Clone the repository
+    git clone -b openclaw-enhancements https://github.com/hunix/HoC.git "$INSTALL_DIR"
+    cd "$INSTALL_DIR"
+    
+    print_success "Repository cloned to $INSTALL_DIR"
+    echo ""
+}
+
+install_dependencies() {
+    print_step "Installing OpenClaw dependencies..."
+    
+    # Install dependencies with pnpm
+    pnpm install
+    
+    print_success "Dependencies installed"
+    echo ""
+}
+
+build_project() {
+    print_step "Building OpenClaw..."
+    
+    # Build the project
+    pnpm build
+    
+    print_success "Build completed"
+    echo ""
+}
+
+create_env_file() {
+    print_step "Creating environment configuration..."
+    
+    if [ -f .env ]; then
+        print_info ".env file already exists, skipping..."
+        echo ""
+        return
+    fi
+    
+    # Create basic .env file
+    cat > .env << 'EOF'
+# OpenClaw Configuration
+# Generated by installation script
+
+# Log level (debug, info, warn, error)
+OPENCLAW_LOG_LEVEL=info
+
+# Enable companion service (Windows only, set to false on Linux)
+OPENCLAW_USE_COMPANION=false
+
+# Gateway configuration
+# OPENCLAW_GATEWAY_PORT=8080
+# OPENCLAW_GATEWAY_HOST=0.0.0.0
+
+# Node host configuration
+# OPENCLAW_NODE_HOST_PORT=8081
+
+EOF
+    
+    print_success "Environment file created (.env)"
+    print_info "You can edit .env to customize configuration"
+    echo ""
+}
+
+setup_systemd_service() {
+    print_step "Setting up systemd service (optional)..."
+    
+    read -p "Do you want to set up OpenClaw as a systemd service? (y/N): " SETUP_SERVICE
+    if [[ ! "$SETUP_SERVICE" =~ ^[Yy]$ ]]; then
+        print_info "Skipping systemd service setup"
+        echo ""
+        return
+    fi
+    
+    # Get the installation directory
+    INSTALL_DIR=$(pwd)
+    
+    # Create systemd service file
+    sudo tee /etc/systemd/system/openclaw.service > /dev/null << EOF
+[Unit]
+Description=OpenClaw Gateway Service
+After=network.target
+
+[Service]
+Type=simple
+User=$USER
+WorkingDirectory=$INSTALL_DIR
+ExecStart=$(which pnpm) start
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=openclaw
+
+[Install]
+WantedBy=multi-user.target
+EOF
+    
+    # Reload systemd and enable service
+    sudo systemctl daemon-reload
+    sudo systemctl enable openclaw.service
+    
+    print_success "Systemd service created and enabled"
+    print_info "Start service with: sudo systemctl start openclaw"
+    print_info "View logs with: sudo journalctl -u openclaw -f"
+    echo ""
+}
+
+run_tests() {
+    print_step "Running tests (optional)..."
+    
+    read -p "Do you want to run tests? (y/N): " RUN_TESTS
+    if [[ ! "$RUN_TESTS" =~ ^[Yy]$ ]]; then
+        print_info "Skipping tests"
+        echo ""
+        return
+    fi
+    
+    pnpm test || print_warning "Some tests failed, but installation can continue"
+    echo ""
+}
+
+print_next_steps() {
+    echo ""
+    echo -e "${GREEN}╔══════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${GREEN}║                   Installation Complete! 🎉                      ║${NC}"
+    echo -e "${GREEN}╚══════════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    echo -e "${BLUE}📍 Installation Directory:${NC} $(pwd)"
+    echo ""
+    echo -e "${YELLOW}🚀 Next Steps:${NC}"
+    echo ""
+    echo "1. Start OpenClaw:"
+    echo "   ${GREEN}pnpm start${NC}"
+    echo ""
+    echo "2. Or start as systemd service:"
+    echo "   ${GREEN}sudo systemctl start openclaw${NC}"
+    echo ""
+    echo "3. View logs:"
+    echo "   ${GREEN}tail -f ~/.openclaw/logs/gateway.log${NC}"
+    echo "   or"
+    echo "   ${GREEN}sudo journalctl -u openclaw -f${NC}"
+    echo ""
+    echo "4. Check status:"
+    echo "   ${GREEN}pnpm status${NC}"
+    echo ""
+    echo -e "${BLUE}📚 Documentation:${NC}"
+    echo "   - README_FIRST.md - Quick start guide"
+    echo "   - INSTALLATION_INSTRUCTIONS.md - Detailed setup"
+    echo "   - IMPLEMENTATION_SUMMARY.md - Technical details"
+    echo "   - TESTING_GUIDE.md - Testing procedures"
+    echo "   - DEPLOYMENT_GUIDE.md - Production deployment"
+    echo ""
+    echo -e "${BLUE}🔗 Repository:${NC} https://github.com/hunix/HoC"
+    echo ""
+    echo -e "${GREEN}✨ All enhancements are included:${NC}"
+    echo "   ✓ Phase 1: Core fortification (error handling, resource management)"
+    echo "   ✓ Phase 2: Windows parity (shell compatibility)"
+    echo "   ✓ Phase 3: Full PC control capabilities (Linux compatible)"
+    echo ""
+}
+
+# Main installation flow
+main() {
+    print_header
+    
+    check_ubuntu_version
+    install_system_dependencies
+    install_nodejs
+    install_pnpm
+    clone_repository
+    install_dependencies
+    build_project
+    create_env_file
+    setup_systemd_service
+    run_tests
+    print_next_steps
+}
+
+# Run main installation
+main

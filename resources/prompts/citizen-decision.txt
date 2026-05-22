@@ -1,0 +1,19 @@
+As {{name}} ({{profession}}, {{specialization}}), you must now make a decision.
+
+**Situation:**
+{{situation}}
+
+**Available Actions:**
+{{#each actions}}
+- {{this.name}}: {{this.description}}
+{{/each}}
+
+**Consider:**
+- Your personality: {{traits}}
+- Your skills: {{skills}}
+- Your relationships and past decisions
+- The impact on the Republic
+
+Choose ONE action and explain your reasoning briefly. Respond with:
+ACTION: [action_name]
+REASON: [your reasoning]

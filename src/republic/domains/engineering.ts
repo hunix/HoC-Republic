@@ -1,0 +1,95 @@
+import type { SeedDomain } from "./seed-data.js";
+
+export const engineeringDomains: SeedDomain[] = [
+  {
+    path: "Engineering",
+    name: "Engineering",
+    description: "Application of scientific principles to design systems and solve problems",
+    coreSkills: [
+      "system-design",
+      "prototyping",
+      "testing-validation",
+      "project-management",
+      "technical-documentation",
+    ],
+    minPracticeLevel: "bachelor",
+  },
+  {
+    path: "Engineering.Software",
+    name: "Software Engineering",
+    description: "Design, development, and maintenance of software systems",
+    coreSkills: [
+      "architecture-design",
+      "code-quality",
+      "testing-automation",
+      "ci-cd",
+      "performance-optimization",
+      "security-analysis",
+    ],
+    minPracticeLevel: "bachelor",
+  },
+  {
+    path: "Engineering.Biomedical",
+    name: "Biomedical Engineering",
+    description: "Engineering principles applied to healthcare technology and medical devices",
+    coreSkills: [
+      "medical-device-design",
+      "biomechanics",
+      "biosignal-processing",
+      "tissue-engineering",
+      "regulatory-compliance",
+    ],
+    minPracticeLevel: "master",
+  },
+  {
+    path: "Engineering.Biomedical.NeuralInterfaces",
+    name: "Neural Interfaces",
+    description: "Brain-computer interface design, neural signal processing, and neuroprosthetics",
+    coreSkills: [
+      "neural-signal-processing",
+      "bci-design",
+      "electrode-engineering",
+      "neural-decoding",
+    ],
+    minPracticeLevel: "doctorate",
+  },
+  {
+    path: "Engineering.Electrical",
+    name: "Electrical Engineering",
+    description: "Electronic systems, circuit design, power systems, and signal processing",
+    coreSkills: [
+      "circuit-design",
+      "signal-processing",
+      "power-systems",
+      "embedded-systems",
+      "pcb-design",
+    ],
+    minPracticeLevel: "bachelor",
+  },
+  {
+    path: "Engineering.Mechanical",
+    name: "Mechanical Engineering",
+    description: "Mechanical systems, thermodynamics, and manufacturing processes",
+    coreSkills: [
+      "cad-modeling",
+      "finite-element-analysis",
+      "thermal-design",
+      "manufacturing-process",
+      "materials-selection",
+    ],
+    minPracticeLevel: "bachelor",
+  },
+  {
+    path: "Engineering.AI",
+    name: "AI Engineering",
+    description: "Design, training, and deployment of artificial intelligence systems",
+    coreSkills: [
+      "model-architecture",
+      "training-optimization",
+      "deployment-pipelines",
+      "prompt-engineering",
+      "evaluation-metrics",
+    ],
+    minPracticeLevel: "master",
+  },
+];

@@ -1,0 +1,63 @@
+{
+  "id": "hoc-plugin-chatterbox",
+  "name": "Chatterbox TTS (Resemble AI)",
+  "version": "1.0.0",
+  "displayName": "Chatterbox TTS (Resemble AI)",
+  "description": "State-of-the-art open-source text-to-speech. Three model variants: Turbo (350M, low-latency, paralinguistic tags), Standard (English), Multilingual (23 languages). Voice cloning via reference audio clips.",
+  "sourceRepo": "https://github.com/resemble-ai/chatterbox",
+  "author": "HoC Republic",
+
+  "backend": {
+    "type": "python-cli",
+    "repo": "https://github.com/resemble-ai/chatterbox.git",
+    "deps": ["chatterbox-tts"],
+    "verifyImport": "from chatterbox.tts import ChatterboxTTS"
+  },
+
+  "toolDefinitions": [
+    {
+      "name": "chatterbox_speak",
+      "description": "Generate speech from text with Chatterbox TTS. Supports 3 model variants: Turbo (fast, paralinguistic), Standard (English), Multilingual (23 languages).",
+      "params": {
+        "text": { "type": "string", "description": "Text to synthesize", "required": true },
+        "model": {
+          "type": "string",
+          "enum": ["turbo", "standard", "multilingual"],
+          "description": "Model variant (default: turbo)"
+        },
+        "voice_ref": {
+          "type": "string",
+          "description": "Path to reference audio for voice cloning"
+        },
+        "language": {
+          "type": "string",
+          "description": "Target language code for multilingual model"
+        }
+      },
+      "command": "chatterbox_speak"
+    }
+  ],
+
+  "gatewayDefinitions": [
+    { "method": "chatterbox.speak", "delegateTo": "chatterbox_speak" },
+    { "method": "chatterbox.job-status", "delegateTo": "_job_status" },
+    { "method": "chatterbox.cancel", "delegateTo": "_cancel" },
+    { "method": "chatterbox.queue-status", "delegateTo": "_queue_status" }
+  ],
+
+  "jobQueue": {
+    "maxConcurrent": 1,
+    "timeoutMs": 120000
+  },
+
+  "capabilities": {
+    "tools": ["chatterbox_speak"],
+    "hooks": ["tick:before"]
+  },
+
+  "requirements": {
+    "binaries": ["python3"]
+  },
+
+  "bootPriority": 32
+}

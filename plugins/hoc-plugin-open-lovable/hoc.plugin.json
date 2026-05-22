@@ -1,0 +1,20 @@
+{
+  "name": "hoc-plugin-open-lovable",
+  "version": "1.0.0",
+  "displayName": "Open Lovable",
+  "description": "Integration with Open Lovable (Firecrawl) — clone and recreate any website as a modern React app via AI chat. Supports Gemini, Anthropic, OpenAI, and Groq for AI generation, with Vercel or E2B sandboxing.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "website-cloning",
+    "react-app-generation",
+    "ai-chat-to-code",
+    "web-scraping",
+    "sandbox-execution"
+  ],
+  "requires": {
+    "node": ">=18",
+    "npm": ["open-lovable"]
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

@@ -1,0 +1,20 @@
+{
+  "name": "hoc-plugin-ai-scientist",
+  "version": "1.0.0",
+  "displayName": "AI Scientist",
+  "description": "Integration with The AI Scientist (SakanaAI) — fully automated open-ended scientific discovery. Generates research ideas, runs experiments, writes papers, and provides LLM-based peer review across NanoGPT, 2D Diffusion, and Grokking templates.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "scientific-discovery",
+    "paper-generation",
+    "experiment-automation",
+    "peer-review",
+    "idea-generation"
+  ],
+  "requires": {
+    "python": ">=3.10",
+    "gpu_vram_gb": 12
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

@@ -1,0 +1,20 @@
+{
+  "enabled": false,
+  "ollamaEndpoint": "http://localhost:11434",
+  "model": "qwen3-vl:4b",
+  "fallbackModel": "llava:7b",
+  "temperature": 0.1,
+  "maxTokens": 4096,
+  "requestTimeoutSeconds": 120,
+  "captureFormat": "png",
+  "captureQuality": 90,
+  "maxImageSizeBytes": 10485760,
+  "retryAttempts": 2,
+  "retryDelayMs": 1000,
+  "prompts": {
+    "analyze": "Analyze this screenshot. Describe what you see, including UI elements, text, and any notable features. Be precise and structured.",
+    "describe": "Describe exactly what is visible on this screen. List all windows, applications, text content, buttons, menus, and UI elements you can identify. Be precise and structured.",
+    "findElement": "Find the UI element matching this description: '{{element}}'. Return the approximate coordinates as JSON: {\"found\": true/false, \"x\": number, \"y\": number, \"confidence\": 0-1, \"description\": \"what you found\"}. Coordinates should be pixel positions on screen. Return ONLY the JSON, no other text.",
+    "ocr": "Extract ALL text visible on this screen. Return it organized by visual region/window. Include menu items, button labels, status bar text, title bars — everything readable."
+  }
+}

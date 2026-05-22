@@ -1,0 +1,59 @@
+{
+  "id": "hoc-plugin-funmusic",
+  "name": "FunMusic (InspireMusic)",
+  "version": "1.0.0",
+  "displayName": "FunMusic (InspireMusic)",
+  "description": "AI music generation via InspireMusic. Text-to-music and music continuation with high-quality long-form audio. Powered by autoregressive transformer (Qwen2.5) + flow-matching model.",
+  "sourceRepo": "https://github.com/FunAudioLLM/InspireMusic",
+  "author": "HoC Republic",
+
+  "backend": {
+    "type": "python-cli",
+    "repo": "https://github.com/FunAudioLLM/InspireMusic.git",
+    "deps": ["inspiremusic"],
+    "verifyImport": "import inspiremusic"
+  },
+
+  "toolDefinitions": [
+    {
+      "name": "funmusic_generate",
+      "description": "Generate music from a text prompt or continue an existing audio track.",
+      "params": {
+        "prompt": {
+          "type": "string",
+          "description": "Text prompt describing the music",
+          "required": true
+        },
+        "duration_sec": { "type": "number", "description": "Duration in seconds (default: 30)" },
+        "continuation_audio": {
+          "type": "string",
+          "description": "Path to audio file for continuation"
+        }
+      },
+      "command": "funmusic_generate"
+    }
+  ],
+
+  "gatewayDefinitions": [
+    { "method": "funmusic.generate", "delegateTo": "funmusic_generate" },
+    { "method": "funmusic.job-status", "delegateTo": "_job_status" },
+    { "method": "funmusic.cancel", "delegateTo": "_cancel" },
+    { "method": "funmusic.queue-status", "delegateTo": "_queue_status" }
+  ],
+
+  "jobQueue": {
+    "maxConcurrent": 1,
+    "timeoutMs": 600000
+  },
+
+  "capabilities": {
+    "tools": ["funmusic_generate"],
+    "hooks": ["tick:before"]
+  },
+
+  "requirements": {
+    "binaries": ["python3"]
+  },
+
+  "bootPriority": 50
+}

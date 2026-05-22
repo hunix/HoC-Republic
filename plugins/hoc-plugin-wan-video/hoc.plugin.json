@@ -1,0 +1,69 @@
+{
+  "id": "hoc-plugin-wan-video",
+  "name": "Wan 2.2 — Cinematic AI Video Generation",
+  "version": "1.0.0",
+  "displayName": "Wan 2.2 Video",
+  "description": "Integration with Wan 2.2 (Alibaba) — Mixture-of-Experts cinematic video generation. Excels in cinematic lighting, controlled color grading, realistic camera motion, and strong prompt alignment. Supports text-to-video and image-to-video at 480p-720p.",
+  "sourceRepo": "https://github.com/Wan-Video/Wan2.1",
+  "author": "HoC Republic",
+
+  "backend": {
+    "type": "python-cli",
+    "repo": "https://github.com/Wan-Video/Wan2.1.git",
+    "deps": ["wan"],
+    "verifyImport": "import wan"
+  },
+
+  "toolDefinitions": [
+    {
+      "name": "wan_generate_video",
+      "description": "Generate cinematic video from text prompt using Wan 2.2 MoE model. Supports cinematic lighting, color grading, and camera motion.",
+      "params": {
+        "prompt": { "type": "string", "description": "Text prompt describing the video scene", "required": true },
+        "negative_prompt": { "type": "string", "description": "Negative prompt to exclude elements" },
+        "resolution": { "type": "string", "enum": ["480p", "720p"], "description": "Output resolution (default: 720p)" },
+        "duration_sec": { "type": "number", "description": "Duration in seconds (default: 5, max: 10)" },
+        "fps": { "type": "number", "description": "Frames per second (default: 24)" },
+        "style": { "type": "string", "enum": ["cinematic", "photorealistic", "anime", "artistic"], "description": "Visual style preset" },
+        "camera_motion": { "type": "string", "enum": ["static", "pan-left", "pan-right", "zoom-in", "zoom-out", "orbit", "dolly", "tracking"], "description": "Camera motion type" },
+        "seed": { "type": "number", "description": "Random seed (-1 for random)" }
+      },
+      "command": "wan_generate_video"
+    },
+    {
+      "name": "wan_image_to_video",
+      "description": "Animate a still image into a video using Wan 2.2 image-to-video mode.",
+      "params": {
+        "image_path": { "type": "string", "description": "Path to input image", "required": true },
+        "prompt": { "type": "string", "description": "Motion/action prompt" },
+        "duration_sec": { "type": "number", "description": "Duration in seconds (default: 5)" }
+      },
+      "command": "wan_image_to_video"
+    }
+  ],
+
+  "gatewayDefinitions": [
+    { "method": "wan.generate", "delegateTo": "wan_generate_video" },
+    { "method": "wan.image-to-video", "delegateTo": "wan_image_to_video" },
+    { "method": "wan.job-status", "delegateTo": "_job_status" },
+    { "method": "wan.cancel", "delegateTo": "_cancel" },
+    { "method": "wan.queue-status", "delegateTo": "_queue_status" }
+  ],
+
+  "jobQueue": {
+    "maxConcurrent": 1,
+    "timeoutMs": 900000
+  },
+
+  "capabilities": {
+    "tools": ["wan_generate_video", "wan_image_to_video"],
+    "hooks": ["tick:before"]
+  },
+
+  "requirements": {
+    "binaries": ["python3"],
+    "gpu_vram_gb": 12
+  },
+
+  "bootPriority": 48
+}

@@ -1,0 +1,52 @@
+{
+  "id": "hoc-plugin-mmaudio",
+  "name": "MMAudio — Multimodal Audio Synthesis",
+  "version": "1.0.0",
+  "displayName": "MMAudio",
+  "description": "Integration with MMAudio (CVPR 2025) — multimodal joint training for high-quality video-to-audio and text-to-audio synthesis. Generates synchronized audio from video and/or text inputs using CLIP + Synchformer.",
+  "sourceRepo": "https://github.com/hkchengrex/MMAudio",
+  "author": "HoC Republic",
+
+  "backend": {
+    "type": "python-cli",
+    "repo": "https://github.com/hkchengrex/MMAudio.git",
+    "deps": ["mmaudio"],
+    "verifyImport": "import mmaudio"
+  },
+
+  "toolDefinitions": [
+    {
+      "name": "mmaudio_generate",
+      "description": "Generate synchronized audio from video and/or text inputs using MMAudio.",
+      "params": {
+        "video_path": { "type": "string", "description": "Path to video file for video-to-audio" },
+        "text_prompt": { "type": "string", "description": "Text prompt for text-to-audio" },
+        "duration_sec": { "type": "number", "description": "Duration in seconds" }
+      },
+      "command": "mmaudio_generate"
+    }
+  ],
+
+  "gatewayDefinitions": [
+    { "method": "mmaudio.generate", "delegateTo": "mmaudio_generate" },
+    { "method": "mmaudio.job-status", "delegateTo": "_job_status" },
+    { "method": "mmaudio.cancel", "delegateTo": "_cancel" },
+    { "method": "mmaudio.queue-status", "delegateTo": "_queue_status" }
+  ],
+
+  "jobQueue": {
+    "maxConcurrent": 1,
+    "timeoutMs": 300000
+  },
+
+  "capabilities": {
+    "tools": ["mmaudio_generate"],
+    "hooks": ["tick:before"]
+  },
+
+  "requirements": {
+    "binaries": ["python3"]
+  },
+
+  "bootPriority": 50
+}

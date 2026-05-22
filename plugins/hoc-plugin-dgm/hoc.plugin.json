@@ -1,0 +1,20 @@
+{
+  "name": "hoc-plugin-dgm",
+  "version": "1.0.0",
+  "displayName": "Darwin Gödel Machine",
+  "description": "Integration with Darwin Gödel Machine (DGM) — open-ended evolution of self-improving coding agents. Iteratively modifies its own code and validates improvements using SWE-bench and Polyglot benchmarks.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "self-improving-agents",
+    "code-evolution",
+    "benchmark-evaluation",
+    "meta-learning",
+    "coding-agent"
+  ],
+  "requires": {
+    "python": ">=3.10",
+    "docker": true
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

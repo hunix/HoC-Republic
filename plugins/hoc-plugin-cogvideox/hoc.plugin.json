@@ -1,0 +1,46 @@
+{
+  "id": "hoc-plugin-cogvideox",
+  "name": "CogVideoX — Consumer-GPU Video Generation",
+  "version": "1.0.0",
+  "displayName": "CogVideoX",
+  "description": "Integration with CogVideoX (Zhipu AI) — efficient video generation that runs on consumer GPUs as low as 8GB VRAM. CogVideoX-5B offers good quality at 720p with INT8 quantization support. Ideal for draft clips and rapid iteration.",
+  "sourceRepo": "https://github.com/THUDM/CogVideo",
+  "author": "HoC Republic",
+  "backend": {
+    "type": "python-cli",
+    "repo": "https://github.com/THUDM/CogVideo.git",
+    "deps": ["cogvideo"],
+    "verifyImport": "import cogvideo"
+  },
+  "toolDefinitions": [
+    {
+      "name": "cogvideo_generate",
+      "description": "Generate video from text prompts using CogVideoX. Runs on 8GB GPUs with INT8 quantization. Good for rapid iteration and draft clips.",
+      "params": {
+        "prompt": { "type": "string", "description": "Text prompt for video", "required": true },
+        "model": { "type": "string", "enum": ["2B", "5B"], "description": "Model variant (2B for 8GB GPUs, 5B for 16GB+)" },
+        "num_frames": { "type": "number", "description": "Number of frames (default: 48)" },
+        "width": { "type": "number", "description": "Width (default: 720)" },
+        "height": { "type": "number", "description": "Height (default: 480)" },
+        "fps": { "type": "number", "description": "FPS (default: 8, can interpolate to 24)" },
+        "guidance_scale": { "type": "number", "description": "CFG scale (default: 6.0)" },
+        "quantize": { "type": "string", "enum": ["none", "int8", "int4"], "description": "Quantization (int8 for 8GB GPUs)" },
+        "seed": { "type": "number", "description": "Random seed" }
+      },
+      "command": "cogvideo_generate"
+    }
+  ],
+  "gatewayDefinitions": [
+    { "method": "cogvideo.generate", "delegateTo": "cogvideo_generate" },
+    { "method": "cogvideo.job-status", "delegateTo": "_job_status" },
+    { "method": "cogvideo.cancel", "delegateTo": "_cancel" },
+    { "method": "cogvideo.queue-status", "delegateTo": "_queue_status" }
+  ],
+  "jobQueue": { "maxConcurrent": 1, "timeoutMs": 600000 },
+  "capabilities": {
+    "tools": ["cogvideo_generate"],
+    "hooks": ["tick:before"]
+  },
+  "requirements": { "binaries": ["python3"], "gpu_vram_gb": 8 },
+  "bootPriority": 48
+}

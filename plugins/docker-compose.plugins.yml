@@ -1,0 +1,131 @@
+# Plugin Docker Compose — services started on-demand when activated via UI
+#
+# The plugin manager calls `docker compose -f <this-file> up -d <service-name>`
+# when a docker-compose plugin is activated, and stops it on deactivation.
+# Services are NOT auto-started on gateway boot.
+#
+# Usage:
+#   Manual:  docker compose -f plugins/docker-compose.plugins.yml up -d <service>
+#   Stop:    docker compose -f plugins/docker-compose.plugins.yml stop <service>
+#
+# To add a new plugin, define a service here and reference it from the
+# plugin's hoc.plugin.json with:
+#   "backend": {
+#     "type": "docker-compose",
+#     "serviceName": "<service-name>",
+#     "composeFile": "docker-compose.plugins.yml",
+#     "apiUrl": "http://localhost:<port>"
+#   }
+
+services:
+  # ─── AutoGPT (self-hosted) ───────────────────────────────────
+  # Uncomment and configure when ready to use:
+  #
+  # autogpt:
+  #   image: significantgravitas/autogpt:latest
+  #   ports:
+  #     - "${AUTOGPT_PORT:-8000}:8000"
+  #   environment:
+  #     - OPENAI_API_KEY=${OPENAI_API_KEY}
+  #   volumes:
+  #     - ./.data/hoc-plugin-autogpt/docker:/app/data
+  #   restart: unless-stopped
+
+  # ─── FaceFusion (GPU) ────────────────────────────────────────
+  # Requires NVIDIA GPU with docker nvidia runtime:
+  #
+  # facefusion:
+  #   image: facefusion/facefusion:latest
+  #   ports:
+  #     - "${FACEFUSION_PORT:-7860}:7860"
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [gpu]
+  #   volumes:
+  #     - ./.data/hoc-plugin-facefusion/docker:/app/data
+  #   restart: unless-stopped
+
+  # ─── Deer-Flow (Super Agent Harness) ─────────────────────────
+  # Requires clone of github.com/bytedance/deer-flow in plugin dir:
+
+  deerflow:
+    build:
+      context: ./.data/hoc-plugin-deerflow/deer-flow
+      dockerfile: Dockerfile
+    ports:
+      - "${DEERFLOW_PORT:-2026}:2026"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./.data/hoc-plugin-deerflow/docker:/app/data
+    restart: unless-stopped
+
+  # ─── WanGP (GPU Video Generator) ──────────────────────────────
+  # Wan 2.2 / Hunyuan / LTX-2.3 video generation via Gradio API.
+  # Build first: ./build-wan2gp.sh
+  # Default resolution: 832×480 @ 24fps, 5 seconds
+  # Using 1.3B model — 8-10x faster than 14B on TITAN RTX (~2-3 min vs 20+ min)
+  # Switch to --t2v-14B if you need max quality (requires 24GB+ VRAM, 18GB RAM)
+
+  wan2gp:
+    image: hoc/wan2gp:latest
+    build:
+      context: ./.data/wan2gp
+      dockerfile: Dockerfile
+      args:
+        CUDA_ARCHITECTURES: "7.5;8.6"
+    ports:
+      - "${WAN2GP_PORT:-7860}:7860"
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        export HOME=/home/user
+        export PYTHONUNBUFFERED=1
+        export HF_HOME=/home/user/.cache/huggingface
+        export OMP_NUM_THREADS=$$(nproc)
+        export MKL_NUM_THREADS=$$(nproc)
+        export TORCH_ALLOW_TF32_CUBLAS=1
+        export TORCH_ALLOW_TF32_CUDNN=1
+        export SDL_AUDIODRIVER=dummy
+        echo "Starting Wan2GP 1.3B with --attention sdpa..."
+        nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader 2>/dev/null || true
+        mkdir -p /workspace/settings /workspace/outputs /workspace/error_queue
+        chown -R user:user /workspace/settings /workspace/outputs /workspace/error_queue /workspace/wgp_config.json 2>/dev/null || true
+        chown user:user /workspace/*.json 2>/dev/null || true
+        exec su -p user -c "python3 wgp.py --listen --attention sdpa --t2v-1-3B"
+    environment:
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True,max_split_size_mb:256
+      - CUDA_MODULE_LOADING=LAZY
+      - CUDA_LAUNCH_BLOCKING=1
+    deploy:
+      resources:
+        limits:
+          memory: 16g
+        reservations:
+          memory: 8g
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - wan2gp-models:/home/user/.cache
+      - wan2gp-outputs:/workspace/outputs
+      - ./.data/wan2gp:/workspace
+    labels:
+      - "hoc.service=wan2gp"
+    restart: unless-stopped
+
+  # ─── Placeholder (keeps compose file valid) ──────────────────
+  # Remove this once you uncomment a real service above.
+  _placeholder:
+    image: busybox
+    command: "true"
+    profiles: ["never"]
+
+volumes:
+  wan2gp-models:
+  wan2gp-outputs:

@@ -1,0 +1,56 @@
+{
+  "id": "hoc-plugin-ltx-video",
+  "name": "LTX-2 — Production-Ready 4K Video Generation",
+  "version": "1.0.0",
+  "displayName": "LTX-2 Video",
+  "description": "Integration with LTX-2 (Lightricks, Jan 2026) — production-ready 4K/50fps video with synchronized audio. Native ComfyUI integration. Supports NVFP4/FP8 quantization for consumer GPUs.",
+  "sourceRepo": "https://github.com/Lightricks/LTX-Video",
+  "author": "HoC Republic",
+  "backend": {
+    "type": "python-cli",
+    "repo": "https://github.com/Lightricks/LTX-Video.git",
+    "deps": ["ltx-video"],
+    "verifyImport": "import ltx_video"
+  },
+  "toolDefinitions": [
+    {
+      "name": "ltx_generate_video",
+      "description": "Generate production-quality video at up to 4K/50fps with optional synchronized audio using LTX-2.",
+      "params": {
+        "prompt": { "type": "string", "description": "Text prompt for video", "required": true },
+        "negative_prompt": { "type": "string", "description": "Negative prompt" },
+        "resolution": { "type": "string", "enum": ["720p", "1080p", "4K"], "description": "Output resolution (default: 1080p)" },
+        "duration_sec": { "type": "number", "description": "Duration 1-20 seconds (default: 5)" },
+        "fps": { "type": "number", "description": "Frames per second: 24, 30, or 50 (default: 24)" },
+        "with_audio": { "type": "boolean", "description": "Generate synchronized audio (default: false)" },
+        "seed": { "type": "number", "description": "Random seed (-1 for random)" }
+      },
+      "command": "ltx_generate_video"
+    },
+    {
+      "name": "ltx_image_to_video",
+      "description": "Animate a still image into a 4K video using LTX-2 image-to-video mode.",
+      "params": {
+        "image_path": { "type": "string", "description": "Path to input image", "required": true },
+        "prompt": { "type": "string", "description": "Motion prompt" },
+        "duration_sec": { "type": "number", "description": "Duration in seconds" },
+        "resolution": { "type": "string", "enum": ["720p", "1080p", "4K"] }
+      },
+      "command": "ltx_image_to_video"
+    }
+  ],
+  "gatewayDefinitions": [
+    { "method": "ltx.generate", "delegateTo": "ltx_generate_video" },
+    { "method": "ltx.image-to-video", "delegateTo": "ltx_image_to_video" },
+    { "method": "ltx.job-status", "delegateTo": "_job_status" },
+    { "method": "ltx.cancel", "delegateTo": "_cancel" },
+    { "method": "ltx.queue-status", "delegateTo": "_queue_status" }
+  ],
+  "jobQueue": { "maxConcurrent": 1, "timeoutMs": 900000 },
+  "capabilities": {
+    "tools": ["ltx_generate_video", "ltx_image_to_video"],
+    "hooks": ["tick:before"]
+  },
+  "requirements": { "binaries": ["python3"], "gpu_vram_gb": 12 },
+  "bootPriority": 48
+}

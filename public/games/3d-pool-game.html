@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HoC Republic — 3D Pool Game</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  body { overflow: hidden; background: #0a0a0f; font-family: 'Inter', sans-serif; color: #e0e0e0; }
+  canvas { display: block; }
+
+  #hud {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 24px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+    pointer-events: none; z-index: 10;
+  }
+  #hud > * { pointer-events: auto; }
+  .score-panel {
+    display: flex; gap: 24px; align-items: center;
+  }
+  .player {
+    padding: 8px 20px; border-radius: 10px;
+    font-size: 14px; font-weight: 600;
+    transition: all 0.3s;
+  }
+  .player.active {
+    background: rgba(129, 140, 248, 0.25);
+    border: 1px solid rgba(129, 140, 248, 0.5);
+    box-shadow: 0 0 20px rgba(129, 140, 248, 0.2);
+  }
+  .player.inactive {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    opacity: 0.6;
+  }
+  .player .name { margin-bottom: 2px; }
+  .player .balls { font-size: 11px; color: #8b949e; }
+  .game-title {
+    font-size: 18px; font-weight: 700;
+    background: linear-gradient(135deg, #818cf8, #34d399);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .game-subtitle { font-size: 11px; color: #6b7280; }
+
+  #power-bar {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    width: 300px; z-index: 10;
+    display: none;
+  }
+  #power-bar.visible { display: block; }
+  .power-track {
+    height: 8px; background: rgba(255,255,255,0.1);
+    border-radius: 4px; overflow: hidden;
+  }
+  .power-fill {
+    height: 100%; border-radius: 4px;
+    background: linear-gradient(90deg, #34d399, #fbbf24, #f87171);
+    transition: width 0.05s;
+  }
+  .power-label {
+    text-align: center; font-size: 11px; color: #8b949e;
+    margin-top: 6px;
+  }
+
+  #message {
+    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+    padding: 10px 24px; border-radius: 10px;
+    background: rgba(0,0,0,0.8); border: 1px solid rgba(129,140,248,0.3);
+    font-size: 13px; font-weight: 500; color: #818cf8;
+    z-index: 10; display: none; white-space: nowrap;
+    backdrop-filter: blur(10px);
+  }
+  #message.visible { display: block; animation: fadeIn 0.3s; }
+
+  #controls-hint {
+    position: fixed; bottom: 12px; right: 16px;
+    font-size: 10px; color: #4b5563; z-index: 10;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+</style>
+</head>
+<body>
+
+<div id="hud">
+  <div class="score-panel">
+    <div class="player active" id="p1">
+      <div class="name">⚪ Player 1 (Solids)</div>
+      <div class="balls" id="p1-balls">● ● ● ● ● ● ●</div>
+    </div>
+  </div>
+  <div style="text-align:center">
+    <div class="game-title">HoC 3D Pool</div>
+    <div class="game-subtitle">Republic Game Studio</div>
+  </div>
+  <div class="score-panel">
+    <div class="player inactive" id="p2">
+      <div class="name">Player 2 (Stripes) 🔵</div>
+      <div class="balls" id="p2-balls">◐ ◐ ◐ ◐ ◐ ◐ ◐</div>
+    </div>
+  </div>
+</div>
+
+<div id="power-bar">
+  <div class="power-track"><div class="power-fill" id="power-fill" style="width:0%"></div></div>
+  <div class="power-label">Click & drag to set power — release to shoot</div>
+</div>
+
+<div id="message"></div>
+<div id="controls-hint">🖱️ Left drag: Aim · Scroll: Zoom · Right drag: Orbit</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://esm.sh/three@0.171.0",
+  "three/addons/": "https://esm.sh/three@0.171.0/examples/jsm/",
+  "cannon-es": "https://esm.sh/cannon-es@0.20.0"
+}}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import * as CANNON from 'cannon-es';
+
+// ═══════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════
+const TABLE_W = 2.54, TABLE_H = 1.27, TABLE_THICK = 0.05;
+const RAIL_H = 0.06, CUSHION_W = 0.07;
+const BALL_R = 0.028575; // standard pool ball radius
+const POCKET_R = 0.055;
+const BALL_MASS = 0.17; // kg
+const CUE_BALL_POS = new THREE.Vector3(-TABLE_W / 4, BALL_R + TABLE_THICK / 2, 0);
+
+// Colors
+const FELT_COLOR = 0x0d6b3a;
+const RAIL_COLOR = 0x5c3a1e;
+const ROOM_COLOR = 0x1a1520;
+
+// Ball colors (1-15)
+const BALL_COLORS = [
+  0xf5e642, // 1 yellow
+  0x1a56db, // 2 blue
+  0xe02424, // 3 red
+  0x5b21b6, // 4 purple
+  0xf97316, // 5 orange
+  0x15803d, // 6 green
+  0x7f1d1d, // 7 maroon
+  0x111827, // 8 black (8-ball)
+  0xf5e642, // 9 yellow stripe
+  0x1a56db, // 10 blue stripe
+  0xe02424, // 11 red stripe
+  0x5b21b6, // 12 purple stripe
+  0xf97316, // 13 orange stripe
+  0x15803d, // 14 green stripe
+  0x7f1d1d, // 15 maroon stripe
+];
+
+// ═══════════════════════════════════════════
+// SCENE SETUP
+// ═══════════════════════════════════════════
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(ROOM_COLOR);
+scene.fog = new THREE.FogExp2(ROOM_COLOR, 0.15);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(0, 2.2, 2.5);
+camera.lookAt(0, 0, 0);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.2;
+document.body.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, TABLE_THICK, 0);
+controls.minDistance = 1;
+controls.maxDistance = 6;
+controls.maxPolarAngle = Math.PI / 2 - 0.05;
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.update();
+
+// ═══════════════════════════════════════════
+// LIGHTING
+// ═══════════════════════════════════════════
+const ambientLight = new THREE.AmbientLight(0x404060, 0.3);
+scene.add(ambientLight);
+
+// Main table spotlight
+const spotlight1 = new THREE.SpotLight(0xffeedd, 80, 6, Math.PI / 3, 0.5, 1.5);
+spotlight1.position.set(0, 2.5, 0);
+spotlight1.target.position.set(0, 0, 0);
+spotlight1.castShadow = true;
+spotlight1.shadow.mapSize.set(2048, 2048);
+spotlight1.shadow.camera.near = 0.5;
+spotlight1.shadow.camera.far = 5;
+spotlight1.shadow.bias = -0.0005;
+scene.add(spotlight1);
+scene.add(spotlight1.target);
+
+// Secondary fill lights
+const fillLight1 = new THREE.PointLight(0x6366f1, 3, 8);
+fillLight1.position.set(-2, 2, 2);
+scene.add(fillLight1);
+const fillLight2 = new THREE.PointLight(0x34d399, 2, 8);
+fillLight2.position.set(2, 2, -2);
+scene.add(fillLight2);
+
+// Lamp fixture
+const lampGeo = new THREE.CylinderGeometry(0.25, 0.35, 0.08, 32);
+const lampMat = new THREE.MeshStandardMaterial({ color: 0x2d1f0e, metalness: 0.8, roughness: 0.3 });
+const lamp = new THREE.Mesh(lampGeo, lampMat);
+lamp.position.set(0, 2.48, 0);
+scene.add(lamp);
+// Lamp shade rim glow
+const rimGeo = new THREE.TorusGeometry(0.35, 0.005, 8, 32);
+const rimMat = new THREE.MeshStandardMaterial({ color: 0xffd700, emissive: 0xffd700, emissiveIntensity: 2 });
+const rim = new THREE.Mesh(rimGeo, rimMat);
+rim.position.set(0, 2.44, 0);
+rim.rotation.x = Math.PI / 2;
+scene.add(rim);
+
+// ═══════════════════════════════════════════
+// ROOM
+// ═══════════════════════════════════════════
+const floorGeo = new THREE.PlaneGeometry(12, 12);
+const floorMat = new THREE.MeshStandardMaterial({ color: 0x1a1520, roughness: 0.9, metalness: 0.1 });
+const floor = new THREE.Mesh(floorGeo, floorMat);
+floor.rotation.x = -Math.PI / 2;
+floor.position.y = -0.45;
+floor.receiveShadow = true;
+scene.add(floor);
+
+// Walls
+const wallMat = new THREE.MeshStandardMaterial({ color: 0x201828, roughness: 0.8 });
+[-1, 1].forEach(side => {
+  const wall = new THREE.Mesh(new THREE.PlaneGeometry(12, 4), wallMat);
+  wall.position.set(0, 1.5, side * 6);
+  wall.rotation.y = side > 0 ? Math.PI : 0;
+  scene.add(wall);
+  const sideWall = new THREE.Mesh(new THREE.PlaneGeometry(12, 4), wallMat);
+  sideWall.position.set(side * 6, 1.5, 0);
+  sideWall.rotation.y = side > 0 ? -Math.PI / 2 : Math.PI / 2;
+  scene.add(sideWall);
+});
+
+// ═══════════════════════════════════════════
+// PHYSICS WORLD
+// ═══════════════════════════════════════════
+const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -9.82, 0) });
+world.defaultContactMaterial.friction = 0.3;
+world.defaultContactMaterial.restitution = 0.5;
+world.broadphase = new CANNON.SAPBroadphase(world);
+world.allowSleep = true;
+
+// Felt material
+const feltMaterial = new CANNON.Material('felt');
+const ballMaterial = new CANNON.Material('ball');
+const cushionMaterial = new CANNON.Material('cushion');
+
+world.addContactMaterial(new CANNON.ContactMaterial(feltMaterial, ballMaterial, {
+  friction: 0.4, restitution: 0.2
+}));
+world.addContactMaterial(new CANNON.ContactMaterial(ballMaterial, ballMaterial, {
+  friction: 0.05, restitution: 0.9
+}));
+world.addContactMaterial(new CANNON.ContactMaterial(cushionMaterial, ballMaterial, {
+  friction: 0.15, restitution: 0.75
+}));
+
+// ═══════════════════════════════════════════
+// TABLE
+// ═══════════════════════════════════════════
+// Playing surface
+const feltGeo = new THREE.BoxGeometry(TABLE_W, TABLE_THICK, TABLE_H);
+const feltMat = new THREE.MeshStandardMaterial({ color: FELT_COLOR, roughness: 0.95, metalness: 0 });
+const feltMesh = new THREE.Mesh(feltGeo, feltMat);
+feltMesh.receiveShadow = true;
+feltMesh.position.y = 0;
+scene.add(feltMesh);
+
+const tableBody = new CANNON.Body({ mass: 0, material: feltMaterial,
+  shape: new CANNON.Box(new CANNON.Vec3(TABLE_W / 2, TABLE_THICK / 2, TABLE_H / 2))
+});
+world.addBody(tableBody);
+
+// Rails (4 sides)
+const railMat3 = new THREE.MeshStandardMaterial({ color: RAIL_COLOR, roughness: 0.4, metalness: 0.3 });
+const railConfigs = [
+  { w: TABLE_W + CUSHION_W * 2, d: CUSHION_W, x: 0, z: TABLE_H / 2 + CUSHION_W / 2 },
+  { w: TABLE_W + CUSHION_W * 2, d: CUSHION_W, x: 0, z: -(TABLE_H / 2 + CUSHION_W / 2) },
+  { w: CUSHION_W, d: TABLE_H, x: TABLE_W / 2 + CUSHION_W / 2, z: 0 },
+  { w: CUSHION_W, d: TABLE_H, x: -(TABLE_W / 2 + CUSHION_W / 2), z: 0 },
+];
+railConfigs.forEach(cfg => {
+  const geo = new THREE.BoxGeometry(cfg.w, RAIL_H, cfg.d);
+  const mesh = new THREE.Mesh(geo, railMat3);
+  mesh.position.set(cfg.x, TABLE_THICK / 2 + RAIL_H / 2, cfg.z);
+  mesh.castShadow = true;
+  scene.add(mesh);
+
+  const body = new CANNON.Body({ mass: 0, material: cushionMaterial,
+    shape: new CANNON.Box(new CANNON.Vec3(cfg.w / 2, RAIL_H / 2, cfg.d / 2))
+  });
+  body.position.set(cfg.x, TABLE_THICK / 2 + RAIL_H / 2, cfg.z);
+  world.addBody(body);
+});
+
+// Table legs
+const legGeo = new THREE.CylinderGeometry(0.03, 0.035, 0.45, 8);
+const legMat = new THREE.MeshStandardMaterial({ color: 0x3a2510, roughness: 0.5, metalness: 0.4 });
+[[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([sx, sz]) => {
+  const leg = new THREE.Mesh(legGeo, legMat);
+  leg.position.set(sx * (TABLE_W / 2 - 0.05), -0.225, sz * (TABLE_H / 2 - 0.05));
+  leg.castShadow = true;
+  scene.add(leg);
+});
+
+// ═══════════════════════════════════════════
+// POCKETS
+// ═══════════════════════════════════════════
+const pocketPositions = [
+  [-TABLE_W / 2, TABLE_H / 2],
+  [0, TABLE_H / 2 + 0.01],
+  [TABLE_W / 2, TABLE_H / 2],
+  [-TABLE_W / 2, -TABLE_H / 2],
+  [0, -(TABLE_H / 2 + 0.01)],
+  [TABLE_W / 2, -TABLE_H / 2],
+];
+const pocketGeo = new THREE.CircleGeometry(POCKET_R, 24);
+const pocketMat = new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 1 });
+pocketPositions.forEach(([px, pz]) => {
+  const pocket = new THREE.Mesh(pocketGeo, pocketMat);
+  pocket.rotation.x = -Math.PI / 2;
+  pocket.position.set(px, TABLE_THICK / 2 + 0.001, pz);
+  scene.add(pocket);
+});
+
+// ═══════════════════════════════════════════
+// BALLS
+// ═══════════════════════════════════════════
+const balls = []; // { mesh, body, number, pocketed }
+
+function createBall(number, position) {
+  const color = number === 0 ? 0xf0f0f0 : BALL_COLORS[number - 1];
+  const isStripe = number > 8;
+
+  const geo = new THREE.SphereGeometry(BALL_R, 32, 16);
+  let mat;
+  if (number === 0) {
+    mat = new THREE.MeshStandardMaterial({ color: 0xf0f0f0, roughness: 0.15, metalness: 0.05 });
+  } else if (isStripe) {
+    // Stripe effect via vertex colors
+    mat = new THREE.MeshStandardMaterial({ color, roughness: 0.15, metalness: 0.05 });
+  } else {
+    mat = new THREE.MeshStandardMaterial({ color, roughness: 0.15, metalness: 0.05 });
+  }
+
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.castShadow = true;
+  mesh.position.copy(position);
+  scene.add(mesh);
+
+  // Number text using a small white circle on top
+  if (number > 0) {
+    const dotGeo = new THREE.CircleGeometry(BALL_R * 0.4, 16);
+    const dotMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const dot = new THREE.Mesh(dotGeo, dotMat);
+    dot.position.y = BALL_R - 0.001;
+    dot.rotation.x = -Math.PI / 2;
+    mesh.add(dot);
+    if (isStripe) {
+      // White band for stripes
+      const bandGeo = new THREE.TorusGeometry(BALL_R * 0.85, BALL_R * 0.25, 4, 24);
+      const bandMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.15 });
+      const band = new THREE.Mesh(bandGeo, bandMat);
+      mesh.add(band);
+    }
+  }
+
+  const body = new CANNON.Body({
+    mass: BALL_MASS, material: ballMaterial,
+    shape: new CANNON.Sphere(BALL_R),
+    linearDamping: 0.4,
+    angularDamping: 0.5,
+  });
+  body.position.set(position.x, position.y, position.z);
+  body.allowSleep = true;
+  body.sleepSpeedLimit = 0.05;
+  body.sleepTimeLimit = 0.5;
+  world.addBody(body);
+
+  const ball = { mesh, body, number, pocketed: false };
+  balls.push(ball);
+  return ball;
+}
+
+// Rack balls in triangle
+function rackBalls() {
+  const startX = TABLE_W / 4;
+  const spacing = BALL_R * 2.05;
+  const y = BALL_R + TABLE_THICK / 2;
+
+  // Standard 8-ball rack order (rows of 1,2,3,4,5)
+  const rackOrder = [1, 9, 2, 10, 8, 11, 3, 12, 6, 14, 4, 7, 13, 5, 15];
+  let idx = 0;
+
+  for (let row = 0; row < 5; row++) {
+    for (let col = 0; col <= row; col++) {
+      const x = startX + row * spacing * Math.cos(Math.PI / 6);
+      const z = (col - row / 2) * spacing;
+      if (idx < rackOrder.length) {
+        createBall(rackOrder[idx], new THREE.Vector3(x, y, z));
+        idx++;
+      }
+    }
+  }
+
+  // Cue ball
+  createBall(0, CUE_BALL_POS.clone().setY(y));
+}
+
+rackBalls();
+
+// ═══════════════════════════════════════════
+// AIM LINE
+// ═══════════════════════════════════════════
+const aimLineMat = new THREE.LineDashedMaterial({ color: 0xffffff, dashSize: 0.02, gapSize: 0.02, transparent: true, opacity: 0.5 });
+const aimLineGeo = new THREE.BufferGeometry();
+const aimLine = new THREE.Line(aimLineGeo, aimLineMat);
+aimLine.visible = false;
+scene.add(aimLine);
+
+// ═══════════════════════════════════════════
+// GAME STATE
+// ═══════════════════════════════════════════
+let currentPlayer = 1;
+let gamePhase = 'aiming'; // aiming, power, rolling
+let aimAngle = 0;
+let power = 0;
+let powerDir = 1;
+const msgEl = document.getElementById('message');
+const powerBar = document.getElementById('power-bar');
+const powerFill = document.getElementById('power-fill');
+
+function showMessage(text, duration = 2500) {
+  msgEl.textContent = text;
+  msgEl.classList.add('visible');
+  setTimeout(() => msgEl.classList.remove('visible'), duration);
+}
+
+function getCueBall() {
+  return balls.find(b => b.number === 0 && !b.pocketed);
+}
+
+function areBallsMoving() {
+  return balls.some(b => !b.pocketed && b.body.velocity.length() > 0.08);
+}
+
+// ═══════════════════════════════════════════
+// SHOOTING
+// ═══════════════════════════════════════════
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+let isAiming = false;
+let aimStart = new THREE.Vector2();
+
+renderer.domElement.addEventListener('mousedown', (e) => {
+  if (e.button !== 0 || gamePhase !== 'aiming') { return; }
+  const cue = getCueBall();
+  if (!cue) { return; }
+
+  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+
+  // Check if clicking on the table surface
+  const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -(TABLE_THICK / 2));
+  const hitPoint = new THREE.Vector3();
+  raycaster.ray.intersectPlane(plane, hitPoint);
+
+  if (hitPoint) {
+    isAiming = true;
+    aimStart.set(e.clientX, e.clientY);
+    gamePhase = 'power';
+    powerBar.classList.add('visible');
+    controls.enabled = false;
+
+    // Calculate aim direction from cue ball to click point
+    const dx = hitPoint.x - cue.mesh.position.x;
+    const dz = hitPoint.z - cue.mesh.position.z;
+    aimAngle = Math.atan2(dz, dx);
+  }
+});
+
+renderer.domElement.addEventListener('mousemove', (e) => {
+  if (!isAiming || gamePhase !== 'power') { return; }
+  const dist = Math.sqrt((e.clientX - aimStart.x) ** 2 + (e.clientY - aimStart.y) ** 2);
+  power = Math.min(1, dist / 200);
+  powerFill.style.width = `${power * 100}%`;
+
+  // Update aim line
+  const cue = getCueBall();
+  if (cue) {
+    const dir = new THREE.Vector3(Math.cos(aimAngle), 0, Math.sin(aimAngle));
+    const start = cue.mesh.position.clone();
+    start.y = TABLE_THICK / 2 + BALL_R;
+    const end = start.clone().add(dir.multiplyScalar(1.5));
+    aimLineGeo.setFromPoints([start, end]);
+    aimLine.computeLineDistances();
+    aimLine.visible = true;
+  }
+});
+
+renderer.domElement.addEventListener('mouseup', (e) => {
+  if (!isAiming) { return; }
+  isAiming = false;
+  controls.enabled = true;
+  powerBar.classList.remove('visible');
+  aimLine.visible = false;
+
+  if (power < 0.02) {
+    gamePhase = 'aiming';
+    return;
+  }
+
+  const cue = getCueBall();
+  if (!cue) { return; }
+
+  // Apply force
+  const force = power * 12;
+  const vx = Math.cos(aimAngle) * force;
+  const vz = Math.sin(aimAngle) * force;
+  cue.body.wakeUp();
+  cue.body.velocity.set(vx, 0, vz);
+
+  gamePhase = 'rolling';
+  power = 0;
+  powerFill.style.width = '0%';
+
+  showMessage(`Player ${currentPlayer} shoots!`, 1500);
+});
+
+// ═══════════════════════════════════════════
+// POCKET DETECTION
+// ═══════════════════════════════════════════
+function checkPockets() {
+  const pocketed = [];
+  for (const ball of balls) {
+    if (ball.pocketed) { continue; }
+    const bx = ball.body.position.x;
+    const bz = ball.body.position.z;
+
+    for (const [px, pz] of pocketPositions) {
+      const dist = Math.sqrt((bx - px) ** 2 + (bz - pz) ** 2);
+      if (dist < POCKET_R * 0.85) {
+        ball.pocketed = true;
+        ball.mesh.visible = false;
+        ball.body.velocity.set(0, 0, 0);
+        ball.body.angularVelocity.set(0, 0, 0);
+        ball.body.position.set(0, -2, 0); // move off table
+        pocketed.push(ball.number);
+      }
+    }
+  }
+  return pocketed;
+}
+
+function handlePocketed(pocketed) {
+  if (pocketed.length === 0) { return; }
+
+  for (const num of pocketed) {
+    if (num === 0) {
+      showMessage('Scratch! Cue ball pocketed — ball in hand', 3000);
+      // Reset cue ball
+      const cue = balls.find(b => b.number === 0);
+      if (cue) {
+        cue.pocketed = false;
+        cue.mesh.visible = true;
+        const y = BALL_R + TABLE_THICK / 2;
+        cue.body.position.set(CUE_BALL_POS.x, y, CUE_BALL_POS.z);
+        cue.body.velocity.set(0, 0, 0);
+        cue.body.angularVelocity.set(0, 0, 0);
+      }
+    } else if (num === 8) {
+      showMessage(`Player ${currentPlayer} pockets the 8-ball! 🎱`, 5000);
+    } else {
+      const type = num < 8 ? 'solid' : 'stripe';
+      showMessage(`Ball ${num} pocketed (${type})!`, 2000);
+    }
+  }
+  updateScoreboard();
+}
+
+function updateScoreboard() {
+  const solidsLeft = balls.filter(b => b.number >= 1 && b.number <= 7 && !b.pocketed).length;
+  const stripesLeft = balls.filter(b => b.number >= 9 && b.number <= 15 && !b.pocketed).length;
+  document.getElementById('p1-balls').textContent = '● '.repeat(solidsLeft).trim() || '✓ Clear!';
+  document.getElementById('p2-balls').textContent = '◐ '.repeat(stripesLeft).trim() || '✓ Clear!';
+}
+
+// ═══════════════════════════════════════════
+// GAME LOOP
+// ═══════════════════════════════════════════
+let wasMoving = false;
+const clock = new THREE.Clock();
+const fixedTimeStep = 1 / 120;
+let accumulator = 0;
+
+function animate() {
+  requestAnimationFrame(animate);
+  const dt = Math.min(clock.getDelta(), 0.05);
+
+  // Physics
+  accumulator += dt;
+  while (accumulator >= fixedTimeStep) {
+    world.step(fixedTimeStep);
+    accumulator -= fixedTimeStep;
+  }
+
+  // Sync meshes to physics
+  for (const ball of balls) {
+    if (ball.pocketed) { continue; }
+    ball.mesh.position.copy(ball.body.position);
+    ball.mesh.quaternion.copy(ball.body.quaternion);
+
+    // Keep balls on table (safety clamp)
+    if (ball.body.position.y < -0.5) {
+      ball.body.position.y = BALL_R + TABLE_THICK / 2;
+      ball.body.velocity.set(0, 0, 0);
+    }
+  }
+
+  // Check game state transitions
+  const moving = areBallsMoving();
+  if (wasMoving && !moving && gamePhase === 'rolling') {
+    const pocketed = checkPockets();
+    handlePocketed(pocketed);
+
+    // Switch player
+    currentPlayer = currentPlayer === 1 ? 2 : 1;
+    document.getElementById('p1').className = `player ${currentPlayer === 1 ? 'active' : 'inactive'}`;
+    document.getElementById('p2').className = `player ${currentPlayer === 2 ? 'active' : 'inactive'}`;
+    gamePhase = 'aiming';
+    showMessage(`Player ${currentPlayer}'s turn`, 2000);
+  }
+  wasMoving = moving;
+
+  // Check pockets while rolling too
+  if (gamePhase === 'rolling') {
+    const pocketed = checkPockets();
+    handlePocketed(pocketed);
+  }
+
+  // Subtle lamp sway
+  lamp.rotation.z = Math.sin(Date.now() * 0.0005) * 0.01;
+  spotlight1.position.x = Math.sin(Date.now() * 0.0005) * 0.03;
+
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+animate();
+
+// ═══════════════════════════════════════════
+// RESIZE
+// ═══════════════════════════════════════════
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+showMessage('Click on the table to aim, drag to set power, release to shoot!', 4000);
+</script>
+</body>
+</html>

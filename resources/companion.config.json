@@ -1,0 +1,49 @@
+{
+  "pipeName": "OpenClawCompanion",
+  "healthCheckIntervalMs": 30000,
+  "clusterHeartbeatIntervalMs": 30000,
+  "requestTimeoutMs": 30000,
+  "maxConcurrentClients": 10,
+  "clusterEnabled": false,
+  "redisHost": "localhost",
+  "redisPort": 6379,
+  "visionEnabled": false,
+  "allowedCommands": [
+    "input.*",
+    "ui.*",
+    "process.*",
+    "screen.*",
+    "audio.*",
+    "system.*",
+    "health.*",
+    "powershell.*",
+    "hardware.*",
+    "file.*",
+    "clipboard.*",
+    "window.*",
+    "display.*",
+    "network.*",
+    "apps.*",
+    "device.*",
+    "vision.*"
+  ],
+  "logging": {
+    "level": "info",
+    "maxFileSizeMB": 50,
+    "retentionDays": 30,
+    "logToEventLog": true,
+    "logToConsole": true
+  },
+  "security": {
+    "allowRemotePowerShell": false,
+    "allowRegistryWrite": true,
+    "allowFileWrite": true,
+    "firewallCommandsRequireAdmin": true,
+    "clipboardAccessEnabled": true,
+    "maxProcessStartsPerMinute": 20,
+    "blockedPaths": [
+      "C:\\Windows\\System32\\config",
+      "C:\\Windows\\System32\\drivers"
+    ]
+  }
+}

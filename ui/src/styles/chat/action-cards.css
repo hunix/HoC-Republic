@@ -1,0 +1,414 @@
+/* ─── Action Card Base ──────────────────────────────────────────── */
+.action-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 10px;
+    background: var(--card);
+    box-shadow:
+        inset 0 1px 0 var(--card-highlight),
+        0 2px 8px rgba(0, 0, 0, 0.06);
+    transition:
+        border-color 200ms ease-out,
+        box-shadow 200ms ease-out;
+}
+
+.action-card:first-child {
+    margin-top: 0;
+}
+
+.action-card:hover {
+    border-color: var(--border-strong);
+    box-shadow:
+        inset 0 1px 0 var(--card-highlight),
+        0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ─── Header ───────────────────────────────────────────────────── */
+.action-card__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--accent);
+}
+
+.action-card__icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.action-card__icon--error {
+    color: var(--danger, #ef4444);
+}
+
+.action-card__title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.3;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ─── Badges ───────────────────────────────────────────────────── */
+.action-card__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 12px;
+    text-transform: capitalize;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+}
+
+.action-card__badge--active {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+}
+
+.action-card__badge--completed {
+    background: rgba(59, 130, 246, 0.15);
+    color: #3b82f6;
+}
+
+.action-card__badge--paused {
+    background: rgba(234, 179, 8, 0.15);
+    color: #eab308;
+}
+
+.action-card__badge--failed {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.action-card__badge--info {
+    background: rgba(139, 92, 246, 0.15);
+    color: #8b5cf6;
+}
+
+.action-card__badge--default {
+    background: var(--secondary);
+    color: var(--muted);
+}
+
+/* ─── Meta / Description ───────────────────────────────────────── */
+.action-card__meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.4;
+}
+
+.action-card__desc {
+    font-size: 13px;
+    color: var(--text);
+    margin-top: 6px;
+    line-height: 1.5;
+    opacity: 0.85;
+}
+
+.action-card__stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+.action-card__stat svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ─── Progress Bar (Project Status) ────────────────────────────── */
+.action-card__progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.action-card__progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--secondary);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.action-card__progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.action-card__progress-fill--active {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.action-card__progress-fill--completed {
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+}
+
+.action-card__progress-fill--paused {
+    background: linear-gradient(90deg, #eab308, #ca8a04);
+}
+
+.action-card__progress-fill--failed {
+    background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.action-card__progress-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    min-width: 32px;
+    text-align: right;
+}
+
+/* ─── Citizens List ────────────────────────────────────────────── */
+.action-card__citizens {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+.action-card__citizens svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+/* ─── Gauges (Citizen Card) ────────────────────────────────────── */
+.action-card__gauges {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.action-card__gauge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-card__gauge-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 68px;
+}
+
+.action-card__gauge-bar {
+    flex: 1;
+    height: 5px;
+    background: var(--secondary);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.action-card__gauge-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.action-card__gauge-fill--health {
+    background: linear-gradient(90deg, #ef4444, #22c55e);
+}
+
+.action-card__gauge-fill--energy {
+    background: linear-gradient(90deg, #eab308, #3b82f6);
+}
+
+.action-card__gauge-fill--happiness {
+    background: linear-gradient(90deg, #f97316, #a855f7);
+}
+
+.action-card__gauge-value {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    min-width: 20px;
+    text-align: right;
+}
+
+/* ─── Votes (Government Card) ──────────────────────────────────── */
+.action-card__votes {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.action-card__vote {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.action-card__vote--for {
+    color: #22c55e;
+}
+
+.action-card__vote--against {
+    color: #ef4444;
+}
+
+/* ─── Economy Alert ────────────────────────────────────────────── */
+.action-card--economy {
+    border-left: 3px solid var(--accent);
+}
+
+.action-card--severity-warning {
+    border-left-color: #eab308;
+}
+
+.action-card--severity-critical {
+    border-left-color: #ef4444;
+}
+
+.action-card__economy-value {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.action-card__big-number {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text);
+}
+
+.action-card__change {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.action-card__change--up {
+    color: #22c55e;
+}
+
+.action-card__change--down {
+    color: #ef4444;
+}
+
+/* ─── Quick Action Buttons ─────────────────────────────────────── */
+.action-card--quick {
+    background: transparent;
+    border: 1px dashed var(--border);
+    box-shadow: none;
+}
+
+.action-card__label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.action-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.action-card__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+    transition:
+        background 150ms ease-out,
+        border-color 150ms ease-out,
+        transform 100ms ease-out;
+}
+
+.action-card__btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-strong);
+}
+
+.action-card__btn:active {
+    transform: scale(0.97);
+}
+
+.action-card__btn--primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+.action-card__btn--primary:hover {
+    filter: brightness(1.1);
+}
+
+.action-card__btn--danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.action-card__btn--danger:hover {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+/* ─── Error Card ───────────────────────────────────────────────── */
+.action-card--error {
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.action-card--error .action-card__desc {
+    color: var(--text);
+    opacity: 0.9;
+}
+
+.action-card--error .action-card__btn {
+    margin-top: 10px;
+}

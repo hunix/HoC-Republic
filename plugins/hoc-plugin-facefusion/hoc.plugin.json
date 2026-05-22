@@ -1,0 +1,43 @@
+{
+  "id": "hoc-plugin-facefusion",
+  "name": "FaceFusion — Local GPU Face Manipulation Platform",
+  "version": "1.0.0",
+  "description": "Integrates facefusion/facefusion face manipulation platform into HoC. Citizens can swap, enhance, and manipulate faces in images and videos using local GPU hardware with a managed job queue that prevents server overwhelm.",
+  "sourceRepo": "https://github.com/facefusion/facefusion",
+  "capabilities": {
+    "inference": false,
+    "tools": [
+      "ff_swap_face",
+      "ff_enhance_face",
+      "ff_enhance_video",
+      "ff_submit_job",
+      "ff_job_status",
+      "ff_queue_status",
+      "ff_cancel_job",
+      "ff_list_processors"
+    ],
+    "providers": [],
+    "hooks": ["tick:before", "citizen:task_assigned"],
+    "gateway": [
+      "facefusion.submit",
+      "facefusion.status",
+      "facefusion.queue",
+      "facefusion.cancel",
+      "facefusion.processors",
+      "facefusion.gpuStatus",
+      "facefusion.config"
+    ],
+    "ui": ["facefusion-jobs-panel"]
+  },
+  "lifecycle": {
+    "init": "index.ts#init",
+    "shutdown": "index.ts#shutdown",
+    "healthCheck": "index.ts#healthCheck"
+  },
+  "requirements": {
+    "python": ">=3.10",
+    "ffmpeg": true,
+    "gpu": "recommended"
+  },
+  "bootPriority": 35
+}

@@ -1,0 +1,12 @@
+{
+  "name": "hoc-plugin-deerflow",
+  "version": "1.0.0",
+  "description": "Deer-Flow Deep Research Harness",
+  "bootPriority": 40,
+  "backend": {
+    "type": "docker-compose",
+    "serviceName": "deerflow",
+    "composeFile": "docker-compose.plugins.yml",
+    "apiUrl": "http://localhost:2026"
+  }
+}

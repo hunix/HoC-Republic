@@ -1,0 +1,569 @@
+/* ===========================================
+   Mobile Layout
+   =========================================== */
+
+/* Tablet: Horizontal nav */
+@media (max-width: 1100px) {
+  .nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 4px;
+    padding: 10px 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-group {
+    display: contents;
+  }
+
+  .nav-group__items {
+    display: contents;
+  }
+
+  .nav-label {
+    display: none;
+  }
+
+  .nav-group--collapsed .nav-group__items {
+    display: contents;
+  }
+
+  .nav-item {
+    padding: 8px 14px;
+    font-size: 13px;
+    border-radius: var(--radius-md);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+/* Mobile-specific styles */
+@media (max-width: 600px) {
+  .shell {
+    --shell-pad: 8px;
+    --shell-gap: 8px;
+  }
+
+  /* Topbar */
+  .topbar {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .brand {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .brand-title {
+    font-size: 14px;
+  }
+
+  .brand-sub {
+    display: none;
+  }
+
+  .topbar-status {
+    gap: 6px;
+    width: auto;
+    flex-wrap: nowrap;
+  }
+
+  .topbar-status .pill {
+    padding: 4px 8px;
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .topbar-status .pill .mono {
+    display: none;
+  }
+
+  .topbar-status .pill span:nth-child(2) {
+    display: none;
+  }
+
+  /* Nav */
+  .nav {
+    padding: 8px 10px;
+    gap: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-group {
+    display: contents;
+  }
+
+  .nav-label {
+    display: none;
+  }
+
+  .nav-item {
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: var(--radius-md);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Content */
+  .content-header {
+    display: none;
+  }
+
+  .content {
+    padding: 4px 4px 16px;
+    gap: 12px;
+  }
+
+  /* Cards */
+  .card {
+    padding: 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .card-title {
+    font-size: 13px;
+  }
+
+  /* Stats */
+  .stat-grid {
+    gap: 8px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat {
+    padding: 10px;
+    border-radius: var(--radius-md);
+  }
+
+  .stat-label {
+    font-size: 11px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+  }
+
+  /* Notes */
+  .note-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  /* Forms */
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .field input,
+  .field textarea,
+  .field select {
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  /* Pills */
+  .pill {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+
+  /* Chat */
+  .chat-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .chat-header__left {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .chat-header__right {
+    justify-content: space-between;
+  }
+
+  .chat-session {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .chat-thread {
+    margin-top: 8px;
+    padding: 12px 8px;
+  }
+
+  .chat-msg {
+    max-width: 90%;
+  }
+
+  .chat-bubble {
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .chat-compose {
+    gap: 8px;
+  }
+
+  .chat-compose__field textarea {
+    min-height: 60px;
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+  }
+
+  /* Log stream */
+  .log-stream {
+    border-radius: var(--radius-md);
+    max-height: 380px;
+  }
+
+  .log-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 8px;
+  }
+
+  .log-time {
+    font-size: 10px;
+  }
+
+  .log-level {
+    font-size: 9px;
+  }
+
+  .log-subsystem {
+    font-size: 11px;
+  }
+
+  .log-message {
+    font-size: 12px;
+  }
+
+  /* Lists */
+  .list-item {
+    padding: 10px;
+    border-radius: var(--radius-md);
+  }
+
+  .list-title {
+    font-size: 13px;
+  }
+
+  .list-sub {
+    font-size: 11px;
+  }
+
+  /* Code blocks */
+  .code-block {
+    padding: 8px;
+    border-radius: var(--radius-md);
+    font-size: 11px;
+  }
+
+  /* Theme toggle */
+  .theme-toggle {
+    --theme-item: 24px;
+    --theme-gap: 2px;
+    --theme-pad: 3px;
+  }
+
+  .theme-icon {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 400px) {
+  .shell {
+    --shell-pad: 4px;
+  }
+
+  .topbar {
+    padding: 8px 10px;
+  }
+
+  .brand-title {
+    font-size: 13px;
+  }
+
+  .nav {
+    padding: 6px 8px;
+  }
+
+  .nav-item {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .content {
+    padding: 4px 4px 12px;
+    gap: 10px;
+  }
+
+  .card {
+    padding: 10px;
+  }
+
+  .stat {
+    padding: 8px;
+  }
+
+  .stat-value {
+    font-size: 16px;
+  }
+
+  .chat-bubble {
+    padding: 8px 10px;
+  }
+
+  .chat-compose__field textarea {
+    min-height: 52px;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .btn {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .topbar-status .pill {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+
+  .theme-toggle {
+    --theme-item: 22px;
+    --theme-gap: 2px;
+    --theme-pad: 2px;
+  }
+
+  .theme-icon {
+    width: 11px;
+    height: 11px;
+  }
+}
+
+/* ===========================================
+   Responsive: New Dashboard Components
+   =========================================== */
+
+/* Tablet (≤1100px) */
+@media (max-width: 1100px) {
+  .connection-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .connection-hero__indicator {
+    margin: 0 auto;
+  }
+
+  .connection-hero__actions {
+    justify-content: center;
+  }
+
+  .metric-tiles,
+  .stat-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile (≤600px) */
+@media (max-width: 600px) {
+  .connection-hero {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .connection-hero__indicator {
+    width: 48px;
+    height: 48px;
+  }
+
+  .connection-hero__indicator svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .connection-hero__info h2 {
+    font-size: 16px;
+  }
+
+  .connection-hero__meta {
+    font-size: 11px;
+  }
+
+  .connection-hero__actions {
+    flex-wrap: wrap;
+  }
+
+  .connection-hero__actions .btn {
+    flex: 1;
+    min-width: 0;
+    justify-content: center;
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .metric-tiles,
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .metric-tile {
+    padding: 10px 12px;
+  }
+
+  .metric-tile__label {
+    font-size: 10px;
+  }
+
+  .metric-tile__value {
+    font-size: 18px;
+  }
+
+  .metric-tile__sub {
+    font-size: 10px;
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .quick-action {
+    padding: 12px 8px;
+    font-size: 12px;
+  }
+
+  .quick-action__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .tips-card {
+    padding: 14px;
+  }
+
+  .tips-card__title {
+    font-size: 13px;
+  }
+
+  .tip-item {
+    font-size: 12px;
+    padding: 8px 0;
+  }
+
+  .section-divider {
+    font-size: 11px;
+  }
+
+  .empty-state {
+    padding: 32px 16px;
+  }
+
+  .empty-state__icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .empty-state__title {
+    font-size: 15px;
+  }
+
+  .empty-state__subtitle {
+    font-size: 12px;
+  }
+
+  /* Config form responsive */
+  .config-sidebar {
+    display: none;
+  }
+
+  .config-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .config-section-card {
+    padding: 12px;
+  }
+}
+
+/* Small mobile (≤400px) */
+@media (max-width: 400px) {
+  .connection-hero {
+    padding: 12px;
+    gap: 10px;
+    border-radius: var(--radius-md);
+  }
+
+  .connection-hero__indicator {
+    width: 40px;
+    height: 40px;
+  }
+
+  .connection-hero__info h2 {
+    font-size: 15px;
+  }
+
+  .metric-tiles,
+  .stat-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .metric-tile__value {
+    font-size: 16px;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .quick-action {
+    padding: 10px 6px;
+    font-size: 11px;
+  }
+
+  .tips-card {
+    padding: 12px;
+  }
+
+  .empty-state {
+    padding: 24px 12px;
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "id": "hoc-plugin-skyreels",
+  "name": "SkyReels V2 — Infinite-Length Film Generation",
+  "version": "1.0.0",
+  "displayName": "SkyReels V2",
+  "description": "Integration with SkyReels V2 (SkyworkAI) — infinite-length film generative model using AutoRegressive Diffusion-Forcing. Generates videos of unlimited length with visual continuity, multi-scene support, camera director control, and storytelling capabilities. Built for full movie production.",
+  "sourceRepo": "https://github.com/SkyworkAI/SkyReels-V2",
+  "author": "HoC Republic",
+  "backend": {
+    "type": "python-cli",
+    "repo": "https://github.com/SkyworkAI/SkyReels-V2.git",
+    "deps": ["skyreels"],
+    "verifyImport": "import skyreels"
+  },
+  "toolDefinitions": [
+    {
+      "name": "skyreels_generate_scene",
+      "description": "Generate a single cinematic scene (up to 30s) with SkyReels V2. Supports camera director control, shot types, and cinematographic annotations.",
+      "params": {
+        "prompt": { "type": "string", "description": "Scene description with cinematographic details", "required": true },
+        "duration_sec": { "type": "number", "description": "Duration 5-30 seconds (default: 10)" },
+        "resolution": { "type": "string", "enum": ["480p", "720p", "1080p"], "description": "Resolution" },
+        "shot_type": { "type": "string", "enum": ["wide", "medium", "close-up", "extreme-close-up", "over-shoulder", "aerial", "pov"], "description": "Camera shot type" },
+        "camera_angle": { "type": "string", "enum": ["eye-level", "low-angle", "high-angle", "bird-eye", "dutch-angle"], "description": "Camera angle" },
+        "camera_movement": { "type": "string", "enum": ["static", "pan", "tilt", "dolly", "tracking", "crane", "handheld", "steadicam"], "description": "Camera movement" },
+        "seed": { "type": "number", "description": "Random seed" }
+      },
+      "command": "skyreels_generate_scene"
+    },
+    {
+      "name": "skyreels_generate_continuous",
+      "description": "Generate a continuous long-form video by chaining scenes with visual continuity. Uses autoregressive diffusion-forcing for seamless transitions.",
+      "params": {
+        "scenes": { "type": "array", "description": "Array of scene prompts to chain together", "required": true },
+        "scene_duration_sec": { "type": "number", "description": "Duration per scene (default: 10)" },
+        "transition_type": { "type": "string", "enum": ["seamless", "fade", "cut"], "description": "Transition between scenes" }
+      },
+      "command": "skyreels_generate_continuous"
+    },
+    {
+      "name": "skyreels_extend_video",
+      "description": "Extend an existing video clip by generating continuation frames maintaining visual continuity.",
+      "params": {
+        "video_path": { "type": "string", "description": "Path to existing video to continue", "required": true },
+        "prompt": { "type": "string", "description": "Continuation prompt" },
+        "extend_sec": { "type": "number", "description": "Seconds to extend (default: 10)" }
+      },
+      "command": "skyreels_extend_video"
+    }
+  ],
+  "gatewayDefinitions": [
+    { "method": "skyreels.generate-scene", "delegateTo": "skyreels_generate_scene" },
+    { "method": "skyreels.generate-continuous", "delegateTo": "skyreels_generate_continuous" },
+    { "method": "skyreels.extend-video", "delegateTo": "skyreels_extend_video" },
+    { "method": "skyreels.job-status", "delegateTo": "_job_status" },
+    { "method": "skyreels.cancel", "delegateTo": "_cancel" },
+    { "method": "skyreels.queue-status", "delegateTo": "_queue_status" }
+  ],
+  "jobQueue": { "maxConcurrent": 1, "timeoutMs": 1800000 },
+  "capabilities": {
+    "tools": ["skyreels_generate_scene", "skyreels_generate_continuous", "skyreels_extend_video"],
+    "hooks": ["tick:before"]
+  },
+  "requirements": { "binaries": ["python3"], "gpu_vram_gb": 24 },
+  "bootPriority": 47
+}

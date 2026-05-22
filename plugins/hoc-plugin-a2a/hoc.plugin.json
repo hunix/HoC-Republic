@@ -1,0 +1,19 @@
+{
+  "name": "hoc-plugin-a2a",
+  "version": "1.0.0",
+  "displayName": "Agent2Agent (A2A)",
+  "description": "Integration with Google's Agent2Agent (A2A) protocol — open standard for agent-to-agent communication. JSON-RPC 2.0 over HTTP(S) with Agent Cards, SSE streaming, and push notifications for cross-ecosystem agent interop.",
+  "author": "HoC Republic",
+  "capabilities": [
+    "agent-communication",
+    "agent-discovery",
+    "cross-ecosystem-interop",
+    "json-rpc",
+    "sse-streaming"
+  ],
+  "requires": {
+    "node": ">=18"
+  },
+  "autoBootstrap": true,
+  "entry": "./index.js"
+}

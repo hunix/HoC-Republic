@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>OpenClawCompanionEnhanced</AssemblyName>
+    <RootNamespace>OpenClawCompanion</RootNamespace>
+    <Version>2.0.0</Version>
+    <Description>OpenClaw Windows Companion Service - Enhanced Edition with Cluster Support</Description>
+    <Company>OpenClaw</Company>
+    <Product>OpenClaw Companion</Product>
+    <Copyright>Copyright © 2026</Copyright>
+    <ApplicationIcon />
+    <StartupObject>OpenClawCompanion.Program</StartupObject>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>CS8600;CS8602;CS8603;CS8604</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Core .NET Libraries -->
+    <PackageReference Include="System.Management" Version="9.0.0" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="9.0.0" />
+    
+    <!-- Redis for Cluster Support -->
+    <PackageReference Include="StackExchange.Redis" Version="2.7.33" />
+    
+    <!-- Audio Support -->
+    <PackageReference Include="NAudio" Version="2.2.1" />
+    
+    <!-- JSON Serialization -->
+    <PackageReference Include="System.Text.Json" Version="9.0.0" />
+
+    <!-- Hosting & DI -->
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="9.0.0" />
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="OpenClawCompanion.cs" />
+  </ItemGroup>
+
+</Project>
