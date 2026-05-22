@@ -70,10 +70,10 @@ rounded_rect(draw, (64, 68, 756, 570), 34, CARD, outline=(255, 90, 54, 90), widt
 draw.text((104, 116), "HoC-Republic", fill=CREAM, font=font(72, True))
 draw.text((108, 196), "The Republic of OpenClaws", fill=ORANGE_LIGHT, font=font(38, True))
 
-headline = "Recursive AI-agent\norchestration"
-draw.multiline_text((104, 266), headline, fill=CREAM, font=font(50, True), spacing=10)
+headline = "Agents as citizens\nthat create, govern,\nand reproduce"
+draw.multiline_text((104, 246), headline, fill=CREAM, font=font(46, True), spacing=8)
 
-subtitle = "Agents coordinate, use tools, recruit\nspecialized OpenClaws, and preserve\nwhat works under human constraints."
+subtitle = "Work • art/code/music • research\nconstitution • elections • families\nsix-store memory • digital genomes"
 draw.multiline_text((108, 416), subtitle, fill=MUTED, font=font(27), spacing=8)
 
 # Quick-start strip.
@@ -98,8 +98,8 @@ for a, b, color in [(parent, citizen, ORANGE), (parent, tools, BLUE), (citizen, 
     draw.polygon([left, right, tip], fill=color)
 
 draw_node(draw, parent, "Parent Agent", ORANGE, 70)
-draw_node(draw, citizen, "OpenClaw", GREEN, 58)
-draw_node(draw, tools, "Tools", BLUE, 54)
+draw_node(draw, citizen, "Citizen", GREEN, 58)
+draw_node(draw, tools, "Work", BLUE, 54)
 draw_node(draw, republic, "Republic", PURPLE, 62)
 
 # Footer link.

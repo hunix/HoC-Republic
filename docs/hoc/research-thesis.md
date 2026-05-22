@@ -60,6 +60,8 @@ The most important public demo should show this lifecycle in a small, determinis
 
 The Republic subsystem expands the recursive-agent thesis into a persistent simulation. Instead of treating agents as independent API calls, the Republic explores what happens when agents have roles, memory, budgets, laws, reputation, relationships, and collective decision-making.
 
+The strongest version of the Republic claim is that citizens are modeled as civic participants rather than decorative bots. Experimental subsystems let citizens choose work, create artifacts, socialize, marry, form family lineages, participate in constitutional governance, and carry persistent memory. The reproductive language is implemented as **digital DNA-like inheritance**: citizens can be linked to neural genomes, and child citizens can be instantiated from parent genomes through resource checks, magnitude-based crossover, mutation, fitness evaluation, personality blending, and specialization inheritance.
+
 | Republic dimension | Example concerns                                                                                           |
 | ------------------ | ---------------------------------------------------------------------------------------------------------- |
 | **Governance**     | Constitutions, laws, courts, elections, executive authority, defense, and policy evolution.                |
@@ -67,6 +69,20 @@ The Republic subsystem expands the recursive-agent thesis into a persistent simu
 | **Identity**       | Citizens, genetic traits, appearance, voice, lifecycle, goals, and social relationships.                   |
 | **Cognition**      | World models, reasoning engines, curiosity, memory reflection, collective intelligence, and meta-learning. |
 | **Infrastructure** | Compute routing, local model provisioning, Docker orchestration, telemetry, replication, and federation.   |
+
+## Citizen capability model
+
+The citizen model is deliberately broader than a work-queue abstraction. The codebase separates **production**, **civic life**, **social life**, **memory**, and **inheritance** so that each capability can be inspected, benchmarked, or removed independently.
+
+| Capability                          | Research meaning                                                                                       | Implementation evidence                                                                                                                                                                                                               |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Autonomous work and production**  | Citizens can pursue work and create outputs rather than only wait for direct chat commands.            | Citizen autonomy, production workflows, asset economy, and audio studio modules model work choices and artifacts such as code, art, research, audio, music, voice-over, podcasts, designs, software, papers, and inventions.          |
+| **Constitutional civic life**       | Citizens operate inside institutions instead of an unbounded prompt loop.                              | The Republic includes constitutional articles, government participation, courts, voting/elections, treasury systems, public knowledge sharing, privacy norms, dignity norms, and bounded self-improvement constraints.                |
+| **Marriage and family lineage**     | Social bonds can affect population history and identity across generations.                            | Social-life and evolution flows support partnerships, marriage, birth records, generation numbers, parent-derived offspring, and inherited specialization.                                                                            |
+| **Six-store memory**                | Citizen behavior can be shaped by multiple persistent forms of memory rather than one flat transcript. | The Republic memory system defines episodic, semantic, procedural, working, social, and collective memory stores that influence experiences, domain knowledge, skills, active goals, relationships, and shared cultural knowledge.    |
+| **Digital DNA-like birth equation** | Reproduction is an executable simulation mechanic, not only a metaphor.                                | Parent genomes must exist and pass resource eligibility; offspring genomes are produced by magnitude-based crossover, mutation, and fitness scoring; child citizens then receive personality blending and specialization inheritance. |
+
+This should still be described conservatively. The system models **digital genomes** and DNA-like inheritance inside software; it does not claim biological DNA, personhood, or autonomous moral status for generated agents.
 
 The correct scientific posture is that these modules are **experiments**. They should be evaluated with reproducible scenarios, benchmark tasks, ablation studies, and safety audits before they are described as demonstrated intelligence.
 
