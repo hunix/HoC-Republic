@@ -30,8 +30,8 @@ openclaw gateway --port 18789
 openclaw gateway --port 18789 --verbose
 # 如果端口被占用，终止监听器然后启动：
 openclaw gateway --force
-# 开发循环（TS 更改时自动重载）：
-pnpm gateway:watch
+# 开发网关：
+pnpm dev gateway run
 ```
 
 - 配置热重载监视 `~/.openclaw/openclaw.json`（或 `OPENCLAW_CONFIG_PATH`）。

@@ -96,11 +96,15 @@ Logs: `%USERPROFILE%\.openclaw\logs\`
 ### A. Run Interactively
 
 ```bash
-pnpm start          # Start the gateway
-pnpm dev            # Dev mode with auto-rebuild
-pnpm gateway:dev    # Gateway only, dev mode
-pnpm tui:dev        # Terminal UI, dev mode
+pnpm install            # Install workspace dependencies
+pnpm build              # Build TypeScript packages
+pnpm ui:build           # Build the web control UI
+pnpm dev onboard        # Complete local OpenClaw onboarding
+pnpm dev gateway run    # Run the gateway in development mode
+pnpm tui:dev            # Terminal UI, dev mode
 ```
+
+For production-style gateway execution, use `pnpm start gateway run` after the build and onboarding steps are complete.
 
 ### B. Systemd Service (Production)
 
@@ -115,7 +119,7 @@ After=network.target
 Type=simple
 User=YOUR_USER
 WorkingDirectory=/path/to/HoC
-ExecStart=/usr/bin/pnpm start
+ExecStart=/usr/bin/pnpm start gateway run
 Restart=always
 RestartSec=10
 Environment=NODE_ENV=production
@@ -144,11 +148,13 @@ chmod +x install-hoc-ubuntu.sh
 For development with auto-rebuild:
 
 ```bash
-pnpm dev              # Full dev mode
-pnpm gateway:dev      # Gateway only
-pnpm tui:dev          # TUI mode
-pnpm ui:dev           # Web UI dev server
+pnpm dev onboard        # First-time local OpenClaw onboarding
+pnpm dev gateway run    # Gateway development mode
+pnpm tui:dev            # TUI mode
+pnpm ui:build           # Build the web UI served by the gateway
 ```
+
+The web control UI is built with `pnpm ui:build` and is then served by the gateway at the configured gateway address, usually `http://localhost:18789`.
 
 Hot reload is automatic — source changes trigger a rebuild before restart.
 
@@ -230,14 +236,14 @@ OPENCLAW_REDIS_URL=redis://:yourpassword@redis-host:6379/0
 ```bash
 OPENCLAW_REDIS_URL=redis://redis-host:6379/0 \
 OPENCLAW_CLUSTER_ROLE=primary \
-pnpm start
+pnpm start gateway run
 ```
 
 **Machine B (Standby):**
 ```bash
 OPENCLAW_REDIS_URL=redis://redis-host:6379/0 \
 OPENCLAW_CLUSTER_ROLE=standby \
-pnpm start
+pnpm start gateway run
 ```
 
 With `OPENCLAW_CLUSTER_ROLE=auto`, the first gateway to acquire the Redis lock becomes primary.
@@ -282,7 +288,7 @@ services:
 
 ```bash
 # Check gateway is running
-pnpm start
+pnpm start gateway run
 
 # View logs
 tail -f ~/.openclaw/logs/gateway.log     # Linux/macOS
@@ -299,7 +305,7 @@ pnpm test
 ### Module warnings on startup
 Set `NODE_NO_WARNINGS=1` in your environment or run with `--no-warnings`:
 ```bash
-NODE_NO_WARNINGS=1 pnpm start
+NODE_NO_WARNINGS=1 pnpm start gateway run
 ```
 
 ### Build failures

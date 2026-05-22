@@ -29,22 +29,22 @@ Examples:
 
 `/debug reset` clears all overrides and returns to the on-disk config.
 
-## Gateway watch mode
+## Gateway development mode
 
-For fast iteration, run the gateway under the file watcher:
+For fast iteration, run the gateway through the canonical development entrypoint:
 
 ```bash
-pnpm gateway:watch --force
+pnpm dev gateway run --force
 ```
 
 This maps to:
 
 ```bash
-tsx watch src/entry.ts gateway --force
+node scripts/run-node.mjs gateway run --force
 ```
 
-Add any gateway CLI flags after `gateway:watch` and they will be passed through
-on each restart.
+Add any gateway CLI flags after `run` and they will be passed through to the
+development gateway process.
 
 ## Dev profile + dev gateway (--dev)
 
@@ -59,11 +59,12 @@ debugging. There are **two** `--dev` flags:
 Recommended flow (dev profile + dev bootstrap):
 
 ```bash
-pnpm gateway:dev
+pnpm dev onboard
+pnpm dev gateway run
 OPENCLAW_PROFILE=dev openclaw tui
 ```
 
-If you don’t have a global install yet, run the CLI via `pnpm openclaw ...`.
+If you don’t have a global install yet, run the CLI via `pnpm openclaw ...`. For a fresh checkout, complete `pnpm install`, `pnpm build`, and `pnpm ui:build` before starting the gateway.
 
 What this does:
 
@@ -113,13 +114,13 @@ This is the best way to see whether reasoning is arriving as plain text deltas
 Enable it via CLI:
 
 ```bash
-pnpm gateway:watch --force --raw-stream
+pnpm dev gateway run --force --raw-stream
 ```
 
 Optional path override:
 
 ```bash
-pnpm gateway:watch --force --raw-stream --raw-stream-path ~/.openclaw/logs/raw-stream.jsonl
+pnpm dev gateway run --force --raw-stream --raw-stream-path ~/.openclaw/logs/raw-stream.jsonl
 ```
 
 Equivalent env vars:

@@ -21,7 +21,7 @@ x-i18n:
 
 - **个性化设置存放在仓库之外：** `~/.openclaw/workspace`（工作区）+ `~/.openclaw/openclaw.json`（配置）。
 - **稳定工作流：** 安装 macOS 应用；让它运行内置的 Gateway 网关。
-- **前沿工作流：** 通过 `pnpm gateway:watch` 自己运行 Gateway 网关，然后让 macOS 应用以本地模式连接。
+- **前沿工作流：** 通过 `pnpm dev gateway run` 自己运行 Gateway 网关，然后让 macOS 应用以本地模式连接。
 
 ## 先决条件（从源码）
 
@@ -73,7 +73,7 @@ openclaw health
 
 ## 前沿工作流（在终端中运行 Gateway 网关）
 
-目标：开发 TypeScript Gateway 网关，获得热重载，保持 macOS 应用 UI 连接。
+目标：从源码开发 TypeScript Gateway 网关，通过 Gateway 网关提供已构建的控制 UI，并保持 macOS 应用 UI 连接。
 
 ### 0)（可选）也从源码运行 macOS 应用
 
@@ -87,10 +87,13 @@ openclaw health
 
 ```bash
 pnpm install
-pnpm gateway:watch
+pnpm build
+pnpm ui:build
+pnpm dev onboard
+pnpm dev gateway run
 ```
 
-`gateway:watch` 以监视模式运行 Gateway 网关，并在 TypeScript 更改时重新加载。
+`pnpm dev gateway run` 会在源码构建、UI 构建和 dev 新手引导准备好本地工作区后，启动规范的开发 Gateway 网关。
 
 ### 2) 将 macOS 应用指向你正在运行的 Gateway 网关
 
@@ -132,7 +135,7 @@ openclaw health
 ## 更新（不破坏你的设置）
 
 - 将 `~/.openclaw/workspace` 和 `~/.openclaw/` 保持为"你的东西"；不要将个人提示/配置放入 `openclaw` 仓库。
-- 更新源码：`git pull` + `pnpm install`（当锁文件更改时）+ 继续使用 `pnpm gateway:watch`。
+- 更新源码：`git pull` + `pnpm install`（当锁文件更改时）+ `pnpm build` + `pnpm ui:build` + 继续使用 `pnpm dev gateway run`。
 
 ## Linux（systemd 用户服务）
 

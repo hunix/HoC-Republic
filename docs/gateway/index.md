@@ -23,8 +23,8 @@ openclaw gateway --port 18789
 openclaw gateway --port 18789 --verbose
 # if the port is busy, terminate listeners then start:
 openclaw gateway --force
-# dev loop (auto-reload on TS changes):
-pnpm gateway:watch
+# development gateway:
+pnpm dev gateway run
 ```
 
 - Config hot reload watches `~/.openclaw/openclaw.json` (or `OPENCLAW_CONFIG_PATH`).

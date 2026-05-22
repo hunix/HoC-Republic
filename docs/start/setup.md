@@ -19,7 +19,7 @@ Last updated: 2026-01-01
 
 - **Tailoring lives outside the repo:** `~/.openclaw/workspace` (workspace) + `~/.openclaw/openclaw.json` (config).
 - **Stable workflow:** install the macOS app; let it run the bundled Gateway.
-- **Bleeding edge workflow:** run the Gateway yourself via `pnpm gateway:watch`, then let the macOS app attach in Local mode.
+- **Bleeding edge workflow:** run the Gateway yourself via `pnpm dev gateway run`, then let the macOS app attach in Local mode.
 
 ## Prereqs (from source)
 
@@ -79,7 +79,7 @@ If onboarding is not available in your build:
 
 ## Bleeding edge workflow (Gateway in a terminal)
 
-Goal: work on the TypeScript Gateway, get hot reload, keep the macOS app UI attached.
+Goal: work on the TypeScript Gateway from source, keep the built control UI available through the gateway, and keep the macOS app UI attached.
 
 ### 0) (Optional) Run the macOS app from source too
 
@@ -93,10 +93,13 @@ If you also want the macOS app on the bleeding edge:
 
 ```bash
 pnpm install
-pnpm gateway:watch
+pnpm build
+pnpm ui:build
+pnpm dev onboard
+pnpm dev gateway run
 ```
 
-`gateway:watch` runs the gateway in watch mode and reloads on TypeScript changes.
+`pnpm dev gateway run` starts the canonical development gateway after the source build, UI build, and dev onboarding steps have prepared the local workspace.
 
 ### 2) Point the macOS app at your running Gateway
 
@@ -138,7 +141,7 @@ Use this when debugging auth or deciding what to back up:
 ## Updating (without wrecking your setup)
 
 - Keep `~/.openclaw/workspace` and `~/.openclaw/` as “your stuff”; don’t put personal prompts/config into the `openclaw` repo.
-- Updating source: `git pull` + `pnpm install` (when lockfile changed) + keep using `pnpm gateway:watch`.
+- Updating source: `git pull` + `pnpm install` (when the lockfile changed) + `pnpm build` + `pnpm ui:build` + keep using `pnpm dev gateway run`.
 
 ## Linux (systemd user service)
 

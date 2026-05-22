@@ -166,7 +166,7 @@ sudo ls -la /opt/openclaw
 # Test manual start
 sudo -i -u openclaw
 cd ~/openclaw
-pnpm start
+pnpm start gateway run
 ```
 
 ### Docker sandbox issues

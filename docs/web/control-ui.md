@@ -170,31 +170,35 @@ Optional absolute base (when you want fixed asset URLs):
 OPENCLAW_CONTROL_UI_BASE_PATH=/openclaw/ pnpm ui:build
 ```
 
-For local development (separate dev server):
+For a normal local checkout, build the UI and run it through the gateway:
 
 ```bash
-pnpm ui:dev # auto-installs UI deps on first run
+pnpm install
+pnpm build
+pnpm ui:build
+pnpm dev onboard
+pnpm dev gateway run
 ```
 
-Then point the UI at your Gateway WS URL (e.g. `ws://127.0.0.1:18789`).
+Then open the gateway-served Control UI, usually at `http://localhost:18789`. Point the UI at your Gateway WebSocket URL only when you intentionally use a separate development origin.
 
-## Debugging/testing: dev server + remote Gateway
+## Debugging/testing: built UI + remote Gateway
 
 The Control UI is static files; the WebSocket target is configurable and can be
-different from the HTTP origin. This is handy when you want the Vite dev server
-locally but the Gateway runs elsewhere.
+different from the HTTP origin. This is handy when the UI is served from one
+deployment origin while the Gateway runs elsewhere.
 
-1. Start the UI dev server: `pnpm ui:dev`
+1. Build the UI with `pnpm ui:build` and run a gateway with `pnpm dev gateway run`, or serve `dist/control-ui` from your chosen static host.
 2. Open a URL like:
 
 ```text
-http://localhost:5173/?gatewayUrl=ws://<gateway-host>:18789
+http://localhost:18789/?gatewayUrl=ws://<gateway-host>:18789
 ```
 
 Optional one-time auth (if needed):
 
 ```text
-http://localhost:5173/?gatewayUrl=wss://<gateway-host>:18789&token=<gateway-token>
+http://localhost:18789/?gatewayUrl=wss://<gateway-host>:18789&token=<gateway-token>
 ```
 
 Notes:
@@ -205,8 +209,7 @@ Notes:
   Provide `token` (or `password`) explicitly. Missing explicit credentials is an error.
 - Use `wss://` when the Gateway is behind TLS (Tailscale Serve, HTTPS proxy, etc.).
 - `gatewayUrl` is only accepted in a top-level window (not embedded) to prevent clickjacking.
-- For cross-origin dev setups (e.g. `pnpm ui:dev` to a remote Gateway), add the UI
-  origin to `gateway.controlUi.allowedOrigins`.
+- For cross-origin setups, add the UI origin to `gateway.controlUi.allowedOrigins`.
 
 Example:
 
@@ -214,7 +217,7 @@ Example:
 {
   gateway: {
     controlUi: {
-      allowedOrigins: ["http://localhost:5173"],
+      allowedOrigins: ["http://localhost:18789"],
     },
   },
 }

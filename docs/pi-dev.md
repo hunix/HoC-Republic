@@ -41,7 +41,8 @@ The script runs all pi related unit tests via these globs:
 Recommended flow:
 
 - Run the gateway in dev mode:
-  - `pnpm gateway:dev`
+  - `pnpm dev onboard`
+  - `pnpm dev gateway run`
 - Trigger the agent directly:
   - `pnpm openclaw agent --message "Hello" --thinking low`
 - Use the TUI for interactive debugging:

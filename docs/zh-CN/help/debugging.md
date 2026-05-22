@@ -35,21 +35,21 @@ x-i18n:
 
 `/debug reset` 清除所有覆盖并返回到磁盘上的配置。
 
-## Gateway 网关监视模式
+## Gateway 网关开发模式
 
-为了快速迭代，在文件监视器下运行 Gateway 网关：
+为了快速迭代，请通过规范的开发入口运行 Gateway 网关：
 
 ```bash
-pnpm gateway:watch --force
+pnpm dev gateway run --force
 ```
 
 这映射到：
 
 ```bash
-tsx watch src/entry.ts gateway --force
+node scripts/run-node.mjs gateway run --force
 ```
 
-在 `gateway:watch` 后添加任何 Gateway 网关 CLI 标志，它们将在每次重启时传递。
+在 `run` 后添加任何 Gateway 网关 CLI 标志，它们会传递给开发网关进程。
 
 ## Dev 配置文件 + dev Gateway 网关（--dev）
 
@@ -61,11 +61,12 @@ tsx watch src/entry.ts gateway --force
 推荐流程（dev 配置文件 + dev 引导）：
 
 ```bash
-pnpm gateway:dev
+pnpm dev onboard
+pnpm dev gateway run
 OPENCLAW_PROFILE=dev openclaw tui
 ```
 
-如果你还没有全局安装，请通过 `pnpm openclaw ...` 运行 CLI。
+如果你还没有全局安装，请通过 `pnpm openclaw ...` 运行 CLI。对于全新 checkout，请先完成 `pnpm install`、`pnpm build` 和 `pnpm ui:build`，再启动 Gateway 网关。
 
 这会执行：
 
@@ -113,13 +114,13 @@ OpenClaw 可以在任何过滤/格式化之前记录**原始助手流**。
 通过 CLI 启用：
 
 ```bash
-pnpm gateway:watch --force --raw-stream
+pnpm dev gateway run --force --raw-stream
 ```
 
 可选路径覆盖：
 
 ```bash
-pnpm gateway:watch --force --raw-stream --raw-stream-path ~/.openclaw/logs/raw-stream.jsonl
+pnpm dev gateway run --force --raw-stream --raw-stream-path ~/.openclaw/logs/raw-stream.jsonl
 ```
 
 等效环境变量：

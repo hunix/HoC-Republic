@@ -157,29 +157,33 @@ pnpm ui:build # 首次运行时自动安装 UI 依赖
 OPENCLAW_CONTROL_UI_BASE_PATH=/openclaw/ pnpm ui:build
 ```
 
-用于本地开发（单独的开发服务器）：
+对于普通本地 checkout，请先构建 UI，然后通过 Gateway 网关提供服务：
 
 ```bash
-pnpm ui:dev # 首次运行时自动安装 UI 依赖
+pnpm install
+pnpm build
+pnpm ui:build
+pnpm dev onboard
+pnpm dev gateway run
 ```
 
-然后将 UI 指向你的 Gateway 网关 WS URL（例如 `ws://127.0.0.1:18789`）。
+然后打开 Gateway 网关提供的 Control UI，通常是 `http://localhost:18789`。只有在你有意使用单独的开发源时，才需要把 UI 指向指定的 Gateway 网关 WebSocket URL。
 
-## 调试/测试：开发服务器 + 远程 Gateway 网关
+## 调试/测试：已构建 UI + 远程 Gateway 网关
 
-控制 UI 是静态文件；WebSocket 目标是可配置的，可以与 HTTP 源不同。当你想要在本地使用 Vite 开发服务器但 Gateway 网关在其他地方运行时，这很方便。
+控制 UI 是静态文件；WebSocket 目标是可配置的，可以与 HTTP 源不同。当 UI 从一个部署源提供服务而 Gateway 网关在其他地方运行时，这很方便。
 
-1. 启动 UI 开发服务器：`pnpm ui:dev`
+1. 使用 `pnpm ui:build` 构建 UI，并用 `pnpm dev gateway run` 运行 Gateway 网关；或者从你选择的静态主机提供 `dist/control-ui`。
 2. 打开类似以下的 URL：
 
 ```text
-http://localhost:5173/?gatewayUrl=ws://<gateway-host>:18789
+http://localhost:18789/?gatewayUrl=ws://<gateway-host>:18789
 ```
 
 可选的一次性认证（如需要）：
 
 ```text
-http://localhost:5173/?gatewayUrl=wss://<gateway-host>:18789&token=<gateway-token>
+http://localhost:18789/?gatewayUrl=wss://<gateway-host>:18789&token=<gateway-token>
 ```
 
 注意：

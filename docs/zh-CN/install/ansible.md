@@ -173,7 +173,7 @@ sudo ls -la /opt/openclaw
 # 测试手动启动
 sudo -i -u openclaw
 cd ~/openclaw
-pnpm start
+pnpm start gateway run
 ```
 
 ### Docker 沙箱问题
