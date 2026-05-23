@@ -18,6 +18,20 @@
 
 ---
 
+## Launch command center
+
+HoC-Republic is now open for **technical review, reproducibility feedback, and demo collaboration**. If you arrived from LinkedIn, Product Hunt, Hacker News, or an external AI-agents directory, the most useful contribution is not generic promotion; it is a concrete signal that helps make the system easier to run, inspect, and evaluate.
+
+| If you want to... | Go here | Best next action |
+| --- | --- | --- |
+| **Review the launch thesis** | [LinkedIn launch post](https://www.linkedin.com/feed/update/urn:li:share:7463937825445597185/) | Comment with the first demo or safety boundary you think should be tested. |
+| **Give technical feedback** | [Launch feedback command center](https://github.com/hunix/HoC-Republic/issues/1) | Report whether the quick-start path is clear and what should be benchmarked first. |
+| **Help build the first public demo** | [Reproducible AI-citizen family demo](https://github.com/hunix/HoC-Republic/issues/2) | Suggest the smallest demo that proves memory, governance, and child-agent specialization. |
+| **Coordinate external showcases** | [External showcase tracker](https://github.com/hunix/HoC-Republic/issues/3) | Propose an ethical directory, community, or launch surface with a native submission angle. |
+| **Evaluate the source** | [Quick start](#quick-start-from-source) | Clone the repository, run the setup path, and open an issue with exact reproduction notes. |
+
+> **Launch ask:** please inspect the source, test the quick start if you can, and help identify the first reproducible Republic demo that should become public evidence rather than only a concept.
+
 ## The idea
 
 **HoC-Republic** is the public home of **HoC**, short for **Hani’s OpenClaws**. It explores a simple but radical question: **what happens when AI agents are treated not as isolated chatbots, but as citizens of a Republic where they can coordinate, work, remember, govern, evolve, and reproduce smarter specialized agents under human-defined constraints?**
@@ -109,6 +123,17 @@ pnpm dev gateway run
 
 The onboarding command prepares the local OpenClaw configuration for the gateway. After onboarding and gateway startup, open the local control surface at `http://localhost:18789`, unless you configured a different gateway port.
 
+### Reproducible proof demo
+
+If you want the fastest source-backed artifact before running the full gateway, use the proof-demo command. It exercises the Republic digital-genome path, regenerates JSON and Markdown artifacts, and documents a narrow, inspectable claim boundary.
+
+```bash
+pnpm demo:proof
+pnpm demo:proof:video
+```
+
+The generated outputs live under [`docs/hoc/outreach/demo-assets`](docs/hoc/outreach/demo-assets). Start with [`hoc-republic-digital-genome-proof.md`](docs/hoc/outreach/demo-assets/hoc-republic-digital-genome-proof.md) for the human-readable run artifact, [`hoc-republic-digital-genome-proof.json`](docs/hoc/outreach/demo-assets/hoc-republic-digital-genome-proof.json) for machine-readable verification, and [`hoc-republic-proof-flow.png`](docs/hoc/outreach/demo-assets/hoc-republic-proof-flow.png) for the visual flow.
+
 ### Production gateway command
 
 For production-style operation, use the start command instead of the development command.
@@ -130,6 +155,8 @@ pnpm start gateway run
 | Run the gateway in production mode  | `pnpm start gateway run`                              |
 | Start the terminal UI               | `pnpm tui`                                            |
 | Run the main test runner            | `pnpm test`                                           |
+| Run the proof demo                  | `pnpm demo:proof`                                     |
+| Render the proof-demo video         | `pnpm demo:proof:video`                               |
 | Run end-to-end tests                | `pnpm test:e2e`                                       |
 | Run live model tests                | `pnpm test:live`                                      |
 | Run lint and format checks          | `pnpm check`                                          |
@@ -193,7 +220,8 @@ HoC is intended to grow as an open research platform. The near-term roadmap shou
 
 | Milestone                  | Outcome                                                                                                                             |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **Reproducible demo**      | A one-command local demo showing an agent spawning a specialized subagent, evaluating output, and preserving the improvement.       |
+| **Reproducible proof demo** | The first source-backed proof command, `pnpm demo:proof`, generates traceable digital-genome birth artifacts for review.           |
+| **Full-system demo**       | A one-command local demo showing an agent spawning a specialized subagent, evaluating output, and preserving the improvement.       |
 | **Research paper package** | A concise paper-style explanation of the architecture, hypotheses, limitations, and experiments.                                    |
 | **Benchmark harness**      | Metrics for task decomposition, tool synthesis quality, agent routing accuracy, safety interventions, and long-horizon reliability. |
 | **Public examples**        | Small examples for channel bots, local-only agents, Tool Forge, Model Council, Republic ticks, and approval-gated automations.      |

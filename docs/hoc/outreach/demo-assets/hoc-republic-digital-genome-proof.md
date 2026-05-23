@@ -1,0 +1,40 @@
+# HoC-Republic Digital-Genome Proof Demo
+
+This capture-ready artifact demonstrates a narrow, source-backed part of HoC-Republic: digital-genome creation, fitness scoring, parent selection, magnitude-based crossover, mutation, host-resource gating, and birth-event logging. The demo deliberately avoids claims of sentience or biological life; it treats the system as a software simulation of agent-lineage mechanics.
+
+| Proof element | Value |
+| --- | --- |
+| Seed | `hoc-republic-proof-2026-05-23` |
+| Topology | `8 → 16 → 16 → 4` |
+| Expected weight count | 448 |
+| Parent A | Demo Parent 1, fitness 0.6599 |
+| Parent B | Demo Parent 2, fitness 0.657 |
+| Selected parents | Demo Parent 1 × Demo Parent 2 |
+| Direct child generation | 1 |
+| Direct child fitness | 0.6604 |
+| Host-resource gate open | Yes |
+| Birth event created by `genomeTick` | Yes |
+
+> The simulated tick emitted a `Birth` event: “Model Delta-Nova bred from Demo Parent 1 × Demo Parent 2 (Gen 1, fitness 0.661)”.
+
+## What this proves
+
+The script imports and executes the repository's own Republic modules rather than mocking the mechanics. It verifies that a pair of parent genomes can be evaluated, selected, crossed over, mutated, and converted into an offspring genome. When host resources allow reproduction, `genomeTick` also adds the offspring to the genome pool, creates a linked ML-model record, emits a `Birth` event, and increments the event counter.
+
+## What this does not claim
+
+This proof does not claim consciousness, personhood, biological reproduction, or autonomous real-world authority. It is a reproducible software demonstration of lineage-like model mechanics inside an agent-civilization simulation.
+
+## Reproduce locally
+
+Run the following command from the repository root:
+
+```bash
+node --import tsx scripts/hoc-republic-proof-demo.ts
+```
+
+The script writes the machine-readable proof to:
+
+```text
+docs/hoc/outreach/demo-assets/hoc-republic-digital-genome-proof.json
+```

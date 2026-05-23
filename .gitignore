@@ -243,3 +243,8 @@ windows-companion/build_log.txt
 windows-companion/build_manual_ref.txt
 windows-companion/build_enhanced_try*.txt
 windows-companion/nuget_error.txt
+
+# HoC-Republic proof-demo generated video intermediates
+/docs/hoc/outreach/demo-assets/video-frames/
+/docs/hoc/outreach/demo-assets/video-frames.txt
+/docs/hoc/outreach/demo-assets/*contact-sheet.png
