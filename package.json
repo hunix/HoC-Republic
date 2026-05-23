@@ -43,6 +43,8 @@
     "check": "pnpm lint && pnpm format",
     "check:docs": "pnpm format:docs && pnpm lint:docs && pnpm docs:build",
     "check:loc": "node --import tsx scripts/check-ts-max-loc.ts --max 500",
+    "demo:proof": "node --import tsx scripts/hoc-republic-proof-demo.ts",
+    "demo:proof:video": "python3.11 scripts/render-hoc-proof-video.py && ffmpeg -y -hide_banner -loglevel error -f concat -safe 0 -i docs/hoc/outreach/demo-assets/video-frames.txt -vf fps=30,format=yuv420p docs/hoc/outreach/demo-assets/hoc-republic-proof-demo-v0.mp4",
     "dev": "node scripts/run-node.mjs",
     "docs:bin": "node scripts/build-docs-list.mjs",
     "docs:build": "cd docs && pnpm dlx --reporter append-only mint broken-links",

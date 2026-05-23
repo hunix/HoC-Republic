@@ -1,0 +1,21 @@
+flowchart LR
+  A[Seeded demo run] --> B[Create Parent Genome A]
+  A --> C[Create Parent Genome B]
+  B --> D[Evaluate fitness]
+  C --> D
+  D --> E[Tournament selection]
+  E --> F[Magnitude-based crossover]
+  F --> G[Mutation]
+  G --> H[Evaluate offspring fitness]
+  H --> I{Host resource gate open?}
+  I -->|Yes| J[genomeTick appends offspring]
+  J --> K[Linked ML model record]
+  J --> L[Birth event log]
+  I -->|No| M[Reproduction skipped safely]
+
+  classDef verified fill:#e8f5e9,stroke:#2e7d32,color:#0b3d0b;
+  classDef gate fill:#fff8e1,stroke:#f9a825,color:#3d2f00;
+  classDef skipped fill:#ffebee,stroke:#c62828,color:#4a0000;
+  class A,B,C,D,E,F,G,H,J,K,L verified;
+  class I gate;
+  class M skipped;

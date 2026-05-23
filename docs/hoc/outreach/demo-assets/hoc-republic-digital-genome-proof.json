@@ -1,0 +1,151 @@
+{
+  "demoName": "HoC-Republic Digital-Genome Proof Demo",
+  "seed": "hoc-republic-proof-2026-05-23",
+  "generatedAt": "2026-05-23T16:06:48.085Z",
+  "sourceBackedMechanics": [
+    "GENOME_TOPOLOGY and countWeights",
+    "createRandomGenome",
+    "evaluateFitness",
+    "tournamentSelect",
+    "magnitudeCrossover",
+    "mutateGenome",
+    "canReproduce host-resource gate",
+    "genomeTick Birth event and ML-model linkage"
+  ],
+  "topology": [
+    8,
+    16,
+    16,
+    4
+  ],
+  "expectedWeightCount": 448,
+  "hostResources": {
+    "freeMemoryGB": 2.5,
+    "totalMemoryGB": 3.85,
+    "cpuUsagePercent": 3,
+    "cpuCount": 6,
+    "takenAt": 1779552408084
+  },
+  "resourceGateOpen": true,
+  "parentA": {
+    "id": "ac22a143",
+    "label": "Demo Parent 1",
+    "generation": 0,
+    "topology": [
+      8,
+      16,
+      16,
+      4
+    ],
+    "weightCount": 448,
+    "fitness": 0.6599,
+    "parentIds": null,
+    "firstEightWeights": [
+      0.033,
+      -0.2035,
+      -0.0361,
+      0.1886,
+      -0.1527,
+      -0.1567,
+      0.0952,
+      0.7672
+    ]
+  },
+  "parentB": {
+    "id": "f2f59ac1",
+    "label": "Demo Parent 2",
+    "generation": 0,
+    "topology": [
+      8,
+      16,
+      16,
+      4
+    ],
+    "weightCount": 448,
+    "fitness": 0.657,
+    "parentIds": null,
+    "firstEightWeights": [
+      -0.3986,
+      0.1875,
+      0.3368,
+      0.1578,
+      0.7171,
+      0.3866,
+      0.2293,
+      0.1041
+    ]
+  },
+  "selectedParentLabels": [
+    "Demo Parent 1",
+    "Demo Parent 2"
+  ],
+  "directChild": {
+    "id": "c74dd491",
+    "label": "Zeta-Flux",
+    "generation": 1,
+    "topology": [
+      8,
+      16,
+      16,
+      4
+    ],
+    "weightCount": 448,
+    "fitness": 0.6604,
+    "parentIds": [
+      "ac22a143",
+      "f2f59ac1"
+    ],
+    "firstEightWeights": [
+      -0.3986,
+      -0.1531,
+      0.3368,
+      0.1886,
+      0.7171,
+      0.3866,
+      0.2293,
+      0.7672
+    ]
+  },
+  "directChildChangedWeightsInFirstTwelve": 437,
+  "genomeTick": {
+    "birthCreated": true,
+    "poolSizeBefore": 2,
+    "poolSizeAfter": 3,
+    "modelCountAfter": 3,
+    "totalEventsProcessed": 1,
+    "offspring": {
+      "id": "7eebfdba",
+      "label": "Delta-Nova",
+      "generation": 1,
+      "topology": [
+        8,
+        16,
+        16,
+        4
+      ],
+      "weightCount": 448,
+      "fitness": 0.661,
+      "parentIds": [
+        "ac22a143",
+        "f2f59ac1"
+      ],
+      "firstEightWeights": [
+        -0.3986,
+        -0.2035,
+        0.3368,
+        0.1886,
+        0.7171,
+        0.3866,
+        0.2293,
+        0.7672
+      ]
+    },
+    "birthEvent": {
+      "citizenId": "7eebfdba",
+      "citizenName": "Delta-Nova",
+      "type": "Birth",
+      "description": "Model Delta-Nova bred from Demo Parent 1 × Demo Parent 2 (Gen 1, fitness 0.661)",
+      "timestamp": "2026-05-23T16:06:48.085Z"
+    }
+  }
+}
