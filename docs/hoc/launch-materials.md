@@ -13,6 +13,8 @@ read_when:
 
 The launch goal is not merely to collect impressions. The goal is to convert attention into reproducible runs, architectural criticism, safety review, benchmarks, examples, pull requests, and a community that can help make recursive agent systems safer and more useful.
 
+For a complete launch operating system, use the [Outreach Command Center](./outreach) after selecting copy from this page. It includes the meme playbook for AI-citizen marriage, agent families, digital DNA-like inheritance, and birth mechanics; a ranked target-community map; a seven-day launch calendar; and a reply bank for turning social reactions into contributors.
+
 ## Canonical copy block
 
 Use this block whenever a short, accurate project description is needed. It keeps the strongest public metaphor while avoiding unsupported claims about finished AGI or guaranteed self-improvement.

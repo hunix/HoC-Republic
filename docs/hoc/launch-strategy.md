@@ -40,22 +40,23 @@ The user's phrase, "the first time AI can give birth to new smarter AI agents," 
 | "A Republic of OpenClaws in a repo."                   | "The Republic subsystem models governance, economy, memory, roles, and social dynamics as a research simulation for OpenClaw agents."                  |
 | "Not another chatbot."                                 | "HoC moves beyond a single chat UI into gateway infrastructure, messaging channels, tools, memory, and agent coordination."                            |
 
-The launch should repeat the vivid question and the precise translation together. That gives social media a memorable line while giving engineers a defensible project definition. Ready-to-post platform copy lives in [Launch Materials](./launch-materials).
+The launch should repeat the vivid question and the precise translation together. That gives social media a memorable line while giving engineers a defensible project definition. Ready-to-post platform copy lives in [Launch Materials](./launch-materials), and the full meme-led operating system lives in the [Outreach Command Center](./outreach).
 
 ## Launch asset stack
 
 A viral open-source launch needs assets prepared before the repository becomes public. Third-party launch playbooks repeatedly emphasize a crisp landing page, visual demo, strong README, starter issues, founder story, and coordinated channel distribution.[4] [5]
 
-| Asset                      | Required quality bar                                                                                                                 | Owner action                                                                     |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
-| **README**                 | Explains the project in one minute, shows novelty, includes quick start, safety, roadmap, and contribution paths.                    | Review the rewritten `README.md` and verify every command.                       |
-| **Demo video or GIF**      | Under 60 seconds, captioned, showing an agent delegating to or creating a specialized helper.                                        | Record before launch; pin in posts and README.                                   |
-| **Social preview image**   | 1280×640 pixels preferred, under 1 MB, readable when small. GitHub recommends custom social previews for shared repository links.[6] | Upload in repository settings before launch.                                     |
-| **Wiki and research docs** | One wiki home, one research thesis, one release checklist, one contributor map.                                                      | Use `docs/hoc` pages as source of truth.                                         |
-| **Good-first issues**      | 10 to 20 focused issues with acceptance criteria.                                                                                    | Create before public launch or immediately after.                                |
-| **Discussion starter**     | One pinned discussion asking for reproductions, benchmarks, safety review, and demos.                                                | Publish when the repository goes public.                                         |
-| **Founder thread**         | Story-driven thread explaining why HoC exists and what is new.                                                                       | Use [Launch Materials](./launch-materials) as the copy source before launch day. |
-| **Technical article**      | A deeper post explaining architecture and limitations.                                                                               | Publish one to two days before main launch.                                      |
+| Asset                       | Required quality bar                                                                                                                  | Owner action                                                                     |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| **README**                  | Explains the project in one minute, shows novelty, includes quick start, safety, roadmap, and contribution paths.                     | Review the rewritten `README.md` and verify every command.                       |
+| **Demo video or GIF**       | Under 60 seconds, captioned, showing an agent delegating to or creating a specialized helper.                                         | Record before launch; pin in posts and README.                                   |
+| **Social preview image**    | 1280×640 pixels preferred, under 1 MB, readable when small. GitHub recommends custom social previews for shared repository links.[6]  | Upload in repository settings before launch.                                     |
+| **Wiki and research docs**  | One wiki home, one research thesis, one release checklist, one contributor map.                                                       | Use `docs/hoc` pages as source of truth.                                         |
+| **Good-first issues**       | 10 to 20 focused issues with acceptance criteria.                                                                                     | Create before public launch or immediately after.                                |
+| **Discussion starter**      | One pinned discussion asking for reproductions, benchmarks, safety review, and demos.                                                 | Publish when the repository goes public.                                         |
+| **Founder thread**          | Story-driven thread explaining why HoC exists and what is new.                                                                        | Use [Launch Materials](./launch-materials) as the copy source before launch day. |
+| **Outreach command center** | Meme playbook, target-community map, platform copy, seven-day calendar, and reply bank for the AI-citizen marriage/family/birth hook. | Use [Outreach Command Center](./outreach) before posting or submitting anywhere. |
+| **Technical article**       | A deeper post explaining architecture and limitations.                                                                                | Publish one to two days before main launch.                                      |
 
 ## Recommended launch timeline
 
