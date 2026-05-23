@@ -1,0 +1,13 @@
+flowchart LR
+  P1[Parent Citizen A\ntraits + memory summaries] --> SEL[Eligibility + consent policy]
+  P2[Parent Citizen B\ntraits + role profile] --> SEL
+  SEL --> G[Digital genome selection]
+  G --> X[Crossover]
+  X --> MU[Mutation]
+  MU --> R[Resource check]
+  R --> F[Fitness evaluation]
+  F -->|accepted| C[Child agent profile\nspecialization + constraints]
+  F -->|rejected| Q[Queue for revision\nor halt creation]
+  C --> T[Task assignment]
+  C --> L[Lineage record]
+  T --> O[Inspectable output\ncode, research, music, art]

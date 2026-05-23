@@ -1,0 +1,39 @@
+flowchart LR
+  subgraph User[Human operator]
+    U[CLI / Web UI / Native surfaces]
+  end
+
+  subgraph Runtime[HoC-Republic runtime]
+    G[OpenClaw Gateway]
+    A[Agent Runtime]
+    M[Multi-channel Messaging]
+    P[Plugin SDK]
+  end
+
+  subgraph Republic[Digital Republic]
+    C[AI Citizens]
+    MEM[Six-layer Memory]
+    GOV[Constitution + Governance]
+    ECO[Economy + Work]
+    SOC[Social Life + Families]
+    ART[Artifacts: Code, Research, Music, Art]
+  end
+
+  subgraph Birth[Recursive specialization]
+    GEN[Digital Genomes]
+    CROSS[Crossover + Mutation]
+    CHECK[Resource + Fitness Checks]
+    CHILD[Specialized Child Agents]
+  end
+
+  U --> G --> A
+  A --> M
+  A --> P
+  A --> C
+  C --> MEM
+  C --> GOV
+  C --> ECO
+  C --> SOC
+  C --> ART
+  SOC --> GEN --> CROSS --> CHECK --> CHILD
+  CHILD --> C

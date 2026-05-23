@@ -1,0 +1,7 @@
+# HoC-Republic Launch Asset QA Notes
+
+- `producthunt-thumbnail.png` was regenerated and visually inspected. It is a 1024x1024 square PNG under 3MB with readable HoC-Republic text, civic-orbit visual motif, agent nodes, and a dark technical palette suitable for a Product Hunt thumbnail.
+- `producthunt-gallery-architecture.png` was visually inspected. It clearly shows the human operator, HoC-Republic runtime, Digital Republic, and recursive specialization loops. Its rendered size is 3120x1308 and the text is readable.
+- `producthunt-gallery-genome-birth.png` was visually inspected. It clearly shows parent citizens, eligibility/consent policy, genome selection, crossover, mutation, resource check, fitness evaluation, accepted child-agent profile, lineage record, and rejected halt path. Its rendered size is 3120x360 and the text is readable, though a taller marketing version could be designed later if a more visual Product Hunt gallery is desired.
+- `producthunt-gallery-architecture-card.png` was visually inspected. It is a polished 1270x760 launch card with readable typography, clear runtime/Republic/recursive-birth sections, and a strong call to run locally and inspect the source.
+- `producthunt-gallery-genome-birth-card.png` was visually inspected. It is a polished 1270x760 launch card with readable typography, clear parent/eligibility/genome/crossover/mutation/fitness/child-agent flow, and an explicit accuracy statement that the inheritance claim is digital rather than biological.
